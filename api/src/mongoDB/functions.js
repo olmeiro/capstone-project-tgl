@@ -9,7 +9,8 @@ async function createUser(data) {
         await client.connect();
         const collection = client.db(dbName).collection(collName);
         const doc = await collection.insertOne(data);
-        console.log(doc);
+        //console.log(doc);
+        return doc
 
     } catch (err ) {
         console.log(err.stack);
@@ -24,7 +25,8 @@ async function findUser(data) {
         await client.connect();
         const collection = client.db(dbName).collection(collName);
         const doc = await collection.findOne(data);
-        console.log(doc);
+        //console.log(doc);
+        return doc
 
     } catch (err ) {
         console.log(err.stack);
@@ -39,8 +41,8 @@ async function findAllUsers() {
         await client.connect();
         const collection = client.db(dbName).collection(collName);
         const doc = await collection.find({}).limit(10).toArray();
-        console.log(doc);
-
+        //console.log(doc);
+        return doc;
     } catch (err ) {
         console.log(err.stack);
 
@@ -50,20 +52,24 @@ async function findAllUsers() {
 }
 
 /*let data = {
+    "id_":"23452345"
     "name": "Esteban Rejas",
     "username":"Es456Rit",
     "email":"freddymt123@gmail.com",
     "password":"1234",
     "createDate": new Date(),
     "delete": { 
-        "status": "No",
+        "status": "no",
         "deleteDate": new Date(),
         },
     "active": Boolean(1),
-    "likes": 0,
+    "likes": ["id":"4567",],
+    "comments":[ {"id": "1234", "text":"asbas", "id_write": "123"}, {}, {}]
+    "favoritos": []
+    "fotos": ["nombreFoto": "imgA0000001"]
 }*/
 
 //createUser(data).catch(console.dir);
 //findUser({name: "Esteban Rejas"});
-findAllUsers();
-//module.exports(createUser, findUser, findAll);
+//findAllUsers();
+module.exports = {createUser, findUser, findAllUsers};
