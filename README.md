@@ -14,3 +14,9 @@ friends: [array],
 comments: [array],
 images: [array],
 }
+
+## contraseñas
+<username>:<password>
+Alberto_user:alberto1234
+Naty_user:naty1234
+Olme_user:olme1234
