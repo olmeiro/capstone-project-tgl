@@ -1,9 +1,8 @@
+import '../styles/tailwind.css'
 import { AppRouter } from './routes/AppRouter'
 
-function App () {
+export function App () {
   return (
       <AppRouter />
   )
 }
-
-export default App
