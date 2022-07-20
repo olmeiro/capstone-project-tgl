@@ -8,7 +8,7 @@ async function createUser(data) {
     try {
         await client.connect();
         const collection = client.db(dbName).collection(collName);
-        const doc = await collection.insertOne(data);
+        const doc = await collection.insertOne(data).project({ _id: 0 });
         //console.log(doc);
         return doc
 
@@ -24,7 +24,7 @@ async function findUser(data) {
     try {
         await client.connect();
         const collection = client.db(dbName).collection(collName);
-        const doc = await collection.findOne(data);
+        const doc = await collection.findOne(data).project({ _id: 0 });
         //console.log(doc);
         return doc
 
@@ -40,7 +40,7 @@ async function findAllUsers() {
     try {
         await client.connect();
         const collection = client.db(dbName).collection(collName);
-        const doc = await collection.find({}).limit(10).toArray();
+        const doc = await collection.find({}).project({ _id: 0 }).limit(10).toArray();
         //console.log(doc);
         return doc;
     } catch (err ) {
