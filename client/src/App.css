@@ -1,0 +1,48 @@
+
+
+.App-logo {
+  height: 12vmin;
+  align-items: left;
+  pointer-events: none;
+}
+
+.logout {
+  height: 4vmin;
+  align-items: right;
+  pointer-events: none;
+}
+
+.userName {
+  align-items: right;
+}
+
+.App-header {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: rgb(11, 11, 11);
+  justify-content: space-around;
+}
+
+
+.header {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  align-items: center;
+}
+
+.optionPage {
+  margin-left: 30px;
+}
+
+.titule {
+  margin-right: 70px;
+  margin-left: 50px;
+}
+
+.App-link {
+  color: #61dafb;
+}
