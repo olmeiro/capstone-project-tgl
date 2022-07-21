@@ -1,24 +1,22 @@
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-
+/* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 
 const navigation = [
-  { name: 'Home', href: '#', current: true },
-  { name: 'Profile', href: '#', current: false },
+  { name: 'Dashboard', href: '#', current: true },
+  { name: 'Team', href: '#', current: false },
+  { name: 'Projects', href: '#', current: false },
+  { name: 'Calendar', href: '#', current: false },
 ]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export function HomeLayout({ children, title = '' }) {
+export default function Example() {
   return (
-    <>
-      <nav>
-      <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -38,12 +36,12 @@ export function HomeLayout({ children, title = '' }) {
                 <div className="flex-shrink-0 flex items-center">
                   <img
                     className="block lg:hidden h-8 w-auto"
-                    src="https://pbs.twimg.com/profile_images/1349709290781749250/kpFdBUgf_400x400.jpg"
+                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
                     alt="Workflow"
                   />
                   <img
                     className="hidden lg:block h-8 w-auto"
-                    src="https://pbs.twimg.com/profile_images/1349709290781749250/kpFdBUgf_400x400.jpg"
+                    src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
                     alt="Workflow"
                   />
                 </div>
@@ -54,7 +52,7 @@ export function HomeLayout({ children, title = '' }) {
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          item.current ? 'bg-gray-900 text-team-blue' : 'text-gray-300 hover:bg-gray-700 hover:text-black',
                           'px-3 py-2 rounded-md text-sm font-medium'
                         )}
                         aria-current={item.current ? 'page' : undefined}
@@ -81,7 +79,7 @@ export function HomeLayout({ children, title = '' }) {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://w7.pngwing.com/pngs/741/68/png-transparent-user-computer-icons-user-miscellaneous-cdr-rectangle-thumbnail.png"
+                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                         alt=""
                       />
                     </Menu.Button>
@@ -154,18 +152,5 @@ export function HomeLayout({ children, title = '' }) {
         </>
       )}
     </Disclosure>
-      </nav>
-      <h1>Social Media TGL {title}</h1>
-      <h2>{title}</h2>
-      {children}
-      <footer>
-        <p>Este es el footer</p>
-      </footer>
-    </>
   )
-}
-
-HomeLayout.propTypes = {
-  children: PropTypes.node,
-  title: PropTypes.string
 }

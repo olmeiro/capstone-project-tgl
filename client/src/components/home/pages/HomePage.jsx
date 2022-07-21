@@ -1,4 +1,4 @@
-import { HomeLayout } from '../layout/HomeLayout'
+import { HomeLayout } from "../layout/HomeLayout"
 
 export const HomePage = () => {
   return (
