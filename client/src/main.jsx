@@ -8,7 +8,7 @@ import './styles/tailwind.css'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter >
-      <div className='container mx-auto sm:flex-col'>
+      <div>
         <App />
       </div>
     </BrowserRouter>
