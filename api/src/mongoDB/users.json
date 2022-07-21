@@ -8,11 +8,11 @@
         "createDate": "20-05-2022",
         "likes": [
                 {
-                    "id": "3456456"
+                    "id": "3456456",
                     "name": "miriam"
                 },
                 {
-                    "id": "63456"
+                    "id": "63456",
                     "name": "ricardo"   
                 }
         ],
@@ -46,8 +46,8 @@
                "id": "8720345",
                "img_name": "img_1234",
                "img_title": "cruzando la frontera"  
-            },
-        ],
-    },
+            }
+        ]
+    }
 
 ]

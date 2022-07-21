@@ -12,7 +12,7 @@ async function createUser(data) {
         //console.log(doc);
         return doc
 
-    } catch (err ) {
+    } catch (err) {
         console.log(err.stack);
 
     } finally {
@@ -28,7 +28,7 @@ async function findUser(data) {
         //console.log(doc);
         return doc
 
-    } catch (err ) {
+    } catch (err) {
         console.log(err.stack);
 
     } finally {
@@ -41,9 +41,10 @@ async function findAllUsers() {
         await client.connect();
         const collection = client.db(dbName).collection(collName);
         const doc = await collection.find({}).project({ _id: 0 }).limit(10).toArray();
-        //console.log(doc);
+        console.log(doc);
         return doc;
-    } catch (err ) {
+        
+    } catch (err) {
         console.log(err.stack);
 
     } finally {
@@ -72,4 +73,5 @@ async function findAllUsers() {
 //createUser(data).catch(console.dir);
 //findUser({name: "Esteban Rejas"});
 //findAllUsers();
-module.exports = {createUser, findUser, findAllUsers};
+
+module.exports = { createUser, findUser, findAllUsers };
