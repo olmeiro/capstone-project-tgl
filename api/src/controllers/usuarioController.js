@@ -2,9 +2,9 @@
 
 // const usuarioService = new UsuarioService;
 
-const getUsuarios = async (req, res) => {
+const getUsuarios = (req, res) => {
     // const usuarios = await usuarioService.metodoquefreddyesblesca
-
+    res.json("hola usuario!!");
 }
 
 const getUsuarioPorId = async (req, res) => {
