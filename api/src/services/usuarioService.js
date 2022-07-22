@@ -1,3 +1,4 @@
+
 const boom = require("@hapi/boom"); // para manejar los errores
 const mongoose = require("../mongoose/conexion");
 
