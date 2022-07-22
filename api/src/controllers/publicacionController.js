@@ -2,9 +2,9 @@
 
 // const publicacionService = new PublicacionService;
 
-const getPublicacions = async (req, res) => {
+const getPublicacions =  (req, res) => {
     // const publicacions = await publicacionService.metodoquefreddyesblesca
-
+    res.json("Hola Publicacion")
 }
 
 const getPublicacionPorId = async (req, res) => {

@@ -2,10 +2,10 @@
 
 const express = require('express');
 const usuarioRouter = require("./src/routes/usuario");
-const publicacionRouter = require("./src/routes/usuario");
-const comentarioRouter = require("./src/routes/usuario");
-const amigoRouter = require("./src/routes/usuario");
-const favoritoRouter = require("./src/routes/usuario");
+const publicacionRouter = require("./src/routes/publicacion");
+const comentarioRouter = require("./src/routes/comentario");
+const amigoRouter = require("./src/routes/amigo");
+const favoritoRouter = require("./src/routes/favorito");
 
 const { findAllUsers, findUser, createUser } = require('../api/src/mongoDB/functions');
 const app = express();
