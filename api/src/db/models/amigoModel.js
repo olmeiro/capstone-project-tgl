@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+const mongoose = require("../../mongoose/conexion");
 const Schema = mongoose.Schema; 
 
-const amigoSchema = new Schema({
+const AmigoSchema = new Schema({
     alias: { type: String, required: true, maxlength: 15 },
     nombre: { type: String, required: true, maxlength: 50 },
     email: { type: String, required: true },
@@ -13,4 +13,4 @@ const amigoSchema = new Schema({
     timestamps: false
 })
 
-module.exports = mongoose.model("amigo", amigoSchema); 
+module.exports = mongoose.model("amigo", AmigoSchema); 
