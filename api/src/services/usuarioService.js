@@ -1,15 +1,14 @@
 const boom = require("@hapi/boom"); // para manejar los errores
-const mongoose = require("../mongoose/conexion");
+const usuarioSchema = require("../db/models/usuarioModel");
 
 class UsuarioService {
     constructor() {
 
     }
-    async getUsuarios() {
-        const allUsuario = await models.Usuario.findAll();
-        return allUsuario;
+    getUsuarios() {
+   
     }
-    async postUsuario(){
+    postUsuario(){
         
     }
 }
