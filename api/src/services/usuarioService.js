@@ -1,50 +1,15 @@
 const client = require('../mongoDB/mongoConnect');
 
-const dbName = "socialNetwork"; //database name
-const collName = "users"; //collection name
 
-async function getUsuarios() {
-    try {
-        await client.connect();
-        const collection = client.db(dbName).collection(collName);
-        const doc = await collection.find({}).project({ _id: 0 }).limit(10).toArray();
-        return doc;
-        
-    } catch (err) {
-        console.log(err.stack);
+const boom = require("@hapi/boom"); // para manejar los errores
+const usuarioSchema = require("../db/models/usuarioModel");
 
-    } finally {
-        await client.close();
+class UsuarioService {
+    constructor() {
+
     }
-}
-
-async function getUsuarioPorId(data) { //data = "1234"
-    try {
-        await client.connect();
-        const collection = client.db(dbName).collection(collName);
-        const doc = await collection.findOne({_id: BSON.ObjectId(data)}).project({ _id: 0, delete: 0, active: 0 }); //data: {"62d5c34f192a8fbf7979b6e3"}
-        return doc;
-
-    } catch (err) {
-        console.log(err.stack);
-
-    } finally {
-        await client.close();
-    }
-}
-
-async function getUsuarioPorAlias(data) { //data = { alias : "@freddy"}
-    try {
-        await client.connect();
-        const collection = client.db(dbName).collection(collName);
-        const doc = await collection.findOne({data, "delete.status" : "false", active: "true"}).project({ _id: 0, delete: 0, active: 0 }); 
-        return doc;
-
-    } catch (err) {
-        console.log(err.stack);
-
-    } finally {
-        await client.close();
+    getUsuarios() {
+   
     }
 }
 
@@ -111,12 +76,4 @@ async function deleteUsuario(data) { // data = { filter: { key : value } }
     }
 }
 
-
-module.exports = { 
-    getUsuarios,
-    getUsuariosPorId, 
-    getUsuarioPorAlias, 
-    postUsuario, 
-    putUsuario, 
-    deleteUsuario 
-};
+module.exports = UsuarioService;

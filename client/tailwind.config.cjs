@@ -1,7 +1,8 @@
 module.exports = {
   content: [
     './index.html',
-    './src/**/*.{vue,js,ts,jsx,tsx}'
+    './src/**/*.{vue,js,ts,jsx,tsx}',
+    'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'
   ],
   darkMode: 'class',
   theme: {
@@ -38,6 +39,7 @@ module.exports = {
     }
   },
   plugins: [
-    require('@tailwindcss/forms')
+    require('@tailwindcss/forms'),
+    require('flowbite/plugin')
   ]
 }
