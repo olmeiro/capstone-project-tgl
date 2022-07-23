@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Children, Fragment } from 'react'
+import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 
@@ -10,13 +10,12 @@ const user = {
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
 }
 const navigation = [
-  { name: 'Team', href: '#', current: false },
-  { name: 'Profile', href: '#', current: false },
-  { name: 'Notifications', href: '#', current: false },
+  { name: 'Team', href: '/', current: false },
+  { name: 'Profile', href: '/profile', current: false },
+  { name: 'Comments', href: '/card', current: false }
 ]
 const userNavigation = [
-  { name: 'Perfil', href: '#' },
-  { name: 'Configuraciones', href: '#' },
+  { name: 'Perfil', href: '/profile' },
   { name: 'Salir', href: '#' }
 ]
 
@@ -29,7 +28,8 @@ const imagePath = '/assets/logo_Team_International.png'
 export function NavBar () {
   return (
     <>
-      <div className="min-h-full">
+      {/* <div className="min-h-full"> */}
+      <div className="">
         <Disclosure as="nav" className="bg-team-dark">
           {({ open }) => (
             <>
@@ -67,10 +67,10 @@ export function NavBar () {
                     <div className="ml-4 flex items-center md:ml-6">
                       <button
                         type="button"
-                        className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                        className="bg-gray-800 p-1 rounded-full text-team-green hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                       >
                         <span className="sr-only">View notifications</span>
-                        <BellIcon className="h-6 w-6 bg-team-brown rounded-md" aria-hidden="true" />
+                        <BellIcon className="h-6 w-6  rounded-md" aria-hidden="true" />
                       </button>
 
                       {/* Profile dropdown */}

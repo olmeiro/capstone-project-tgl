@@ -1,20 +1,19 @@
 import React from 'react'
-import { Footer } from './Footer'
-import { Histories } from './Histories'
-import { NavBar } from './NavBar'
-import { SidebarLeft } from './SidebarLeft'
-import { SidebarRight } from './SidebarRight'
+import PropTypes from 'prop-types'
 
-export const HomeLayout = () => {
+import { Footer } from './Footer'
+import { NavBar } from './NavBar'
+
+export const HomeLayout = ({ children }) => {
   return (
-    <div className='container sm:flex-col'>
+    <div className=''>
       <NavBar />
-      <div className='mx-auto flex flex-row gap-2 justify-center sm:flex-col md:flex-row mt-8 font-inter'>
-        <SidebarLeft />
-        <Histories />
-        <SidebarRight />
-      </div>
+      { children }
       <Footer />
     </div>
   )
+}
+
+HomeLayout.propTypes = {
+  children: PropTypes.node
 }
