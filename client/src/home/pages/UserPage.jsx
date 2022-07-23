@@ -1,10 +1,16 @@
 import React from 'react'
 import { HomeLayout } from '../layout/HomeLayout'
+import { Header } from '../layout/profile/Header'
+import { CardPhotos } from '../layout/profile/CardPhotos'
+import { FormOtherUser } from '../layout/profile/FormOtherUser'
 
 export const UserPage = () => {
   return (
     <HomeLayout>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto error alias pariatur maxime dolore veritatis, officia explicabo cum aliquam! Amet, natus assumenda aspernatur accusamus omnis nam provident voluptatem tenetur optio?</p>
+      <Header>
+        <FormOtherUser />
+      </Header>
+      <CardPhotos />
     </HomeLayout>
   )
 }

@@ -6,7 +6,7 @@ import { NavBar } from './NavBar'
 
 export const HomeLayout = ({ children }) => {
   return (
-    <div className=''>
+    <div className='bg-purple-100'>
       <NavBar />
       { children }
       <Footer />
