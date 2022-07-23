@@ -1,4 +1,4 @@
-const client = require('./mongoConnect.js');
+const client = require('../mongoDB/mongoConnect');
 
 const dbName = "socialNetwork"; //database name
 const collName = "users"; //collection name
@@ -55,13 +55,14 @@ async function postUsuario(data) { //schema
 
         const homologacion = await collection.findOne( { alias : data.alias } )
 
-
         if (homologacion) {
             const msg = "Este usuario ya existe";
             return {response : msg};
 
         } else {
-            
+            data.delete = {"deleteDate": "0000-00-00T00:00:00Z", "status": false};
+            data.active = true;
+
             const doc = await collection.insertOne(data);
             return doc;
 
