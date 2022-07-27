@@ -13,7 +13,7 @@ const sequelize = new Sequelize(URI, {
     dialect: 'postgres',
 })
 
-setupModels(sequelize)
+setupModels(sequelize);
 
 //relaciones de uno a muchos
 Usuario.hasMany(Publicacion);

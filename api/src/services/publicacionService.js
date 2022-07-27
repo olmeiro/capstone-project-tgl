@@ -31,8 +31,8 @@ class PublicacionService {
         await Publicacion.update({ descripcion }, { where: { id } });
     }
 
-    static async deletePublicacion(publicacionId) {
-        await Publicacion.destroy(publicacionId);
+    static async deletePublicacion(id) {
+        await Publicacion.destroy({ where: { id } });
     }
 }
 

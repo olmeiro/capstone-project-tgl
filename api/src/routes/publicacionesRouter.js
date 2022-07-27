@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const upload = require("../multer/multerConfig");
 
 const {
     getPublicaciones,
@@ -12,7 +13,7 @@ const {
 
 router.get("/todas", getPublicaciones)
 router.get("/porusuario", getPublicacionesPorUsuario);
-router.post("/", postPublicacion)
+router.post("/", upload.single("file"), postPublicacion)
 router.put("/", putPublicacion)
 router.delete("/", deletePublicacion)
 
