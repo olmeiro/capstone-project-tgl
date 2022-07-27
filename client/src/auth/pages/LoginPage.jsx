@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { AuthLayout } from '../layout/AuthLayout'
 import { useAuthStore, useForm } from '../../hooks'
+import Swal from 'sweetalert2'
 
 const formData = {
   email: '',
@@ -10,14 +11,13 @@ const formData = {
 }
 
 const formValidations = {
-  pw: [(value) => value.length >= 1, 'El password es obligatorio'],
+  pw: [(value) => value.length >= 6, 'El password es obligatorio'],
   email: [(value) => value.includes('@'), 'El email es obligatorio']
 }
 
 export const LoginPage = () => {
-  const { startLogin } = useAuthStore()
-
   const [formSubmitted, setFormSubmitted] = useState(false)
+  const { startLogin, errorMessage } = useAuthStore()
 
   const { email, pw, onInputChange, isFormValid, emailValid, pwValid } = useForm(formData, formValidations)
 
@@ -27,6 +27,12 @@ export const LoginPage = () => {
     startLogin({ username: email, password: pw })
     console.log(isFormValid)
   }
+
+  useEffect(() => {
+    if (errorMessage !== undefined) {
+      Swal.fire('Error en la autenticacion', errorMessage, 'error')
+    }
+  }, [errorMessage])
 
   return (
     <AuthLayout title="Login">
@@ -46,7 +52,7 @@ export const LoginPage = () => {
         <label htmlFor="">Password</label>
         <input
           className="form-input px-4 py-3 rounded-full"
-          type="text"
+          type="password"
           placeholder="password"
           id="pw"
           name="pw"
