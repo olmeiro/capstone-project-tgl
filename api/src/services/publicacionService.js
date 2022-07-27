@@ -1,24 +1,38 @@
-const boom = require("@hapi/boom"); // para manejar los errores
-const PublicacionSchema = require("../db/models/publicacionModel");
+const bomm = require("@hapi/boom");
+const { models } = require("../db/sequelize");
+const { Publicacion } = models;
 
 class PublicacionService {
     constructor() {
 
     }
-    getPublicaciones() {
 
+    static async getPublicacionesTodas() {
+        const publicacionesTodas = await Publicacion.findAll();
+        return publicacionesTodas;
     }
-    getPublicacionPorId(id) {
-        return PublicacionSchema.findById(id);
-    }
-    postPublicacion(publicacion) {
-        PublicacionSchema.create(publicacion)
-    }
-    updatePublicacion() {
 
+    static async getPublicacionesPorUsuario(UsuarioId) {
+        const publicacionPorUsusuario = await Publicacion.findAll({ where: { UsuarioId } });
+        return publicacionPorUsusuario;
     }
-    deletePublicacion() {
 
+    static async getPublicacionPorId(publicacionId) {
+        const publicacion = await Publicacion.findByPk(publicacionId);
+        return publicacion;
+    }
+
+    static async postPublicacion(nuevaPublicacion) {
+        const publicacion = await Publicacion.create(nuevaPublicacion);
+        return publicacion;
+    }
+
+    static async putPublicacion(descripcion, id) {
+        await Publicacion.update({ descripcion }, { where: { id } });
+    }
+
+    static async deletePublicacion(publicacionId) {
+        await Publicacion.destroy(publicacionId);
     }
 }
 
