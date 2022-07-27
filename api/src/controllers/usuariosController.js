@@ -7,9 +7,7 @@ const getUsuariosTodos = async (req, res) => {
 
 const getUsuariosPorAlias = async (req, res) => {
     const { alias } = req.params;
-    const usuario = await UsuarioService.getUsuariosPorAlias({
-        where: { alias }
-    });
+    const usuario = await UsuarioService.getUsuariosPorAlias(alias);
     res.json(usuario);
 }
 
@@ -63,18 +61,14 @@ const putUsuarioPorId = async (req, res) => {
         contraseña,
         fotoDePerfil,
         fotoDePortada
-    }, { where: { id } });
+    }, id);
 
     res.json("¡el usuario ha sido actualizado exitosamente!");
 }
 
 const deleteUsuarioPorId = async (req, res) => {
     const { id } = req.body;
-    await UsuarioService.deleteUsuarioPorId({
-        where: {
-            id
-        }
-    });
+    await UsuarioService.deleteUsuarioPorId(id);
     res.json("¡el usuario ha sido eliminado exitosamente!");
 }
 
