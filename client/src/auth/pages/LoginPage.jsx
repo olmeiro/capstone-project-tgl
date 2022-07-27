@@ -1,10 +1,8 @@
 import { useState } from 'react'
-// import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { useForm } from '../../hooks'
-// import { checkingAuth } from '../../store/auth/thunks'
 
 import { AuthLayout } from '../layout/AuthLayout'
+import { useAuthStore, useForm } from '../../hooks'
 
 const formData = {
   email: '',
@@ -17,17 +15,17 @@ const formValidations = {
 }
 
 export const LoginPage = () => {
+  const { startLogin } = useAuthStore()
+
   const [formSubmitted, setFormSubmitted] = useState(false)
-  // const dispatch = useDispatch()
 
   const { email, pw, onInputChange, isFormValid, emailValid, pwValid } = useForm(formData, formValidations)
 
   const onSubmit = (e) => {
     e.preventDefault()
     setFormSubmitted(true)
+    startLogin({ username: email, password: pw })
     console.log(isFormValid)
-
-    // dispatch(checkingAuth())
   }
 
   return (
