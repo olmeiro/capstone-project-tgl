@@ -12,12 +12,12 @@ class UsuarioService {
         return usuariosTodos;
     }
 
-    static async getUsuariosPorAlias(usuarioPorAlias){
-        const usuario = await Usuario.findOne(usuarioPorAlias)
+    static async getUsuariosPorAlias(alias) {
+        const usuario = await Usuario.findOne({ where: { alias } })
         return usuario;
     }
 
-    static async getUsuarioPorId(id){
+    static async getUsuarioPorId(id) {
         const usuario = await Usuario.findByPk(id);
         return usuario;
     }
@@ -27,12 +27,12 @@ class UsuarioService {
         return usuario;
     }
 
-    static async putUsuarioPorId(nuevoUsuario, usuario) {
-        await Usuario.update(nuevoUsuario, usuario);
+    static async putUsuarioPorId(nuevoUsuario, id) {
+        await Usuario.update(nuevoUsuario, { where: { id } });
     }
 
-    static async deleteUsuarioPorId(usuarioId) {
-        await Usuario.destroy(usuarioId);
+    static async deleteUsuarioPorId(id) {
+        await Usuario.destroy({ where: { id } });
     }
 }
 

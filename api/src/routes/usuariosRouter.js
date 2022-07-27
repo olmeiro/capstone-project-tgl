@@ -11,8 +11,8 @@ const {
 } = require("../controllers/usuariosController");
 
 router.get("/todos", getUsuariosTodos);
-router.get("/:alias", getUsuariosPorAlias);
-router.get("/porId",getUsuarioPorId)
+router.get("/poralias/:alias", getUsuariosPorAlias);
+router.get("/porid",getUsuarioPorId)
 router.post("/", postUsuario);  
 router.put("/", putUsuarioPorId);
 router.delete("/", deleteUsuarioPorId);
