@@ -1,15 +1,34 @@
-const boom = require("@hapi/boom"); // para manejar los errores
-const usuarioSchema = require("../db/models/usuarioModel");
+const bomm = require("@hapi/boom");
+const { models } = require("../db/sequelize");
+const { Usuario } = models;
 
-class PublicacionService {
+class AmigoService {
     constructor() {
 
     }
-    getUsuarioPorAlias(alias) {
-        return usuarioSchema.findOne(alias);
+
+    static async getAmigosPorUsuarioId(id) {
+        const usuario = await Usuario.findByPk(id);
+        let amigos = usuario.amigos;
+        amigos = amigos.map(async id => await Usuario.findByPk(id));
+        amigos = Promise.all(amigos);
+        return amigos;
     }
 
+    static async agregarAmigo(amigoId, id) {
+        const usuario = await Usuario.findByPk(id);
+        const amigos = [...usuario.amigos, amigoId];
+        if (!usuario.amigos.includes(amigoId)) {
+            await Usuario.update({ amigos }, { where: { id } })
+        }
+    }
+
+    static async deleteAmigo(amigoId, id) {
+        const usuario = await Usuario.findByPk(id);
+        const amigos = usuario.amigos.filter(amigo => amigo != amigoId);
+        await Usuario.update({ amigos }, { where: { id } });
+    }
 
 }
 
-module.exports = PublicacionService;
+module.exports = AmigoService;

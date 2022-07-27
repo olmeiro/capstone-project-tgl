@@ -1,78 +1,38 @@
-const client = require('../mongoDB/mongoConnect');
-
-
-const boom = require("@hapi/boom"); // para manejar los errores
-const usuarioSchema = require("../db/models/usuarioModel");
+const bomm = require("@hapi/boom");
+const { models } = require("../db/sequelize");
+const { Usuario } = models;
 
 class UsuarioService {
     constructor() {
 
     }
-    getUsuarios() {
-   
+
+    static async getUsuariosTodos() {
+        const usuariosTodos = await Usuario.findAll();
+        return usuariosTodos;
     }
-}
 
-async function postUsuario(data) { //schema
-    try {
-        await client.connect();
-        const collection = client.db(dbName).collection(collName);
-
-        const homologacion = await collection.findOne( { alias : data.alias } )
-
-        if (homologacion) {
-            const msg = "Este usuario ya existe";
-            return {response : msg};
-
-        } else {
-            data.delete = {"deleteDate": "0000-00-00T00:00:00Z", "status": false};
-            data.active = true;
-
-            const doc = await collection.insertOne(data);
-            return doc;
-
-        }
-
-    } catch (err) {
-        console.log(err.stack);
-
-    } finally {
-        await client.close();
+    static async getUsuariosPorAlias(usuarioPorAlias){
+        const usuario = await Usuario.findOne(usuarioPorAlias)
+        return usuario;
     }
-}
 
-async function putUsuario(data) { // data = { filter: { key : "value" }, update : { key : "value" }}
-    try {
-        await client.connect();
-        const collection = client.db(dbName).collection(collName);
-        const filter = data.filter;
-        const update = { $set: data.update };
-        const doc = await collection.updateOne({filter},{update});
-        return doc;
-
-    } catch (err) {
-        console.log(err.stack);
-
-    } finally {
-        await client.close();
+    static async getUsuarioPorId(id){
+        const usuario = await Usuario.findByPk(id);
+        return usuario;
     }
-}
 
-async function deleteUsuario(data) { // data = { filter: { key : value } }
-    try {
-        await client.connect();
-        const collection = client.db(dbName).collection(collName);
-        const filter = data.filter;
-        const deleteDate = new Date();
-        const update = { $set:{ "delete.status" : "true", "delete.deleteDate" : deleteDate }};
-        const doc = await collection.updateOne({filter},{update});
-        return doc;
+    static async postUsuario(nuevoUsuario) {
+        const usuario = await Usuario.create(nuevoUsuario);
+        return usuario;
+    }
 
-    } catch (err) {
-        console.log(err.stack);
+    static async putUsuarioPorId(nuevoUsuario, usuario) {
+        await Usuario.update(nuevoUsuario, usuario);
+    }
 
-    } finally {
-        await client.close();
+    static async deleteUsuarioPorId(usuarioId) {
+        await Usuario.destroy(usuarioId);
     }
 }
 
