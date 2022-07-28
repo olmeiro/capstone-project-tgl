@@ -3,5 +3,11 @@ exports.successResponse = function (req, res, body, status) {
 }
 
 exports.errorResponse = function (req, res, error, status) {
-    res.status(status || 500).json({ error })
+    if(error.isBoom){
+        const { output } = error;
+        res.status(output.statusCode || 500).json(output.payload);
+    }
+    else{
+        res.status(status || 500).json({ error })
+    }
 }

@@ -1,52 +1,58 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { AuthLayout } from '../layout/AuthLayout'
 import { useAuthStore, useForm } from '../../hooks'
+import Swal from 'sweetalert2'
 
 const formData = {
-  email: '',
+  alias: '',
   pw: ''
 }
 
 const formValidations = {
-  pw: [(value) => value.length >= 1, 'El password es obligatorio'],
-  email: [(value) => value.includes('@'), 'El email es obligatorio']
+  alias: [(value) => value.length >= 4, 'El alias es obligatorio'],
+  pw: [(value) => value.length >= 6, 'El password es obligatorio']
 }
 
 export const LoginPage = () => {
-  const { startLogin } = useAuthStore()
-
   const [formSubmitted, setFormSubmitted] = useState(false)
+  const { startLogin, errorMessage } = useAuthStore()
 
-  const { email, pw, onInputChange, isFormValid, emailValid, pwValid } = useForm(formData, formValidations)
+  const { alias, pw, onInputChange, isFormValid, aliasValid, pwValid } = useForm(formData, formValidations)
 
   const onSubmit = (e) => {
     e.preventDefault()
     setFormSubmitted(true)
-    startLogin({ username: email, password: pw })
+    startLogin({ alias, contraseña: pw })
     console.log(isFormValid)
   }
+
+  useEffect(() => {
+    if (errorMessage !== undefined) {
+      Swal.fire('Error en la autenticacion', errorMessage, 'error')
+    }
+  }, [errorMessage])
 
   return (
     <AuthLayout title="Login">
       <form onSubmit={onSubmit} className="flex flex-col p-8">
-        <label htmlFor="">Usuario</label>
+        <label htmlFor="">Correo electrónico</label>
         <input
           className="form-input px-4 py-3 rounded-full"
           type="text"
-          placeholder="email"
-          id="email"
-          name="email"
-          value={email}
+          placeholder="alias"
+          id="alias"
+          name="alias"
+          value={alias}
           onChange={onInputChange}
         />
-        <span className='text-[10px] text-end text-team-blue'>{formSubmitted && emailValid}</span>
+        <span className='text-[10px] text-end text-team-blue'>{formSubmitted && aliasValid}</span>
 
-        <label htmlFor="">Password</label>
+        <label htmlFor="">Contraseña</label>
         <input
           className="form-input px-4 py-3 rounded-full"
-          type="text"
+          type="password"
           placeholder="password"
           id="pw"
           name="pw"

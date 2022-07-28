@@ -1,21 +1,34 @@
 const AmigoService = require("../services/amigoService");
+const { successResponse, errorResponse } = require("../responses/index");
 
 const getAmigosPorUsuarioId = async (req, res) => {
     const { usuarioId } = req.body;
-    const amigos = await AmigoService.getAmigosPorUsuarioId(usuarioId);
-    res.json(amigos);
+    try {
+        const amigos = await AmigoService.getAmigosPorUsuarioId(usuarioId);
+        successResponse(req, res, amigos);
+    } catch (error) {
+        errorResponse(req, res, error);
+    }
 }
 
 const agregarAmigo = async (req, res) => {
     const { amigoId, usuarioId } = req.body;
-    await AmigoService.agregarAmigo(amigoId, usuarioId);
-    res.json("amigo agregado correctamente");
+    try {
+        await AmigoService.agregarAmigo(amigoId, usuarioId);
+        successResponse(req, res, "¡Friend has been successfully added!");
+    } catch (error) {
+        errorResponse(req, res, error);
+    }
 }
 
 const deleteAmigo = async (req, res) => {
     const { amigoId, usuarioId } = req.body;
-    await AmigoService.deleteAmigo(amigoId, usuarioId);
-    res.json("amigo eliminado correctamente");
+    try {
+        await AmigoService.deleteAmigo(amigoId, usuarioId);
+        successResponse(req, res, "¡Friend has been successfully deleted!");
+    } catch (error) {
+        errorResponse(req, res, error);
+    }
 }
 
 module.exports = {
