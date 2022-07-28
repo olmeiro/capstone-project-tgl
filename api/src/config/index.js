@@ -9,7 +9,8 @@ const config = {
     DB_PORT: process.env.DB_PORT,
     DB_DATABASE: process.env.DB_DATABASE,
     PORT: process.env.PORT,
-    API_KEY: process.env.API_KEY
+    API_KEY: process.env.API_KEY,
+    SECRET_JWT_SEED: process.env.SECRET_JWT_SEED
 }
 
 module.exports = config;

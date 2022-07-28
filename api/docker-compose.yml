@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  postgres-social:
+      image: "postgres"
+      container_name: postgres-social
+      ports:
+        - "5433:5432"
+      environment:
+        POSTGRES_USER: tglsocial
+        POSTGRES_PASSWORD: tglsocial
+        POSTGRES_DATABASES: tglsocial
+        HOSTNAME: tglsocial.postgres.db
+      volumes:
+      - postgresSocial:/var/lib/postgresql/data
+
+volumes:
+  postgresSocial:
+    external: true
+
+#Crear volumen
+# docker volume create postgresSocial
+#Iniciar su docker compose 
+  # Ubicarse en la ruta donde este el archivo docker-compose.yml
+# docker-compose -p postgresTGL up -d
