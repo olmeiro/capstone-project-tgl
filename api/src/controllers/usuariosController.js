@@ -1,3 +1,5 @@
+const { response } = require("express");
+const { generateJWT } = require("../helpers/generate-jwts");
 const UsuarioService = require("../services/usuarioService");
 
 const getUsuariosTodos = async (req, res) => {
@@ -72,11 +74,45 @@ const deleteUsuarioPorId = async (req, res) => {
     res.json("¡el usuario ha sido eliminado exitosamente!");
 }
 
+const loginUsuario = async (req, res) => {
+    const { alias, contraseña } = req.body
+    try {
+        const user = await UsuarioService.login(alias, contraseña)
+
+        // generar JWT
+        const token = await generateJWT(user.id, user.alias)
+
+        res.status(200).json({
+            user,
+            token
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const revalidarToken = async (req, res= response) => {
+    const { id, nombre } = req
+    console.log("id-nombre", nombre)
+
+    // Generar JWT
+    const token = await generateJWT(id, nombre)
+
+    res.json({
+        ok: true,
+        id,
+        nombre,
+        token
+    })
+}
+
 module.exports = {
     getUsuariosTodos,
     getUsuariosPorAlias,
     getUsuarioPorId,
     postUsuario,
     putUsuarioPorId,
-    deleteUsuarioPorId
+    deleteUsuarioPorId,
+    loginUsuario,
+    revalidarToken
 }

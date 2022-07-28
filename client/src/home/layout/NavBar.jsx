@@ -2,8 +2,9 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { useAuthStore } from '../../hooks'
 
-const user = {
+const userMock = {
   name: 'Tom Cook',
   email: 'tom@example.com',
   imageUrl:
@@ -15,7 +16,7 @@ const navigation = [
   { name: 'perfil otro usuario', href: '/otheruser', current: false }
 ]
 const userNavigation = [
-  { name: 'Perfil', href: '/profile' },
+  // { name: 'Perfil', href: '/profile' },
   { name: 'Salir', href: '#' }
 ]
 
@@ -26,6 +27,8 @@ function classNames (...classes) {
 const imagePath = '/assets/logo_Team_International.png'
 
 export function NavBar () {
+  const { startLogout, user } = useAuthStore()
+  console.log("usename", user.name);
   return (
     <>
       {/* <div className="min-h-full"> */}
@@ -78,7 +81,7 @@ export function NavBar () {
                         <div>
                           <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                             <span className="sr-only">Open user menu</span>
-                            <img className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" />
+                            <img className="h-8 w-8 rounded-full" src={userMock.imageUrl} alt="" />
                           </Menu.Button>
                         </div>
                         <Transition
@@ -100,6 +103,7 @@ export function NavBar () {
                                       active ? 'bg-gray-100' : '',
                                       'block px-4 py-2 text-sm text-gray-700'
                                     )}
+                                    onClick={startLogout}
                                   >
                                     {item.name}
                                   </a>
@@ -147,11 +151,11 @@ export function NavBar () {
                 <div className="pt-4 pb-3 border-t border-gray-700">
                   <div className="flex items-center px-5">
                     <div className="flex-shrink-0">
-                      <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
+                      <img className="h-10 w-10 rounded-full" src={userMock.imageUrl} alt="" />
                     </div>
                     <div className="ml-3">
-                      <div className="text-base font-medium leading-none text-white">{user.name}</div>
-                      <div className="text-sm font-medium leading-none text-gray-400">{user.email}</div>
+                      <div className="text-base font-medium leading-none text-white">{userMock}</div>
+                      <div className="text-sm font-medium leading-none text-gray-400">{userMock.email}</div>
                     </div>
                     <button
                       type="button"

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { validarJWT } = require("../middleware/validar-jwt");
 
 const {
     getUsuariosTodos,
@@ -7,7 +8,9 @@ const {
     getUsuarioPorId,
     postUsuario,
     putUsuarioPorId,
-    deleteUsuarioPorId
+    deleteUsuarioPorId,
+    loginUsuario,
+    revalidarToken
 } = require("../controllers/usuariosController");
 
 router.get("/todos", getUsuariosTodos);
@@ -16,6 +19,9 @@ router.get("/porid",getUsuarioPorId)
 router.post("/", postUsuario);  
 router.put("/", putUsuarioPorId);
 router.delete("/", deleteUsuarioPorId);
+router.post("/login", loginUsuario); 
+
+router.get("/renew", validarJWT, revalidarToken);  
 
 
 module.exports = router
