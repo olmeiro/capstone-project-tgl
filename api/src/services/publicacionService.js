@@ -1,4 +1,4 @@
-const bomm = require("@hapi/boom");
+const boom = require("@hapi/boom");
 const { models } = require("../db/sequelize");
 const { Publicacion } = models;
 
@@ -8,31 +8,55 @@ class PublicacionService {
     }
 
     static async getPublicacionesTodas() {
-        const publicacionesTodas = await Publicacion.findAll();
-        return publicacionesTodas;
+        try {
+            const publicacionesTodas = await Publicacion.findAll();
+            return publicacionesTodas;
+        } catch (error) {
+            throw boom.internal(error.message);
+        }
     }
 
     static async getPublicacionesPorUsuario(UsuarioId) {
-        const publicacionPorUsusuario = await Publicacion.findAll({ where: { UsuarioId } });
-        return publicacionPorUsusuario;
+        try {
+            const publicacionPorUsusuario = await Publicacion.findAll({ where: { UsuarioId } });
+            return publicacionPorUsusuario;
+        } catch (error) {
+            throw boom.internal(error.message);
+        }
     }
 
     static async getPublicacionPorId(publicacionId) {
-        const publicacion = await Publicacion.findByPk(publicacionId);
-        return publicacion;
+        try {
+            const publicacion = await Publicacion.findByPk(publicacionId);
+            return publicacion;
+        } catch (error) {
+            throw boom.internal(error.message);
+        }
     }
 
     static async postPublicacion(nuevaPublicacion) {
-        const publicacion = await Publicacion.create(nuevaPublicacion);
-        return publicacion;
+        try {
+            const publicacion = await Publicacion.create(nuevaPublicacion);
+            return publicacion;
+        } catch (error) {
+            throw boom.internal(error.message);
+        }
     }
 
     static async putPublicacion(descripcion, id) {
-        await Publicacion.update({ descripcion }, { where: { id } });
+        try {
+            await Publicacion.update({ descripcion }, { where: { id } });
+        } catch (error) {
+            throw boom.internal(error.message);
+        }
     }
 
     static async deletePublicacion(id) {
-        await Publicacion.destroy({ where: { id } });
+        try {
+            await Publicacion.destroy({ where: { id } });
+        } catch (error) {
+            throw boom.internal(error.message);
+        }
     }
 }
 
