@@ -1,48 +1,43 @@
-import { AuthLayout } from '../layout/AuthLayout'
-import { useForm } from '../../hooks/useForm'
 import { useEffect, useState } from 'react'
-import { useAuthStore } from '../../hooks'
 import Swal from 'sweetalert2'
 
+import { useAuthStore } from '../../hooks'
+import { AuthLayout } from '../layout/AuthLayout'
+import { useForm } from '../../hooks/useForm'
+
 const formData = {
-  userName: '',
-  name: '',
+  alias: '',
+  nombre: '',
   email: '',
-  phone: '',
-  pw: '',
-  pw1: ''
+  telefono: '',
+  contraseña: '',
+  contraseña1: ''
 }
 
-// const formValidations = {
-//   userName: [(value) => value.length >= 4, 'El nombre de usuario es invalido'],
-//   name: [(value) => value.length >= 4, 'El nombre debe tener al menos 6 letras'],
-//   email: [(value) => value.includes('@'), 'El email es obligatorio'],
-//   phone: [(value) => value.length >= 7, 'El telefono es obligatorio'],
-//   pw: [(value) => value.length >= 6, 'El password es obligatorio'],
-//   pw1: [(value) => value.length >= 6, 'El confirm password es obligatorio']
-// }
 const formValidations = {
+  alias: [(value) => value.length >= 4, 'El nombre de usuario es invalido'],
+  nombre: [(value) => value.length >= 4, 'El nombre debe tener al menos 6 letras'],
   email: [(value) => value.includes('@'), 'El email es obligatorio'],
-  pw: [(value) => value.length >= 6, 'El password es obligatorio'],
-  pw1: [(value) => value.length >= 6, 'El confirm password es obligatorio']
+  telefono: [(value) => value.length <= 7, 'El telefono es obligatorio'],
+  contraseña: [(value) => value.length >= 6, 'El password es obligatorio'],
+  contraseña1: [(value) => value.length >= 6, 'El confirm password es obligatorio']
 }
 
 export const RegisterPage = () => {
   const [formSubmitted, setFormSubmitted] = useState(false)
   const { startRegister, errorMessage } = useAuthStore()
 
-  // const { userName, name, email, phone, pw, pw1, onInputChange, isFormValid, userNameValid, nameValid, emailValid, phoneValid, pwValid, pw1Valid } = useForm(formData, formValidations)
-  const { email, pw, pw1, onInputChange, isFormValid, emailValid, pwValid, pw1Valid } = useForm(formData, formValidations)
+  const { alias, nombre, email, telefono, contraseña, contraseña1, onInputChange, isFormValid, aliasValid, nombreValid, emailValid, telefonoValid, contraseñaValid, contraseña1Valid } = useForm(formData, formValidations)
 
   const onSubmit = (e) => {
     e.preventDefault()
     setFormSubmitted(true)
-    // console.log({ userName, name, email, phone, pw, pw1, onInputChange })
-    if (pw !== pw1) {
+    console.log({ alias, nombre, email, telefono, contraseña, contraseña1 })
+    if (contraseña !== contraseña1) {
       return Swal.fire('Contraseñas no coinciden', 'error')
     }
 
-    startRegister({ username: email, password: pw })
+    startRegister({ alias, nombre, email, telefono, contraseña })
     console.log(isFormValid)
   }
 
@@ -59,29 +54,29 @@ export const RegisterPage = () => {
        onSubmit={onSubmit}
       >
 
-        {/* <label htmlFor="">Usuario</label>
+        <label htmlFor="">Alias</label>
         <input
           className="form-input px-4 py-3 rounded-full"
           type="text"
           placeholder="nombre de usuario"
-          id="userName"
-          name="userName"
-          value={userName}
+          id="alias"
+          name="alias"
+          value={alias}
           onChange={onInputChange}
         />
-        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && userNameValid}</span> */}
+        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && aliasValid}</span>
 
-        {/* <label htmlFor="">Nombre completo</label>
+        <label htmlFor="">Nombre completo</label>
         <input
           className="form-input px-4 py-3 rounded-full"
           type="text"
           placeholder="nombre y apellidos"
-          id="name"
-          name="name"
-          value={name}
+          id="nombre"
+          name="nombre"
+          value={nombre}
           onChange={onInputChange}
         />
-        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && nameValid}</span> */}
+        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && nombreValid}</span>
 
         <label htmlFor="">Correo electrónico</label>
         <input
@@ -95,41 +90,41 @@ export const RegisterPage = () => {
         />
         <span className='text-[10px] text-end text-team-brown'>{formSubmitted && emailValid}</span>
 
-        {/* <label htmlFor="">Teléfono</label>
+        <label htmlFor="">Teléfono</label>
         <input
           className="form-input px-4 py-3 rounded-full"
           type="text"
           placeholder="teléfono"
-          id="phone"
-          name="phone"
-          value={phone}
+          id="telefono"
+          name="telefono"
+          value={telefono}
           onChange={onInputChange}
         />
-        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && phoneValid}</span> */}
+        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && telefonoValid}</span>
 
         <label htmlFor="">Contraseña</label>
         <input
           className="form-input px-4 py-3 rounded-full"
           type="text"
           placeholder="password"
-          id="pw"
-          name="pw"
-          value={pw}
+          id="contraseña"
+          name="contraseña"
+          value={contraseña}
           onChange={onInputChange}
         />
-        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && pwValid}</span>
+        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && contraseñaValid}</span>
 
         <label htmlFor="">Confirmar contraseña</label>
         <input
           className="form-input px-4 py-3 rounded-full"
           type="text"
           placeholder="password"
-          id="pw1"
-          name="pw1"
-          value={pw1}
+          id="contraseña1"
+          name="contraseña1"
+          value={contraseña1}
           onChange={onInputChange}
         />
-        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && pw1Valid}</span>
+        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && contraseña1Valid}</span>
 
         <div className="flex flex-row-reverse justify-between mt-4">
           <button type='submit' className="bg-team-brown h-10 w-1/2  ml-3 rounded-lg text-team-dark font-medium hover:bg-team-green">
