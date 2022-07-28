@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-
+// genera jwt 
 const { SECRET_JWT_SEED } = require("../config/index");
 
 const generateJWT = (id, nombre) => {

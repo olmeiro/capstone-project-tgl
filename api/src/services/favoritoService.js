@@ -1,4 +1,4 @@
-const bomm = require("@hapi/boom");
+const boom = require("@hapi/boom");
 const { models } = require("../db/sequelize");
 const { Usuario, Publicacion } = models;
 
@@ -8,25 +8,37 @@ class FavoritoService {
     }
 
     static async getFavoritosPorUsuarioId(id) {
-        const usuario = await Usuario.findByPk(id);
-        let favoritos = usuario.favoritos;
-        favoritos = favoritos.map(async id => await Publicacion.findByPk(id));
-        favoritos = Promise.all(favoritos);
-        return favoritos;
+        try {
+            const usuario = await Usuario.findByPk(id);
+            let favoritos = usuario.favoritos;
+            favoritos = favoritos.map(async id => await Publicacion.findByPk(id));
+            favoritos = Promise.all(favoritos);
+            return favoritos;
+        } catch (error) {
+            throw boom.internal(error.message);
+        }
     }
 
     static async agregarFavorito(publicacionId, id) {
-        const usuario = await Usuario.findByPk(id);
-        const favoritos = [...usuario.favoritos, publicacionId];
-        if (!usuario.favoritos.includes(publicacionId)) {
-            await Usuario.update({ favoritos }, { where: { id } })
+        try {
+            const usuario = await Usuario.findByPk(id);
+            const favoritos = [...usuario.favoritos, publicacionId];
+            if (!usuario.favoritos.includes(publicacionId)) {
+                await Usuario.update({ favoritos }, { where: { id } })
+            }
+        } catch (error) {
+            throw boom.internal(error.message);
         }
     }
 
     static async deleteFavorito(publicacionId, id) {
-        const usuario = await Usuario.findByPk(id);
-        const favoritos = usuario.favoritos.filter(favorito => favorito != publicacionId);
-        await Usuario.update({ favoritos }, { where: { id } });
+        try {
+            const usuario = await Usuario.findByPk(id);
+            const favoritos = usuario.favoritos.filter(favorito => favorito != publicacionId);
+            await Usuario.update({ favoritos }, { where: { id } });
+        } catch (error) {
+            throw boom.internal(error.message);
+        }
     }
 }
 

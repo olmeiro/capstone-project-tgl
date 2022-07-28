@@ -1,25 +1,38 @@
 const FavoritoService = require("../services/favoritoService");
+const { successResponse, errorResponse } = require("../responses/index");
 
-const getFavoritos = async (req, res)=>{
+const getFavoritos = async (req, res) => {
     const { usuarioId } = req.body;
-    const favoritos = await FavoritoService.getFavoritosPorUsuarioId(usuarioId);
-    res.json(favoritos);
+    try {
+        const favoritos = await FavoritoService.getFavoritosPorUsuarioId(usuarioId);
+        successResponse(req, res, favoritos);
+    } catch (error) {
+        errorResponse(req, res, error);
+    }
 }
 
-const agregarFavorito = async (req, res)=>{
+const agregarFavorito = async (req, res) => {
     const { publicacionId, usuarioId } = req.body;
-    await FavoritoService.agregarFavorito(publicacionId, usuarioId);
-    res.json("favorito agregado correctamente");
+    try {
+        await FavoritoService.agregarFavorito(publicacionId, usuarioId);
+        successResponse(req, res, "Favorite has been successfully added");
+    } catch (error) {
+        errorResponse(req, res, error);
+    }
 }
 
-const deleteFavoritos = async (req, res)=>{
+const deleteFavoritos = async (req, res) => {
     const { publicacionId, usuarioId } = req.body;
-    await FavoritoService.deleteFavorito(publicacionId, usuarioId);
-    res.json("favorito eliminado correctamente");
+    try {
+        await FavoritoService.deleteFavorito(publicacionId, usuarioId);
+        successResponse(req, res, "Favorite has been successfully deleted");
+    } catch (error) {
+        errorResponse(req, res, error);
+    }
 }
 
 module.exports = {
-    getFavoritos, 
+    getFavoritos,
     agregarFavorito,
     deleteFavoritos
 }
