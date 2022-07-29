@@ -1,37 +1,35 @@
 const { Model, DataTypes } = require("sequelize");
 
-const ComentarioSchema = {
+const CommentSchema = {
     id: {
         allowNull: true,
         autoIncrement: true, // 
         primaryKey: true,   // 
         type: DataTypes.INTEGER
     },
-    // publicacionId
-    // usuarioId
-    fecha: {
+    date: {
         allowNull: true,
         type: DataTypes.STRING
     },
-    comentario: {
+    comment: {
         allowNull: true,
         type: DataTypes.STRING
     },
 }
 
-class Comentario extends Model {
+class Comment extends Model {
     static associate() { }
 
     static config(sequelize) {
         return {
             sequelize,
-            tableName: 'comentarios',
-            modelName: 'Comentario',
+            tableName: 'comments',
+            modelName: 'Comment',
             timestamps: false
         }
     }
 }
 
 module.exports = {
-    ComentarioSchema, Comentario
+    CommentSchema, Comment
 }

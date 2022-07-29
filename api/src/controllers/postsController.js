@@ -1,5 +1,5 @@
-const PublicacionService = require("../services/publicacionService");
-const UsuarioService = require("../services/usuarioService");
+const PostService = require("../services/postService");
+const UserService = require("../services/userService");
 
 const fs = require('fs');
 const FormData = require('form-data');
@@ -7,30 +7,30 @@ const axios = require('axios')
 const { API_KEY } = require("../config/index");
 const { successResponse, errorResponse } = require("../utils/responses/index");
 
-const getPublicaciones = async (req, res) => {
+const getPosts = async (req, res) => {
     try {
-        const publicaciones = await PublicacionService.getPublicacionesTodas();
-        successResponse(req, res, publicaciones);
+        const posts = await PostService.getPostsAll();
+        successResponse(req, res, posts);
     } catch (error) {
         errorResponse(req, res, error);
     }
 }
 
-const getPublicacionesPorUsuario = async (req, res) => {
-    const { usuarioId } = req.body;
+const getPostsByUser = async (req, res) => {
+    const { userId } = req.body;
     try {
-        const publicaciones = await PublicacionService.getPublicacionesPorUsuario(usuarioId);
-        successResponse(req, res, publicaciones);
+        const posts = await PostService.getPostsByUser(userId);
+        successResponse(req, res, posts);
     } catch (error) {
         errorResponse(req, res, error);
     }
 }
 
-const postPublicacion = async (req, res) => {
+const uploadPost = async (req, res) => {
     const { path } = req.file;
     const {
-        descripcion,
-        usuarioLogeadoId
+        description,
+        loginUserId
     } = req.body;
     try {
         const formData = new FormData();
@@ -46,37 +46,37 @@ const postPublicacion = async (req, res) => {
         const responseFromApi = postToApi.data
         const urlFoto = responseFromApi.data.url
 
-        const publicacion = await PublicacionService.postPublicacion({
-            descripcion,
+        const post = await PostService.uploadPost({
+            description,
             foto: urlFoto,
             fecha: new Date().toUTCString().split(",")[1].split("GMT")[0].trim()
         });
 
-        const usuarioLogeado = await UsuarioService.getUsuarioPorId(usuarioLogeadoId)
-        await usuarioLogeado.addPublicacion(publicacion);
-        successResponse(req, res, publicacion);
+        const usuarioLogeado = await UserService.getUsuarioPorId(loginUserId)
+        await usuarioLogeado.addPost(post);
+        successResponse(req, res, post);
     } catch (error) {
         errorResponse(req, res, error);
     }
 }
 
-const putPublicacion = async (req, res) => {
+const putPost = async (req, res) => {
     const {
         id,
-        descripcion,
+        description,
     } = req.body
     try {
-        await PublicacionService.putPublicacion(descripcion, id);
+        await PostService.editPost(description, id);
         successResponse(req, res, "¡Post has been successfully updated!");
     } catch (error) {
         errorResponse(req, res, error);
     }
 }
 
-const deletePublicacion = async (req, res) => {
-    const { publicacionId } = req.body;
+const deletePost = async (req, res) => {
+    const { postId } = req.body;
     try {
-        await PublicacionService.deletePublicacion(publicacionId);
+        await PostService.deletePost(postId);
         successResponse(req, res, "¡Post has been successfully deleted!");
     } catch (error) {
         errorResponse(req, res, error);
@@ -84,9 +84,9 @@ const deletePublicacion = async (req, res) => {
 }
 
 module.exports = {
-    getPublicaciones,
-    getPublicacionesPorUsuario,
-    postPublicacion,
-    putPublicacion,
-    deletePublicacion
+    getPosts,
+    getPostsByUser,
+    uploadPost,
+    putPost,
+    deletePost
 }

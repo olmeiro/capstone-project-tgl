@@ -1,39 +1,38 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { socialApi } from '../api'
-import { clearErrorMessage, onChecking, onLogin, onLogout, onRegister } from '../store'
+import { clearErrorMessage, onChecking, onLogin, onLogout } from '../store'
 
 export const useAuthStore = () => {
   const { status, user, errorMessage } = useSelector(state => state.auth)
   const dispatch = useDispatch()
 
-  const startLogin = async ({ alias, contraseña }) => {
+  const startLogin = async ({ alias, password }) => {
     dispatch(onChecking())
     try {
-      const { data } = await socialApi.post('/usuarios/login', { alias, contraseña })
-      localStorage.setItem('token', data.token)
+      const { data } = await socialApi.post('/user/login', { alias, password })
+      localStorage.setItem('token', data.body.token)
       localStorage.setItem('token-init-data', new Date().getTime())
-      dispatch(onLogin({ alias: data.user.alias, nombre: data.user.nombre }))
+      dispatch(onLogin({ alias: data.body.user.alias, name: data.body.user.name }))
     } catch (error) {
-      dispatch(onLogout('Error de autenticación'))
+      dispatch(onLogout(error.response.data?.message || ''))
       setTimeout(() => {
         dispatch(clearErrorMessage())
       })
     }
   }
 
-  const startRegister = async ({ alias, nombre, email, telefono, contraseña }) => {
-    console.log({ alias, nombre, email, telefono, contraseña })
+  const startRegister = async ({ alias, name, email, phone, password }) => {
     dispatch(onChecking())
     try {
-      const { data } = await socialApi.post('/usuarios', { alias, nombre, email, telefono, contraseña })
-      localStorage.setItem('token', data.token)
+      const { data } = await socialApi.post('/user', { alias, name, email, phone, password })
+      localStorage.setItem('token', data.body.token)
       localStorage.setItem('token-init', new Date().getTime())
-      dispatch(onLogin({ alias: data.user.alias, nombre: data.user.nombre }))
+      dispatch(onLogin({ alias: data.body.alias, name: data.body.name }))
     } catch (error) {
-      // TODO: controlar el error desde peticion
-      console.log(error)
-      dispatch(onLogout(error.response.data?.msg || ''))
-      dispatch(onLogout('Error en el registro'))
+      dispatch(onLogout(error.response.data?.message || ''))
+      setTimeout(() => {
+        dispatch(clearErrorMessage())
+      })
     }
   }
 
@@ -44,10 +43,10 @@ export const useAuthStore = () => {
     }
 
     try {
-      const { data } = await socialApi('/usuarios/renew')
-      localStorage.setItem('token', data.token)
+      const { data } = await socialApi('/user/renew')
+      localStorage.setItem('token', data.body.token)
       localStorage.setItem('token-init-date', new Date().getTime())
-      dispatch(onLogin({ alias: data.nombre, id: data.id }))
+      dispatch(onLogin({ alias: data.name, id: data.id }))
     } catch (error) {
       localStorage.clear()
       dispatch(onLogout())
@@ -60,11 +59,11 @@ export const useAuthStore = () => {
   }
 
   return {
-    // propiedades
+    // properties
     errorMessage,
     status,
     user,
-    // metodos
+    // methods
     startLogin,
     startRegister,
     checkToken,

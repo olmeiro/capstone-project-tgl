@@ -1,21 +1,21 @@
 const { Model, DataTypes } = require("sequelize");
 
-const PublicacionSchema = {
+const PostSchema = {
     id: {
         allowNull: true,
         autoIncrement: true, // 
         primaryKey: true,   // 
         type: DataTypes.INTEGER
     },
-    descripcion: {
+    description: {
         allowNull: true,
         type: DataTypes.STRING
     },
-    foto: {
+    photo: {
         allowNull: true,
         type: DataTypes.STRING
     },
-    fecha: {
+    date: {
         allowNull: true,
         type: DataTypes.STRING
     },
@@ -26,19 +26,19 @@ const PublicacionSchema = {
     }
 }
 
-class Publicacion extends Model {
+class Post extends Model {
     static associate() { }
 
     static config(sequelize) {
         return {
             sequelize,
-            tableName: 'publicaciones',
-            modelName: 'Publicacion',
+            tableName: 'posts',
+            modelName: 'Post',
             timestamps: false
         }
     }
 }
 
 module.exports = {
-    PublicacionSchema, Publicacion
+    PostSchema, Post
 }

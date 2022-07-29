@@ -1,32 +1,32 @@
-const ComentarioService = require("../services/comentarioService");
-const PublicacionService = require("../services/publicacionService");
-const UsuarioService = require("../services/usuarioService");
+const ComentarioService = require("../services/commentService");
+const PostService = require("../services/postService");
+const UserService = require("../services/userService");
 
 const { successResponse, errorResponse } = require("../utils/responses/index");
 
-const getComentariosPorPublicacion = async (req, res) => {
+const getCommentsByPost = async (req, res) => {
     try {
         const { publicacionId } = req.body;
-        const comentarios = await ComentarioService.getComentariosPorPublicacion(publicacionId);
+        const comentarios = await ComentarioService.getCommentsByPost(publicacionId);
         successResponse(req, res, comentarios);
     } catch (error) {
         errorResponse(req, res, error);
     }
 }
 
-const postComentario = async (req, res) => {
+const uploadPost = async (req, res) => {
     const {
         comentario,
         usuarioLogeadoId,
         publicacionId
     } = req.body;
     try {
-        const comentarioCreado = await ComentarioService.postComentario({
+        const comentarioCreado = await ComentarioService.uploadPost({
             comentario,
             fecha: new Date().toUTCString().split(",")[1].split("GMT")[0].trim()
         })
-        const usuarioLogeado = await UsuarioService.getUsuarioPorId(usuarioLogeadoId);
-        const publicacion = await PublicacionService.getPublicacionPorId(publicacionId);
+        const usuarioLogeado = await UserService.getUsuarioPorId(usuarioLogeadoId);
+        const publicacion = await PostService.getPostById(publicacionId);
         await usuarioLogeado.addComentario(comentarioCreado);
         await publicacion.addComentario(comentarioCreado);
         successResponse(req, res, comentarioCreado);
@@ -35,20 +35,20 @@ const postComentario = async (req, res) => {
     }
 }
 
-const putComentario = async (req, res) => {
+const putComment = async (req, res) => {
     const { comentarioNuevo, comentarioId } = req.body;
     try {
-        await ComentarioService.putComentario(comentarioNuevo, comentarioId);
+        await ComentarioService.putComment(comentarioNuevo, comentarioId);
         successResponse(req, res,"¡Comment has been successfully updated!");
     } catch (error) {
         errorResponse(req, res, error);
     }
 }
 
-const deleteComentario = async (req, res) => {
+const deleteComment = async (req, res) => {
     const { comentarioId } = req.body;
     try {
-        await ComentarioService.deleteComentario(comentarioId);
+        await ComentarioService.deleteComment(comentarioId);
         successResponse(req, res,"¡Comment has been successfully deleted!");
     } catch (error) {
         errorResponse(req, res, error);
@@ -56,8 +56,8 @@ const deleteComentario = async (req, res) => {
 }
 
 module.exports = {
-    getComentariosPorPublicacion,
-    postComentario,
-    putComentario,
-    deleteComentario
+    getCommentsByPost,
+    uploadPost,
+    putComment,
+    deleteComment
 }

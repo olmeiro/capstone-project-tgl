@@ -2,17 +2,17 @@ const express = require("express");
 const router = express.Router();
 
 
-const usuariosRouter = require("./usuariosRouter");
-const publicacionesRouter = require("./publicacionesRouter")
-const comentariosRouter = require("./comentariosRouter");
-const amigosRouter = require("./amigosRouter");
-const favoritosRouter = require("./favoritosRouter");
+const userRouter = require("./userRouter");
+const postsRouter = require("./postsRouter")
+const commentsRouter = require("./commentsRouter");
+const friendsRouter = require("./friendsRouter");
+const favoritesRouter = require("./favoritesRouter");
 
 
-router.use("/usuarios", usuariosRouter)
-router.use("/publicaciones", publicacionesRouter)
-router.use("/comentarios", comentariosRouter)
-router.use("/amigos", amigosRouter)
-router.use("/favoritos", favoritosRouter)
+router.use("/user", userRouter)
+router.use("/posts", postsRouter)
+router.use("/comments", commentsRouter)
+router.use("/friends", friendsRouter)
+router.use("/favorites", favoritesRouter)
 
 module.exports = router
