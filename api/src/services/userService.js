@@ -2,88 +2,87 @@ const { models } = require("../db/sequelize");
 const bcrypt = require('bcryptjs')
 const boom = require("@hapi/boom");
 
-const { Usuario } = models;
+const { User } = models;
 
-class UsuarioService {
+class UserService {
     constructor() {
 
     }
 
-    static async getUsuariosTodos() {
+    static async getAllUsers() {
         try {
-            const usuariosTodos = await Usuario.findAll();
-            if (usuariosTodos.length == 0) {
+            const allUsers = await User.findAll();
+            if (allUsers.length == 0) {
                 throw boom.notFound("Users has not been found");
             }
-            return usuariosTodos;
+            return allUsers;
         } catch (error) {
             throw boom.internal(error.message);
         }
     }
 
-    static async getUsuariosPorAlias(alias) {
+    static async getUserByAlias(alias) {
         try {
-            const usuario = await Usuario.findOne({ where: { alias } })
-            if (!usuario) {
+            const user = await User.findOne({ where: { alias } })
+            if (!user) {
                 throw boom.notFound(`The user with nickname ${alias} has not been found`);
             }
-            return usuario;
+            return user;
         } catch (error) {
             throw boom.internal(error.message);
         }
 
     }
 
-    static async getUsuarioPorId(id) {
+    static async getUserById(id) {
         try {
-            const usuario = await Usuario.findByPk(id);
-            if (!usuario) {
+            const user = await User.findByPk(id);
+            if (!user) {
                 throw boom.notFound(`User with id ${id} not found`);
             }
-            return usuario;
+            return user;
         } catch (error) {
             throw boom.internal(error.message);
         }
     }
 
-    static async postUsuario(nuevoUsuario) {
+    static async postUser(newUser) {
         try {
-            const encryptPassword = await bcrypt.hash(nuevoUsuario.contraseña, 14)
-            const usuario = await Usuario.create({
-                ...nuevoUsuario,
-                contraseña: encryptPassword
+            const encryptPassword = await bcrypt.hash(newUser.password, 14)
+            const user = await User.create({
+                ...newUser,
+                password: encryptPassword
             });
-            return usuario;
+            return user;
         } catch (error) {
             throw boom.internal(error.message);
         }
     }
 
-    static async putUsuarioPorId(nuevoUsuario, id) {
+    static async putUserById(newUser, id) {
         try {
-            await Usuario.update(nuevoUsuario, { where: { id } });
+            await User.update(newUser, { where: { id } });
         } catch (error) {
             throw boom.internal(error.message);
         }
     }
 
-    static async deleteUsuarioPorId(id) {
+    static async deleteUserById(id) {
         try {
-            await Usuario.destroy({ where: { id } });
+            await User.destroy({ where: { id } });
         } catch (error) {
             throw boom.internal(error.message);
         }
     }
 
-    static async login(alias, contraseña) {
+    static async login(alias, password) {
         try {
-            // existe alias
-            const user = await Usuario.findOne({ where: { alias } })
+            const user = await User.findOne({ where: { alias } })
             if (!user) {
                 throw boom.notFound(`User with nickname ${alias} has not been found`);
             }
-            // verificar contraseña
-            const validPassword = bcrypt.compareSync(contraseña, user.contraseña)
+            
+            const validPassword = bcrypt.compareSync(password, user.password)
             if (!validPassword) {
                 throw boom.notFound(`Password is incorrect`);
             }
@@ -94,4 +93,4 @@ class UsuarioService {
     }
 }
 
-module.exports = UsuarioService;
+module.exports = UserService;

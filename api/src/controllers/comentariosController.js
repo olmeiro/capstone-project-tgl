@@ -1,6 +1,6 @@
 const ComentarioService = require("../services/comentarioService");
 const PublicacionService = require("../services/publicacionService");
-const UsuarioService = require("../services/usuarioService");
+const UserService = require("../services/userService");
 
 const { successResponse, errorResponse } = require("../responses/index");
 
@@ -25,7 +25,7 @@ const postComentario = async (req, res) => {
             comentario,
             fecha: new Date().toUTCString().split(",")[1].split("GMT")[0].trim()
         })
-        const usuarioLogeado = await UsuarioService.getUsuarioPorId(usuarioLogeadoId);
+        const usuarioLogeado = await UserService.getUsuarioPorId(usuarioLogeadoId);
         const publicacion = await PublicacionService.getPublicacionPorId(publicacionId);
         await usuarioLogeado.addComentario(comentarioCreado);
         await publicacion.addComentario(comentarioCreado);

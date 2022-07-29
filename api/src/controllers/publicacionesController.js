@@ -1,5 +1,5 @@
 const PublicacionService = require("../services/publicacionService");
-const UsuarioService = require("../services/usuarioService");
+const UserService = require("../services/userService");
 
 const fs = require('fs');
 const FormData = require('form-data');
@@ -52,7 +52,7 @@ const postPublicacion = async (req, res) => {
             fecha: new Date().toUTCString().split(",")[1].split("GMT")[0].trim()
         });
 
-        const usuarioLogeado = await UsuarioService.getUsuarioPorId(usuarioLogeadoId)
+        const usuarioLogeado = await UserService.getUsuarioPorId(usuarioLogeadoId)
         await usuarioLogeado.addPublicacion(publicacion);
         successResponse(req, res, publicacion);
     } catch (error) {
