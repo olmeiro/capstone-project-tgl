@@ -1,9 +1,9 @@
-const { UsuarioModel, Usuario } = require("./models/usuarioSchema");
+const { UserModel, User } = require("./models/userSchema");
 const { PublicacionSchema, Publicacion } = require("./models/publicacionSchema");
 const { ComentarioSchema, Comentario } = require("./models/comentarioSchema");
 
 function setupModels(sequelize){
-    Usuario.init(UsuarioModel, Usuario.config(sequelize))
+    User.init(UserModel, User.config(sequelize))
     Publicacion.init(PublicacionSchema, Publicacion.config(sequelize))
     Comentario.init(ComentarioSchema, Comentario.config(sequelize))
 }

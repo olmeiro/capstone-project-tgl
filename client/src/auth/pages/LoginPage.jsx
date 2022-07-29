@@ -1,31 +1,32 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 import { AuthLayout } from '../layout/AuthLayout'
 import { useAuthStore, useForm } from '../../hooks'
-import Swal from 'sweetalert2'
 
 const formData = {
   alias: '',
-  pw: ''
+  password: ''
 }
 
 const formValidations = {
   alias: [(value) => value.length >= 4, 'El alias es obligatorio'],
-  pw: [(value) => value.length >= 6, 'El password es obligatorio']
+  password: [(value) => value.length >= 6, 'El password es obligatorio']
 }
 
 export const LoginPage = () => {
   const [formSubmitted, setFormSubmitted] = useState(false)
   const { startLogin, errorMessage } = useAuthStore()
 
-  const { alias, pw, onInputChange, isFormValid, aliasValid, pwValid } = useForm(formData, formValidations)
+  const { alias, password, onInputChange, aliasValid, passwordValid, isFormValid } = useForm(formData, formValidations)
 
   const onSubmit = (e) => {
     e.preventDefault()
     setFormSubmitted(true)
-    startLogin({ alias, contraseña: pw })
-    console.log(isFormValid)
+    if (isFormValid) {
+      startLogin({ alias, password })
+    }
   }
 
   useEffect(() => {
@@ -54,12 +55,12 @@ export const LoginPage = () => {
           className="form-input px-4 py-3 rounded-full"
           type="password"
           placeholder="password"
-          id="pw"
-          name="pw"
-          value={pw}
+          id="password"
+          name="password"
+          value={password}
           onChange={onInputChange}
         />
-        <span className='text-[10px] text-end text-team-blue'>{formSubmitted && pwValid}</span>
+        <span className='text-[10px] text-end text-team-blue'>{formSubmitted && passwordValid}</span>
         <button
           type="submit"
           className="bg-team-brown h-10 w-full  ml-3 mt-2 rounded-lg text-team-dark font-medium hover:bg-team-green"
