@@ -5,7 +5,7 @@ const fs = require('fs');
 const FormData = require('form-data');
 const axios = require('axios')
 const { API_KEY } = require("../config/index");
-const { errorResponse, successResponse } = require("../responses");
+const { successResponse, errorResponse } = require("../utils/responses/index");
 
 const getPublicaciones = async (req, res) => {
     try {

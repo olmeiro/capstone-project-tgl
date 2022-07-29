@@ -6,7 +6,7 @@ const fs = require('fs');
 const FormData = require('form-data');
 const axios = require('axios')
 const { API_KEY } = require("../config/index");
-const { successResponse, errorResponse } = require("../responses/index");
+const { successResponse, errorResponse } = require("../utils/responses/index");
 
 const getUsuariosTodos = async (req, res) => {
     try {

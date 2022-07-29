@@ -1,5 +1,5 @@
 const FavoritoService = require("../services/favoritoService");
-const { successResponse, errorResponse } = require("../responses/index");
+const { successResponse, errorResponse } = require("../utils/responses/index");
 
 const getFavoritos = async (req, res) => {
     const { usuarioId } = req.body;

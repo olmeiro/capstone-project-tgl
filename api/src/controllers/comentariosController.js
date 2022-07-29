@@ -2,7 +2,7 @@ const ComentarioService = require("../services/comentarioService");
 const PublicacionService = require("../services/publicacionService");
 const UsuarioService = require("../services/usuarioService");
 
-const { successResponse, errorResponse } = require("../responses/index");
+const { successResponse, errorResponse } = require("../utils/responses/index");
 
 const getComentariosPorPublicacion = async (req, res) => {
     try {

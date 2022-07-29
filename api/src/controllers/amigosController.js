@@ -1,5 +1,5 @@
 const AmigoService = require("../services/amigoService");
-const { successResponse, errorResponse } = require("../responses/index");
+const { successResponse, errorResponse } = require("../utils/responses/index");
 
 const getAmigosPorUsuarioId = async (req, res) => {
     const { usuarioId } = req.body;
