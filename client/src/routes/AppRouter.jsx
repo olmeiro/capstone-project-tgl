@@ -5,6 +5,7 @@ import { HomeRoutes } from '../home/routes/HomeRoutes'
 import { Friends, ProfilePage } from '../home/pages'
 import { AuthRoutes } from '../auth/AuthRoutes'
 import { useAuthStore } from '../hooks'
+import LoadingSpinner from '../loading/LoadingSpinner'
 
 export const AppRouter = () => {
   const { status, checkToken } = useAuthStore()
@@ -13,11 +14,12 @@ export const AppRouter = () => {
     checkToken()
   }, [])
 
-  if (status === 'checking') {
+ if (status === 'checking') {
     return (
-      <h3>Cargando...</h3>
+      // aca va el cargando cuando pasa del login a la pagina principal
+        <LoadingSpinner />
     )
-  }
+ }
 
   return (
     <Routes>
