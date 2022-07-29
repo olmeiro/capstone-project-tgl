@@ -4,7 +4,7 @@ import { Header } from '../layout/profile/Header'
 import { CardPhotos } from '../layout/profile/CardPhotos'
 import { FormOtherUser } from '../layout/profile/FormOtherUser'
 
-export const UserPage = () => {
+export const Friends = () => {
   return (
     <HomeLayout>
       <Header>

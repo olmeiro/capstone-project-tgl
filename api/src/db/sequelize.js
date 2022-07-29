@@ -24,7 +24,7 @@ Publicacion.hasMany(Comentario);
 Comentario.belongsTo(Publicacion);
 
 sequelize.sync({
-    force: true
+    force: false
 })
 
 module.exports = sequelize;

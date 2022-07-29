@@ -9,8 +9,7 @@ const amigosRouter = require("./amigosRouter");
 const favoritosRouter = require("./favoritosRouter");
 
 
-router.use("/usuarios", userRouter)
-
+router.use("/user", userRouter)
 router.use("/publicaciones", publicacionesRouter)
 router.use("/comentarios", comentariosRouter)
 router.use("/amigos", amigosRouter)

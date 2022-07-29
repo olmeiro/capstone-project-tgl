@@ -1,7 +1,9 @@
-import { useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { AuthRoutes } from '../auth/AuthRoutes'
+import { useEffect } from 'react'
+
 import { HomeRoutes } from '../home/routes/HomeRoutes'
+import { Friends, ProfilePage } from '../home/pages'
+import { AuthRoutes } from '../auth/AuthRoutes'
 import { useAuthStore } from '../hooks'
 
 export const AppRouter = () => {
@@ -29,7 +31,9 @@ export const AppRouter = () => {
             )
           : (
             <>
-              <Route path='/' element={<HomeRoutes /> }/>
+              <Route path='/*' element={<HomeRoutes /> }/>
+              <Route path='/profile' element={<ProfilePage /> }/>
+              <Route path='/friends' element={<Friends /> }/>
               <Route path='/*' element={<Navigate to="/" />}/>
             </>
             )

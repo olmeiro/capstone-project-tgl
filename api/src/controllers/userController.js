@@ -121,7 +121,6 @@ const loginUser = async (req, res) => {
   const { alias, password } = req.body;
   try {
     const user = await UserService.login(alias, password);
-    // generar JWT
     const token = await generateJWT(user.id, user.alias);
     successResponse(req, res, { user, token });
   } catch (error) {
@@ -132,7 +131,6 @@ const loginUser = async (req, res) => {
 const renewToken = async (req, res = response) => {
   const { id, name } = req;
   try {
-    // Generar JWT
     const token = await generateJWT(id, name);
     successResponse(req, res, { ok: true, id, name, token });
   } catch (error) {

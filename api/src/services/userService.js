@@ -55,7 +55,11 @@ class UserService {
             });
             return user;
         } catch (error) {
-            throw boom.internal(error.message);
+            if(error.name =  'SequelizeUniqueConstraintError'){
+                throw boom.badRequest(`El usuario con alias ${newUser.alias} ya se encuentra registrado. Intente con un nuevo alias.`);
+            }else{
+                throw boom.badRequest('Error en el registro.')
+            }
         }
     }
 
@@ -79,7 +83,7 @@ class UserService {
         try {
             const user = await User.findOne({ where: { alias } })
             if (!user) {
-                throw boom.notFound(`User with nickname ${alias} has not been found`);
+                throw boom.notFound(`Usuario ${alias} no fue encontrado.`);
             }
             
             const validPassword = bcrypt.compareSync(password, user.password)
@@ -88,7 +92,7 @@ class UserService {
             }
             return user;
         } catch (error) {
-            throw boom.internal(error.message);
+            throw boom.badData(error.message);
         }
     }
 }
