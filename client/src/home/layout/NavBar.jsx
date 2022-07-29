@@ -12,8 +12,8 @@ const userMock = {
 }
 const navigation = [
   { name: 'Team', href: '/', current: false },
-  { name: 'Profile', href: '/profile', current: false },
-  { name: 'perfil otro usuario', href: '/otheruser', current: false }
+  { name: 'Perfil', href: '/profile', current: false },
+  { name: 'Amigos', href: '/friends', current: false }
 ]
 const userNavigation = [
   // { name: 'Perfil', href: '/profile' },
@@ -28,7 +28,6 @@ const imagePath = '/assets/logo_Team_International.png'
 
 export function NavBar () {
   const { startLogout, user } = useAuthStore()
-  console.log("usename", user.name);
   return (
     <>
       {/* <div className="min-h-full"> */}

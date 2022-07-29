@@ -1,44 +1,42 @@
 import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 
-import { useAuthStore } from '../../hooks'
 import { AuthLayout } from '../layout/AuthLayout'
-import { useForm } from '../../hooks/useForm'
+import { useForm, useAuthStore } from '../../hooks'
 
 const formData = {
   alias: '',
-  nombre: '',
+  name: '',
   email: '',
-  telefono: '',
-  contraseña: '',
-  contraseña1: ''
+  phone: '',
+  password: '',
+  password1: ''
 }
 
 const formValidations = {
-  alias: [(value) => value.length >= 4, 'El nombre de usuario es invalido'],
-  nombre: [(value) => value.length >= 4, 'El nombre debe tener al menos 6 letras'],
+  alias: [(value) => value.length >= 4, 'El name de usuario tener al menos 4 caracteres'],
+  name: [(value) => value.length >= 4, 'El name debe tener al menos 4 caracteres'],
   email: [(value) => value.includes('@'), 'El email es obligatorio'],
-  telefono: [(value) => value.length <= 7, 'El telefono es obligatorio'],
-  contraseña: [(value) => value.length >= 6, 'El password es obligatorio'],
-  contraseña1: [(value) => value.length >= 6, 'El confirm password es obligatorio']
+  phone: [(value) => value.length >= 7, 'El número de telefono es númerico de 7 digitos'],
+  password: [(value) => value.length >= 6, 'El password es numerico de 6 digitos'],
+  password1: [(value) => value.length >= 6, 'El password es numerico de 6 digitos']
 }
 
 export const RegisterPage = () => {
   const [formSubmitted, setFormSubmitted] = useState(false)
   const { startRegister, errorMessage } = useAuthStore()
 
-  const { alias, nombre, email, telefono, contraseña, contraseña1, onInputChange, isFormValid, aliasValid, nombreValid, emailValid, telefonoValid, contraseñaValid, contraseña1Valid } = useForm(formData, formValidations)
+  const { alias, name, email, phone, password, password1, onInputChange, aliasValid, nameValid, emailValid, phoneValid, passwordValid, password1Valid, isFormValid } = useForm(formData, formValidations)
 
   const onSubmit = (e) => {
     e.preventDefault()
     setFormSubmitted(true)
-    console.log({ alias, nombre, email, telefono, contraseña, contraseña1 })
-    if (contraseña !== contraseña1) {
+    if (password !== password1) {
       return Swal.fire('Contraseñas no coinciden', 'error')
     }
-
-    startRegister({ alias, nombre, email, telefono, contraseña })
-    console.log(isFormValid)
+    if (isFormValid) {
+      startRegister({ alias, name, email, phone, password })
+    }
   }
 
   useEffect(() => {
@@ -58,7 +56,7 @@ export const RegisterPage = () => {
         <input
           className="form-input px-4 py-3 rounded-full"
           type="text"
-          placeholder="nombre de usuario"
+          placeholder="name de usuario"
           id="alias"
           name="alias"
           value={alias}
@@ -66,17 +64,17 @@ export const RegisterPage = () => {
         />
         <span className='text-[10px] text-end text-team-brown'>{formSubmitted && aliasValid}</span>
 
-        <label htmlFor="">Nombre completo</label>
+        <label htmlFor="">name completo</label>
         <input
           className="form-input px-4 py-3 rounded-full"
           type="text"
-          placeholder="nombre y apellidos"
-          id="nombre"
-          name="nombre"
-          value={nombre}
+          placeholder="name y apellidos"
+          id="name"
+          name="name"
+          value={name}
           onChange={onInputChange}
         />
-        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && nombreValid}</span>
+        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && nameValid}</span>
 
         <label htmlFor="">Correo electrónico</label>
         <input
@@ -95,36 +93,36 @@ export const RegisterPage = () => {
           className="form-input px-4 py-3 rounded-full"
           type="text"
           placeholder="teléfono"
-          id="telefono"
-          name="telefono"
-          value={telefono}
+          id="phone"
+          name="phone"
+          value={phone}
           onChange={onInputChange}
         />
-        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && telefonoValid}</span>
+        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && phoneValid}</span>
 
         <label htmlFor="">Contraseña</label>
         <input
           className="form-input px-4 py-3 rounded-full"
           type="text"
           placeholder="password"
-          id="contraseña"
-          name="contraseña"
-          value={contraseña}
+          id="password"
+          name="password"
+          value={password}
           onChange={onInputChange}
         />
-        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && contraseñaValid}</span>
+        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && passwordValid}</span>
 
-        <label htmlFor="">Confirmar contraseña</label>
+        <label htmlFor="">Confirmar password</label>
         <input
           className="form-input px-4 py-3 rounded-full"
           type="text"
           placeholder="password"
-          id="contraseña1"
-          name="contraseña1"
-          value={contraseña1}
+          id="password1"
+          name="password1"
+          value={password1}
           onChange={onInputChange}
         />
-        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && contraseña1Valid}</span>
+        <span className='text-[10px] text-end text-team-brown'>{formSubmitted && password1Valid}</span>
 
         <div className="flex flex-row-reverse justify-between mt-4">
           <button type='submit' className="bg-team-brown h-10 w-1/2  ml-3 rounded-lg text-team-dark font-medium hover:bg-team-green">

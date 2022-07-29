@@ -1,7 +1,7 @@
 const { Sequelize } = require("sequelize");
 const setupModels = require("./init.db");
 
-const { Usuario } = require("./models/usuarioSchema");
+const { User } = require("./models/userSchema");
 const { Publicacion } = require("./models/publicacionSchema");
 const { Comentario } = require("./models/comentarioSchema");
 
@@ -16,10 +16,10 @@ const sequelize = new Sequelize(URI, {
 setupModels(sequelize);
 
 //relaciones de uno a muchos
-Usuario.hasMany(Publicacion);
-Publicacion.belongsTo(Usuario);
-Usuario.hasMany(Comentario);
-Comentario.belongsTo(Usuario);
+User.hasMany(Publicacion);
+Publicacion.belongsTo(User);
+User.hasMany(Comentario);
+Comentario.belongsTo(User);
 Publicacion.hasMany(Comentario);
 Comentario.belongsTo(Publicacion);
 

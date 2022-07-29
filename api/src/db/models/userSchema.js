@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 
-const UsuarioModel = {
+const UserModel = {
     id: {
         allowNull: true,
         autoIncrement: true, // 
@@ -12,55 +12,63 @@ const UsuarioModel = {
         unique: true,
         type: DataTypes.STRING
     },
-    nombre: {
+    name: {
         allowNull: true,
         type: DataTypes.STRING
+    },
+    bio: {
+        allowNull: true,
+        type: DataTypes.STRING
+    },
+    status: {
+        allowNull: true,
+        type: DataTypes.BOOLEAN
     },
     email:{
         allowNull: true,
         type: DataTypes.STRING
     },
-    telefono:{
+    phone:{
         allowNull: true,
         type: DataTypes.INTEGER
     },
-    contraseña:{
+    password:{
         allowNull: true,
         type: DataTypes.STRING
     },
-    fotoDePerfil:{
+    photoProfile:{
         allowNull: true,
         type: DataTypes.STRING
     },
-    fotoDePortada:{
+    photoCover:{
         allowNull: true,
         type: DataTypes.STRING
     },
-    amigos:{
+    friends:{
         allowNull :true,
         type: DataTypes.ARRAY(DataTypes.INTEGER),
         defaultValue:[]
     },
-    favoritos:{
+    favorites:{
         allowNull :true,
         type: DataTypes.ARRAY(DataTypes.INTEGER),
         defaultValue:[]
     }
 }
 
-class Usuario extends Model {
+class User extends Model {
     static associate() { }
 
     static config(sequelize) {
         return {
             sequelize,
-            tableName: 'usuarios', 
-            modelName: 'Usuario', 
+            tableName: 'users', 
+            modelName: 'User', 
             timestamps: false
         }
     }
 }
 
 module.exports = { 
-    UsuarioModel, Usuario
+    UserModel, User
 }
