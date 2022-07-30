@@ -8,7 +8,6 @@ import { Friends } from '../components/home/pages/Friends'
 import { LoginPage } from '../components/auth/pages/LoginPage'
 import { RegisterPage } from '../components/auth/pages/RegisterPage'
 
-
 export const AppRouter = () => {
   const { status, checkToken } = useAuthStore()
 

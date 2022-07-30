@@ -31,7 +31,7 @@ export function NavBar () {
   return (
     <>
       {/* <div className="min-h-full"> */}
-      <div className="">
+      <div className="w-full">
         <Disclosure as="nav" className="bg-team-dark">
           {({ open }) => (
             <>
