@@ -40,6 +40,7 @@ const getUserById = async (req, res) => {
 const postUser = async (req, res) => {
   const { alias, name, email, phone, password } = req.body;
   try {
+    console.log("BODYDYYYYYYYYYYYYYYYYY", { alias, name, email, phone, password } )
     const user = await UserService.postUser({
       alias,
       name,
@@ -49,12 +50,14 @@ const postUser = async (req, res) => {
     });
     successResponse(req, res, user);
   } catch (error) {
+    console.log("1111111111111111111111111111111111", error)
     errorResponse(req, res, error);
   }
 };
 
 const putUserById = async (req, res) => {
   const [photoProfile, photoCover] = req.files;
+  console.log("PTMRRRRRRRRRRR", req.files)
   const { id, alias, name, email, phone, password } = req.body;
   try {
     const formDataProfile = new FormData();

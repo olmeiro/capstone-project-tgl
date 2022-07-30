@@ -1,6 +1,6 @@
 const { response } = require("express");
 const { generateJWT } = require("../helpers/generate-jwts");
-const UsuarioService = require("../services/usuarioService");
+const UserService = require("../services/userService");
 
 const fs = require('fs');
 const FormData = require('form-data');
@@ -10,7 +10,7 @@ const { successResponse, errorResponse } = require("../utils/responses/index");
 
 const getUsuariosTodos = async (req, res) => {
     try {
-        const usuariosTodos = await UsuarioService.getUsuariosTodos();
+        const usuariosTodos = await UserService.getUsuariosTodos();
         successResponse(req, res, usuariosTodos);
     } catch (error) {
         errorResponse(req, res, error);
@@ -20,7 +20,7 @@ const getUsuariosTodos = async (req, res) => {
 const getUsuariosPorAlias = async (req, res) => {
     const { alias } = req.params;
     try {
-        const usuario = await UsuarioService.getUsuariosPorAlias(alias);
+        const usuario = await UserService.getUsuariosPorAlias(alias);
         successResponse(req, res, usuario);
     } catch (error) {
         errorResponse(req, res, error)
@@ -30,7 +30,7 @@ const getUsuariosPorAlias = async (req, res) => {
 const getUsuarioPorId = async (req, res) => {
     const { id } = req.body;
     try {
-        const usuario = await UsuarioService.getUsuarioPorId(id)
+        const usuario = await UserService.getUsuarioPorId(id)
         successResponse(req, res, usuario);
     } catch (error) {
         errorResponse(req, res, error);
@@ -40,18 +40,18 @@ const getUsuarioPorId = async (req, res) => {
 const postUsuario = async (req, res) => {
     const {
         alias,
-        nombre,
+        name,
         email,
         telefono,
-        contraseña
+        password
     } = req.body;
     try {
-        const usuario = await UsuarioService.postUsuario({
+        const usuario = await UserService.postUsuario({
             alias,
-            nombre,
+            name,
             email,
             telefono,
-            contraseña
+            password
         });
         successResponse(req, res, usuario);
     } catch (error) {
@@ -64,10 +64,10 @@ const putUsuarioPorId = async (req, res) => {
     const {
         id,
         alias,
-        nombre,
+        name,
         email,
         telefono,
-        contraseña,
+        password,
     } = req.body;
     try {
 
@@ -98,12 +98,12 @@ const putUsuarioPorId = async (req, res) => {
         const urls = dataFromApi.map(data => data.data.url);
         const [urlFotoDePerfil, urlFotoDePortada] = urls;
 
-        await UsuarioService.putUsuarioPorId({
+        await UserService.putUsuarioPorId({
             alias,
-            nombre,
+            name,
             email,
             telefono,
-            contraseña,
+            password,
             fotoDePerfil: urlFotoDePerfil,
             fotoDePortada: urlFotoDePortada
         }, id);
@@ -117,7 +117,7 @@ const putUsuarioPorId = async (req, res) => {
 const deleteUsuarioPorId = async (req, res) => {
     const { id } = req.body;
     try {
-        await UsuarioService.deleteUsuarioPorId(id);
+        await UserService.deleteUsuarioPorId(id);
         successResponse(req, res, "¡User has been deleted successfully!");
     } catch (error) {
         errorResponse(req, res, error);
@@ -125,9 +125,9 @@ const deleteUsuarioPorId = async (req, res) => {
 }
 
 const loginUsuario = async (req, res) => {
-    const { alias, contraseña } = req.body
+    const { alias, password } = req.body
     try {
-        const user = await UsuarioService.login(alias, contraseña)
+        const user = await UserService.login(alias, password)
         // generar JWT
         const token = await generateJWT(user.id, user.alias)
         successResponse(req, res, { user, token });
@@ -137,11 +137,11 @@ const loginUsuario = async (req, res) => {
 }
 
 const revalidarToken = async (req, res = response) => {
-    const { id, nombre } = req
+    const { id, name } = req
     try {
         // Generar JWT
-        const token = await generateJWT(id, nombre)
-        successResponse(req, res, { ok: true, id, nombre, token });
+        const token = await generateJWT(id, name)
+        successResponse(req, res, { ok: true, id, name, token });
     } catch (error) {
         errorResponse(req, res, error);
     }

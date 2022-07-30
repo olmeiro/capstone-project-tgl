@@ -52,7 +52,7 @@ const uploadPost = async (req, res) => {
             fecha: new Date().toUTCString().split(",")[1].split("GMT")[0].trim()
         });
 
-        const usuarioLogeado = await UserService.getUsuarioPorId(loginUserId)
+        const usuarioLogeado = await UserService.getUserById(loginUserId)
         await usuarioLogeado.addPost(post);
         successResponse(req, res, post);
     } catch (error) {
