@@ -42,9 +42,8 @@ export const useAuthStore = () => {
 
     try {
       const { data } = await socialApi('/user/renew')
-      console.log("DATA_CHECK:", data)
       localStorage.setItem('token', data.body.token)
-      dispatch(onLogin({ id: data.body, alias: data.body.alias, name: data.body.name }))
+      dispatch(onLogin({ id: data.body.id, alias: data.body.alias, name: data.body.name }))
     } catch (error) {
       localStorage.clear()
       dispatch(onLogout())
