@@ -2,7 +2,7 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
-import { useAuthStore } from '../../hooks'
+import { useAuthStore } from '../../../hooks'
 
 const userMock = {
   name: 'Tom Cook',
@@ -27,7 +27,7 @@ function classNames (...classes) {
 const imagePath = '/assets/logo_Team_International.png'
 
 export function NavBar () {
-  const { startLogout, user } = useAuthStore()
+  const { startLogout } = useAuthStore()
   return (
     <>
       {/* <div className="min-h-full"> */}
@@ -153,7 +153,7 @@ export function NavBar () {
                       <img className="h-10 w-10 rounded-full" src={userMock.imageUrl} alt="" />
                     </div>
                     <div className="ml-3">
-                      <div className="text-base font-medium leading-none text-white">{userMock}</div>
+                      <div className="text-base font-medium leading-none text-white">{userMock.user}</div>
                       <div className="text-sm font-medium leading-none text-gray-400">{userMock.email}</div>
                     </div>
                     <button

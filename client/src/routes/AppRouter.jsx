@@ -1,9 +1,13 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useEffect } from 'react'
 
-import { Friends, HomePage, ProfilePage } from '../home/pages'
 import { useAuthStore } from '../hooks'
-import { LoginPage, RegisterPage } from '../auth/pages'
+import { HomePage } from '../components/home/pages/HomePage'
+import { ProfilePage } from '../components/home/pages/ProfilePage'
+import { Friends } from '../components/home/pages/Friends'
+import { LoginPage } from '../components/auth/pages/LoginPage'
+import { RegisterPage } from '../components/auth/pages/RegisterPage'
+
 
 export const AppRouter = () => {
   const { status, checkToken } = useAuthStore()
