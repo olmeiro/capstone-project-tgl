@@ -22,7 +22,8 @@ const UserModel = {
     },
     status: {
         allowNull: true,
-        type: DataTypes.BOOLEAN
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
     },
     email:{
         allowNull: true,
