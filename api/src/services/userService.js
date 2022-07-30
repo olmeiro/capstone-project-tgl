@@ -17,7 +17,6 @@ class UserService {
             }
             return allUsers;
         } catch (error) {
-            console.log("EEEEEEEEEEEEEEEEEEE ",error)
             throw boom.internal(error.message);
         }
     }

@@ -11,8 +11,8 @@ export const useAuthStore = () => {
     try {
       const { data } = await socialApi.post('/user/login', { alias, password })
       localStorage.setItem('token', data.body.token)
-      localStorage.setItem('token-init-data', new Date().getTime())
-      dispatch(onLogin({ alias: data.body.user.alias, name: data.body.user.name }))
+      localStorage.setItem('token-init', new Date().getTime())
+      dispatch(onLogin({ id: data.body.user.id, alias: data.body.user.alias, name: data.body.user.name }))
     } catch (error) {
       dispatch(onLogout(error.response.data?.message || ''))
       setTimeout(() => {
@@ -27,7 +27,7 @@ export const useAuthStore = () => {
       const { data } = await socialApi.post('/user', { alias, name, email, phone, password })
       localStorage.setItem('token', data.body.token)
       localStorage.setItem('token-init', new Date().getTime())
-      dispatch(onLogin({ alias: data.body.alias, name: data.body.name }))
+      dispatch(onLogin({ id: data.body.user.id, alias: data.body.user.alias, name: data.body.user.name }))
     } catch (error) {
       dispatch(onLogout(error.response.data?.message || ''))
       setTimeout(() => {
