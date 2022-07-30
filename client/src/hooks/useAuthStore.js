@@ -11,13 +11,12 @@ export const useAuthStore = () => {
     try {
       const { data } = await socialApi.post('/user/login', { alias, password })
       localStorage.setItem('token', data.body.token)
-      localStorage.setItem('token-init', new Date().getTime())
       dispatch(onLogin({ id: data.body.user.id, alias: data.body.user.alias, name: data.body.user.name }))
     } catch (error) {
       dispatch(onLogout(error.response.data?.message || ''))
       setTimeout(() => {
         dispatch(clearErrorMessage())
-      })
+      }, 10)
     }
   }
 
@@ -26,13 +25,12 @@ export const useAuthStore = () => {
     try {
       const { data } = await socialApi.post('/user', { alias, name, email, phone, password })
       localStorage.setItem('token', data.body.token)
-      localStorage.setItem('token-init', new Date().getTime())
       dispatch(onLogin({ id: data.body.user.id, alias: data.body.user.alias, name: data.body.user.name }))
     } catch (error) {
       dispatch(onLogout(error.response.data?.message || ''))
       setTimeout(() => {
         dispatch(clearErrorMessage())
-      })
+      }, 10)
     }
   }
 
@@ -44,9 +42,9 @@ export const useAuthStore = () => {
 
     try {
       const { data } = await socialApi('/user/renew')
+      console.log("DATA_CHECK:", data)
       localStorage.setItem('token', data.body.token)
-      localStorage.setItem('token-init-date', new Date().getTime())
-      dispatch(onLogin({ alias: data.name, id: data.id }))
+      dispatch(onLogin({ id: data.body, alias: data.body.alias, name: data.body.name }))
     } catch (error) {
       localStorage.clear()
       dispatch(onLogout())
