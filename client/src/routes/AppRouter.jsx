@@ -1,10 +1,9 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useEffect } from 'react'
 
-import { HomeRoutes } from '../home/routes/HomeRoutes'
-import { Friends, ProfilePage } from '../home/pages'
-import { AuthRoutes } from '../auth/AuthRoutes'
+import { Friends, HomePage, ProfilePage } from '../home/pages'
 import { useAuthStore } from '../hooks'
+import { LoginPage, RegisterPage } from '../auth/pages'
 
 export const AppRouter = () => {
   const { status, checkToken } = useAuthStore()
@@ -25,15 +24,18 @@ export const AppRouter = () => {
         (status === 'not-authenticated')
           ? (
               <>
-                <Route path='/auth/*' element={ <AuthRoutes /> }/>
+                <Route path="/auth/login" element={<LoginPage />} />
+                <Route path="/auth/register" element={<RegisterPage />} />
+
                 <Route path='/*' element={<Navigate to="/auth/login" />}/>
               </>
             )
           : (
             <>
-              <Route path='/*' element={<HomeRoutes /> }/>
+              <Route path='/' element={<HomePage /> }/>
               <Route path='/profile' element={<ProfilePage /> }/>
               <Route path='/friends' element={<Friends /> }/>
+
               <Route path='/*' element={<Navigate to="/" />}/>
             </>
             )
