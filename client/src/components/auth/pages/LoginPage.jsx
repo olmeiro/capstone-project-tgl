@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 import { AuthLayout } from '../layout/AuthLayout'
-import { useAuthStore, useForm } from '../../hooks'
+import { useAuthStore, useForm } from '../../../hooks'
 
 const formData = {
   alias: '',

@@ -48,7 +48,8 @@ const postUser = async (req, res) => {
       phone,
       password,
     });
-    successResponse(req, res, user);
+    const token = await generateJWT(user.id, user.alias, user.name);
+    successResponse(req, res, { user, token });
   } catch (error) {
     console.log("1111111111111111111111111111111111", error)
     errorResponse(req, res, error);
@@ -105,7 +106,6 @@ const putUserById = async (req, res) => {
     );
     successResponse(req, res, "¡User has been updated successfully!");
   } catch (error) {
-    console.log(error);
     errorResponse(req, res, error);
   }
 };
@@ -124,7 +124,7 @@ const loginUser = async (req, res) => {
   const { alias, password } = req.body;
   try {
     const user = await UserService.login(alias, password);
-    const token = await generateJWT(user.id, user.alias);
+    const token = await generateJWT(user.id, user.alias, user.name);
     successResponse(req, res, { user, token });
   } catch (error) {
     errorResponse(req, res, error);
@@ -132,10 +132,10 @@ const loginUser = async (req, res) => {
 };
 
 const renewToken = async (req, res = response) => {
-  const { id, name } = req;
+  const { id, alias, name } = req;
   try {
-    const token = await generateJWT(id, name);
-    successResponse(req, res, { ok: true, id, name, token });
+    const token = await generateJWT(id, alias, name);
+    successResponse(req, res, { ok: true, id, alias, name, token });
   } catch (error) {
     errorResponse(req, res, error);
   }
