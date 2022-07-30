@@ -3,16 +3,16 @@ const router = express.Router();
 
 
 const userRouter = require("./userRouter");
-const publicacionesRouter = require("./publicacionesRouter")
-const comentariosRouter = require("./comentariosRouter");
-const amigosRouter = require("./amigosRouter");
-const favoritosRouter = require("./favoritosRouter");
+const postsRouter = require("./postsRouter")
+const commentsRouter = require("./commentsRouter");
+const friendsRouter = require("./friendsRouter");
+const favoritesRouter = require("./favoritesRouter");
 
 
 router.use("/user", userRouter)
-router.use("/publicaciones", publicacionesRouter)
-router.use("/comentarios", comentariosRouter)
-router.use("/amigos", amigosRouter)
-router.use("/favoritos", favoritosRouter)
+router.use("/posts", postsRouter)
+router.use("/comments", commentsRouter)
+router.use("/friends", friendsRouter)
+router.use("/favorites", favoritesRouter)
 
 module.exports = router
