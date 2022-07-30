@@ -3,7 +3,7 @@ const FormData = require("form-data");
 const axios = require("axios");
 const fs = require("fs");
 
-const { successResponse, errorResponse } = require("../responses/index");
+const { successResponse, errorResponse } = require("../utils/responses/index");
 const { generateJWT } = require("../helpers/generate-jwts");
 const UserService = require("../services/userService");
 const { API_KEY } = require("../config/index");

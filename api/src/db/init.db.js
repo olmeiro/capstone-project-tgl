@@ -1,11 +1,11 @@
 const { UserModel, User } = require("./models/userSchema");
-const { PublicacionSchema, Publicacion } = require("./models/publicacionSchema");
-const { ComentarioSchema, Comentario } = require("./models/comentarioSchema");
+const { PostSchema, Post } = require("./models/postSchema");
+const { CommentSchema, Comment } = require("./models/commentSchema");
 
 function setupModels(sequelize){
     User.init(UserModel, User.config(sequelize))
-    Publicacion.init(PublicacionSchema, Publicacion.config(sequelize))
-    Comentario.init(ComentarioSchema, Comentario.config(sequelize))
+    Post.init(PostSchema, Post.config(sequelize))
+    Comment.init(CommentSchema, Comment.config(sequelize))
 }
 
 module.exports = setupModels;
