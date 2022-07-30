@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 export const AuthLayout = ({ children, title = '' }) => {
   const imagePath = '/assets/logo_Team_International.png'
   return (
-    <section className="container w-full  flex flex-row sm:flex-col min-h-screen">
+    <section className="w-full  flex flex-row sm:flex-col min-h-screen">
       <header className="w-full min-h-full flex flex-row sm:flex-col md:flex-row justify-between p-6 items-center h-28 bg text-team-green">
         <div className="mt-2">
           <img className="w-24" src={imagePath} />

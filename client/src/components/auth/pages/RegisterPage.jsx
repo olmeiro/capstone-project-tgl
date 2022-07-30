@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 
 import { AuthLayout } from '../layout/AuthLayout'
-import { useForm, useAuthStore } from '../../hooks'
+import { useForm, useAuthStore } from '../../../hooks'
 
 const formData = {
   alias: '',
