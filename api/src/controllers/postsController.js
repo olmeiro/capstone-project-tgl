@@ -17,9 +17,9 @@ const getPosts = async (req, res) => {
 }
 
 const getPostsByUser = async (req, res) => {
-    const { userId } = req.body;
+    const { userid } = req.params;
     try {
-        const posts = await PostService.getPostsByUser(userId);
+        const posts = await PostService.getPostsByUser(userid);
         successResponse(req, res, posts);
     } catch (error) {
         errorResponse(req, res, error);
@@ -48,8 +48,8 @@ const uploadPost = async (req, res) => {
 
         const post = await PostService.uploadPost({
             description,
-            foto: urlFoto,
-            fecha: new Date().toUTCString().split(",")[1].split("GMT")[0].trim()
+            photo: urlFoto,
+            date: new Date().toUTCString().split(",")[1].split("GMT")[0].trim()
         });
 
         const usuarioLogeado = await UserService.getUserById(loginUserId)
@@ -64,9 +64,10 @@ const putPost = async (req, res) => {
     const {
         id,
         description,
+        likes
     } = req.body
     try {
-        await PostService.editPost(description, id);
+        await PostService.editPost(description, id, likes);
         successResponse(req, res, "¡Post has been successfully updated!");
     } catch (error) {
         errorResponse(req, res, error);

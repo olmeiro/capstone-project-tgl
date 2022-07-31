@@ -15,7 +15,7 @@ class CommentService {
             throw boom.internal(error.message);
         }
     }
-    static async uploadPost(comment) {
+    static async uploadComment(comment) {
         try {
             const createdComment = await Comment.create(comment);
             return createdComment;

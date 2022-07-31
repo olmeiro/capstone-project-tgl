@@ -38,9 +38,9 @@ class PublicacionService {
             throw boom.internal(error.message);
         }
     }
-    static async editPost(description, id) {
+    static async editPost(description, id, likes) {
         try {
-            await Post.update({ description }, { where: { id } });
+            await Post.update({ description, likes }, { where: { id } });
         } catch (error) {
             throw boom.internal(error.message);
         }

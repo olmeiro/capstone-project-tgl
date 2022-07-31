@@ -18,10 +18,10 @@ const {
 
 router.get("/all", getAllUsers);
 router.get("/byalias/:alias", getUserByAlias);
-router.get("/byid", getUserById)
+router.get("/byid/:id", getUserById)
 router.post("/", postUser);
 // router.post("/", validateDataJoi(userSchema, "body"), postUser);
-router.put("/", upload.array("file", 2), putUserById);
+router.put("/", upload.single("file"), putUserById);
 router.delete("/", deleteUserById);
 router.post("/login", loginUser);
 router.get("/renew", validarJWT, renewToken);
