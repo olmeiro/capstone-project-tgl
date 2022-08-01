@@ -54,7 +54,7 @@ export const SidebarLeft = () => {
               <p className="text-sm text-gray-500 inline-block">{user.email}</p>
             </div>
             <div className='w-8'>
-              <Tooltip content="Add friendship" arrow={false}>
+              <Tooltip content="Agregar amistad" arrow={false}>
                 <button onClick={()=> handleAddFriend(user.id)}>
                   <PlusIcon
                     className="h-6 w-6 mb-3 relative top-1  rounded-full text-white bg-team-dark"

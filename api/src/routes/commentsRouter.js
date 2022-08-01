@@ -11,7 +11,7 @@ const  {
 router.get("/bypost/:postid", getCommentsByPost)
 router.post("/", uploadComment)
 router.put("/", putComment)
-router.delete("/", deleteComment)
+router.delete("/:commentId", deleteComment)
 
 
 module.exports = router

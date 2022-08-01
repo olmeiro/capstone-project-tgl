@@ -5,6 +5,7 @@ export const homeSlice = createSlice({
     initialState: {
         posts: [],
         suggestions: [],
+        checkComments: false
     },
     reducers: {
         getPostsToHome: (state, { payload }) => {
@@ -12,8 +13,11 @@ export const homeSlice = createSlice({
         },
         getFriendsFromFriends: (state, { payload }) => {
             state.suggestions = payload
+        },
+        checkComments: (state, { payload }) => {
+            state.checkComments = !state.checkComments
         }
     }
 })
 
-export const { getPostsToHome, getFriendsFromFriends } = homeSlice.actions
+export const { getPostsToHome, getFriendsFromFriends, checkComments } = homeSlice.actions

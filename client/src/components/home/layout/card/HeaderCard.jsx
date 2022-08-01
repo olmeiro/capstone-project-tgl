@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   StarIcon,
   HeartIcon,
@@ -13,21 +13,22 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
   const [likesRender, setLikesRender] = useState(likes);
   const [comment, setComment] = useState("")
 
-  const { makeAComment } = useHomeStore();
+  const { makeAComment, checkCommentsHook } = useHomeStore();
 
   const handleLike = () => {
     likeAPost(postId)
   }
-
   const handleComment = (e) => {
     setComment(e.target.value)
   }
-
-  const handleSumit = () => {
-    makeAComment(postId, comment);
-    alert("Comentario enviado")
+  const handleSumit = async () => {
+    await makeAComment(postId, comment);
+    checkCommentsHook();
+    alert("Comentario publicado")
     setOpenModal(false)
   }
+
+  
 
   return (
     <div>

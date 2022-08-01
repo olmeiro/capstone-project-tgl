@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { socialApi } from '../api'
-import { getPostsToHome, getFriendsFromFriends } from '../store'
+import { getPostsToHome, getFriendsFromFriends, checkComments } from '../store'
 
 export const useHomeStore = () => {
     const dispatch = useDispatch()
@@ -63,6 +63,12 @@ export const useHomeStore = () => {
         comments = await Promise.all(comments);
         return comments
     }
+    const deleteComment = async(commentId)=>{
+        await socialApi.delete(`/comments/${commentId}`);
+    }
+    const checkCommentsHook = ()=>{
+        dispatch(checkComments());
+    }
 
 
     return {
@@ -71,6 +77,8 @@ export const useHomeStore = () => {
         addFriendshipHook,
         likeAPost,
         makeAComment,
-        getCommentsByPost
+        getCommentsByPost,
+        deleteComment,
+        checkCommentsHook
     }
 }

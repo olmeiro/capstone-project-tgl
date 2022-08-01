@@ -49,7 +49,7 @@ const putComment = async (req, res) => {
 }
 
 const deleteComment = async (req, res) => {
-    const { commentId } = req.body;
+    const { commentId } = req.params;
     try {
         await CommentService.deleteComment(commentId);
         successResponse(req, res,"¡Comment has been successfully deleted!");
