@@ -20,9 +20,10 @@ const uploadComment = async (req, res) => {
         userId,
         postId
     } = req.body;
+    console.log("cuidaooooooooooooo",req.body )
     try {
         let date = new Date();
-        date.setUTCHours(-3);
+        date.setUTCHours(18)
         date = date.toUTCString().split(",")[1].split("GMT")[0].trim();
         const createdComment = await CommentService.uploadComment({
             comment,
