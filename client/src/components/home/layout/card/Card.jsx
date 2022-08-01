@@ -9,7 +9,7 @@ export const Card = ({ photo, description, likes, date, postId, likeAPost }) => 
     <>
       <HeaderCard setIsOpen={setIsOpen} photo={photo} description={description} likes={likes} date={date} likeAPost={likeAPost} postId={postId} />
       <CarDrawer isOpen={isOpen} setIsOpen={setIsOpen}>
-        <CardComments />
+        <CardComments postId={postId} />
       </CarDrawer>
     </>
   )

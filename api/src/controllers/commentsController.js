@@ -21,9 +21,12 @@ const uploadComment = async (req, res) => {
         postId
     } = req.body;
     try {
+        let date = new Date();
+        date.setUTCHours(-3);
+        date = date.toUTCString().split(",")[1].split("GMT")[0].trim();
         const createdComment = await CommentService.uploadComment({
             comment,
-            fecha: new Date().toUTCString().split(",")[1].split("GMT")[0].trim()
+            date
         })
         const usuarioLogeado = await UserService.getUserById(userId);
         const publicacion = await PostService.getPostById(postId);
@@ -31,7 +34,6 @@ const uploadComment = async (req, res) => {
         await publicacion.addComment(createdComment);
         successResponse(req, res, createdComment);
     } catch (error) {
-        console.log("COCOCOCOOCOOC" , error)
         errorResponse(req, res, error);
     }
 }

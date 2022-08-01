@@ -47,11 +47,21 @@ export const useHomeStore = () => {
     const likeAPost = async (id) => {
         await socialApi.put(`/posts/`, { id, likes: 3 })
     }
-    const makeAComment = async (postId,comment) => {
+    const makeAComment = async (postId, comment) => {
         await socialApi.post(`/comments/`, { comment, postId, userId })
     }
-    const getCommentsByPost = async (postId)=>{
-        await socialApi.get(`/comments/bypost${postId}`)
+    const getCommentsByPost = async (postid) => {
+        let comments = await socialApi.get(`/comments/bypost/${postid}`)
+        comments = comments.data.body
+        comments = comments.map(async comment => {
+            let userId = comment.UserId
+            let user = await socialApi.get(`/user/byid/${userId}`)
+            user = user.data.body
+            comment.user = user;
+            return comment
+        });
+        comments = await Promise.all(comments);
+        return comments
     }
 
 
