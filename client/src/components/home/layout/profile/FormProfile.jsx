@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Label, TextInput } from 'flowbite-react'
+
 import { useForm } from '../../../../hooks'
 import Swal from 'sweetalert2'
+import { useProfileStore } from '../../../../hooks/useProfileStore'
 
 const formData = {
   alias: '',
@@ -26,6 +28,8 @@ const formValidations = {
 export const FormProfile = () => {
   const [formSubmitted, setFormSubmitted] = useState(false)
 
+  const { changeDataProfile, profileData } = useProfileStore()
+
   const { alias, name, bio, email, phone, password, password1, aliasValid, nameValid, bioValid, emailValid, phoneValid, passwordValid, password1Valid, onInputChange, isFormValid } = useForm(formData, formValidations)
 
   const onSubmit = (e) => {
@@ -35,11 +39,14 @@ export const FormProfile = () => {
     if (password !== password1) {
       return Swal.fire('Contraseñas no coinciden', 'error')
     }
+
     if (isFormValid) {
-      console.log('enviando form')
-      // startEditingInfo({ alias, name, email, phone, password })
+      changeDataProfile({ alias, name, bio, email, phone, password })
     }
   }
+
+  useEffect(() => {
+  }, [profileData])
 
   return (
       <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">

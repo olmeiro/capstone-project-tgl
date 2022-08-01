@@ -3,17 +3,34 @@ import { Tooltip, Button, Modal, Label } from 'flowbite-react'
 import { AdjustmentsIcon } from '@heroicons/react/outline'
 import { AiFillTool, AiOutlineCloudUpload } from 'react-icons/ai'
 import { FormProfile } from './FormProfile'
+import { useProfileStore } from '../../../../hooks/useProfileStore'
+import { useAuthStore } from '../../../../hooks'
 
 const imagePath = '/assets/model.avif'
 
 export const Header = () => {
   const [openModal, setOpenModal] = useState(false)
   const [modalImg, setModalImg] = useState(false)
+  const [image, setImage] = useState({ preview: '', data: '' })
+
+  const { user } = useAuthStore()
+
+  const { loadingPhotoProfile } = useProfileStore()
 
   const inputRef = useRef()
 
-  const onChangeInputFile = ({ target }) => {
-    console.log(target.files)
+  const handleFileChange = (e) => {
+    const img = {
+      preview: URL.createObjectURL(e.target.files[0]),
+      data: e.target.files[0]
+    }
+    setImage(img)
+  }
+
+  const onHandleSubmit = async (e) => {
+    e.preventDefault()
+    // const img = e.target.firstElementChild.files
+    loadingPhotoProfile(image.data, user.id)
   }
 
   return (
@@ -46,12 +63,21 @@ export const Header = () => {
                 className='w-12 h-12 m-10 hover:bg-team-green rounded-md'
                 onClick={() => inputRef.current.click()}
               />
-              <input
-                type='file'
-                className='invisible'
-                ref={inputRef}
-                onChange={onChangeInputFile}
-              />
+              <h1>Upload to server</h1>
+              {image.preview && <img src={image.preview} width='100' height='100' />}
+              <hr></hr>
+              <form onSubmit={onHandleSubmit}>
+                <input
+                  type='file'
+                  name='file'
+                  className='invisible'
+                  ref={inputRef}
+                  onChange={handleFileChange}
+                />
+                <div className='flex justify-end'>
+                  <button className='bg-team-blue p-4 rounded-lg'>Enviar</button>
+                </div>
+              </form>
           </div>
           </Modal.Body>
         </Modal>

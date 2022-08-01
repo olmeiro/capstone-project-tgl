@@ -9,6 +9,7 @@ const {
     getUserById,
     postUser,
     putUserById,
+    putProfilePhotoUser,
     deleteUserById,
     loginUser,
     renewToken,
@@ -19,6 +20,7 @@ router.get("/bylias/:alias", getUserByAlias);
 router.get("/byid", getUserById)
 router.post("/", postUser);
 router.put("/", upload.array("file", 2), putUserById);
+router.put("/profilephoto", upload.single("file"), putProfilePhotoUser);
 router.delete("/", deleteUserById);
 router.post("/login", loginUser); 
 router.get("/renew", validarJWT, renewToken);  

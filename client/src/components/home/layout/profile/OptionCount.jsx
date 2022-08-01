@@ -1,18 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Modal } from 'flowbite-react'
+import { useProfileStore } from '../../../../hooks/useProfileStore'
+import { useAuthStore } from '../../../../hooks'
 
 export const OptionCount = () => {
   const [modalInactive, setModalInactive] = useState(false)
   const [modalDelete, setModalDelete] = useState(false)
+  const [idUser, setIdUser] = useState('')
 
-  const InactiveCount = () => {
-    console.log('inactivando cuenta')
-    // InactiveCount(id)
+  const { user } = useAuthStore()
+  const { inactiveCount, deleteCount } = useProfileStore()
+
+  const inactiveCountUser = () => {
+    inactiveCount(idUser)
+    // onLogout
   }
-  const deleteCount = () => {
-    console.log('eliminando cuenta')
-    // deleteCount(id)
+  const deleteCountUser = (id) => {
+    deleteCount(idUser)
+    // onLogout
   }
+
+  useEffect(() => {
+    setIdUser(user.id)
+  }, [])
 
   return (
     <div>
@@ -46,7 +56,7 @@ export const OptionCount = () => {
               </h3>
               <button
                 data-modal-toggle="popup-modal"
-                onClick={InactiveCount}
+                onClick={inactiveCountUser}
                 type="button"
                 className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
               >
@@ -94,7 +104,7 @@ export const OptionCount = () => {
               </h3>
               <button
                 data-modal-toggle="popup-modal"
-                onClick={deleteCount}
+                onClick={deleteCountUser}
                 type="button"
                 className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
               >

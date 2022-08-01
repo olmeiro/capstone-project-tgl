@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, Modal, Label, TextInput } from 'flowbite-react'
 
-import { useForm } from '../../../../hooks'
+import { useAuthStore, useForm } from '../../../../hooks'
+import { useProfileStore } from '../../../../hooks/useProfileStore'
 
 const formData = {
   comment: ''
@@ -12,22 +13,33 @@ const formValidations = {
 }
 
 export const CardPhotos = () => {
+  const [idUser, setIdUser] = useState('')
   const [openModal, setOpenModal] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
+
   const { comment, commentValid, onInputChange, isFormValid } = useForm(formData, formValidations)
+
+  const { user } = useAuthStore()
+  const { loadingFriendsUser, loadingPhotosUser, uploadCommentPhoto, deletePhotoUser } = useProfileStore()
 
   const onSubmit = (e) => {
     e.preventDefault()
     setFormSubmitted(true)
     if (isFormValid) {
-      console.log('enviando comentario')
-      // sendCommentPhoto()
+      uploadCommentPhoto(comment, idUser)
     }
   }
 
   const deletePhoto = () => {
-    console.log('eliminando foto')
+    // necesito id foto
+    deletePhotoUser(idUser)
   }
+
+  useEffect(() => {
+    setIdUser(user.id)
+    loadingPhotosUser()
+    loadingFriendsUser()
+  }, [])
 
   return (
   <div className="flex gap-4 mt-3 mb-3 justify-center flex-wrap">
@@ -60,6 +72,7 @@ export const CardPhotos = () => {
           </Modal.Body>
         </Modal>
       </React.Fragment>
+
      <Card>
        <div className="flex flex-col items-center pb-10">
          <img
