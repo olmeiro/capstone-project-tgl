@@ -1,16 +1,27 @@
 import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import { socialApi } from '../api'
-import { onLoadDataProfile, onChangeDataProfile, onLoadCommentPhoto, inactivatingCount, deletingCount, onLoadFriendsUser, onLoadPhotosUser } from '../store'
+import { onLoadDataProfile, onChangeDataProfile, onLoadCommentPhoto, inactivatingCount, deletingCount, onLoadFriendsUser, onLoadPhotosUser, onLoadPhotoProfile } from '../store'
 
 export const useProfileStore = () => {
   const { profileData } = useSelector(state => state.profile)
   const dispatch = useDispatch()
 
   const loadingDataProfile = async (id) => {
-    const data = await socialApi.get('/user/byid', id)
-    console.log('DATA-LOADINg-DATA', data)
-    dispatch(onLoadDataProfile(data))
+    try {
+      const { data } = await socialApi.get(`/user/byid/${id}`)
+      dispatch(onLoadDataProfile(data.body))
+      Swal.fire({
+        icon: 'success',
+        title: 'Imagen cargada correctamente.'
+      })
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Algo ha ido mal!'
+      })
+    }
   }
 
   const loadingFriendsUser = () => {
@@ -18,13 +29,12 @@ export const useProfileStore = () => {
     dispatch(onLoadFriendsUser()) // pasar info api
   }
 
-  const loadingPhotoProfile = async (image, id) => {
-    console.log("ID STORE", id)
+  const loadingPhotoProfile = async (image) => {
     const formData = new FormData()
     formData.append('file', image)
     try {
-      await socialApi.put('/user/profilephoto', formData)
-      await loadingDataProfile(id)
+      const { data } = await socialApi.put('/user/profilephoto', formData)
+      dispatch(onLoadPhotoProfile(data.body))
     } catch (error) {
       Swal.fire({
         icon: 'error',
@@ -34,23 +44,48 @@ export const useProfileStore = () => {
     }
   }
 
-  const loadingPhotosUser = () => {
-    dispatch(onLoadPhotosUser())
+  const loadingPhotoUser = async (image) => {
+    const formData = new FormData()
+    formData.append('file', image)
+    try {
+      const { data } = await socialApi.put('/user/photouser', formData)
+      console.log('data:', data)
+      dispatch(onLoadPhotosUser(data.body))
+      Swal.fire({
+        icon: 'success',
+        title: 'Fotos cargadas correctamente.'
+      })
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Algo a ido mal cargando las imagenes!'
+      })
+    }
   }
 
-  const changeDataProfile = ({ alias, name, bio, email, phone, password }) => {
-    // hacer post del coment con la api
-    dispatch(onChangeDataProfile({ alias, name, bio, email, phone, password }))
+  const changeDataProfile = async ({ idUser, alias, name, bio, email, phone }) => {
+    try {
+      await socialApi.put('/user/', { idUser, alias, name, bio, email, phone })
+      dispatch(onChangeDataProfile({ alias, name, bio, email, phone }))
+      Swal.fire({
+        icon: 'success',
+        title: 'Información actualizada correctamente.'
+      })
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Información no actualizada correctamente.'
+      })
+    }
   }
 
   const uploadCommentPhoto = (comment, id) => {
-    console.log('commentHook', { comment, id })
     // hacer put comment en photo cover de user id
     dispatch(onLoadCommentPhoto(comment))
   }
 
   const deletePhotoUser = (id) => {
-    console.log('delete photo user:', id)
     // hacer put photo user id
     // dispatch()
   }
@@ -74,7 +109,7 @@ export const useProfileStore = () => {
     profileData,
     loadingFriendsUser,
     loadingPhotoProfile,
-    loadingPhotosUser,
+    loadingPhotoUser,
     // methods
     loadingDataProfile,
     changeDataProfile,

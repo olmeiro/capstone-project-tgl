@@ -13,7 +13,7 @@ const formValidations = {
   comment: [(value) => value.length >= 4, 'El comentario debe tener al menos 4 letras']
 }
 
-export const CardPhotos = () => {
+export const CardPhotosFriends = () => {
   const [idUser, setIdUser] = useState('')
   const [openModal, setOpenModal] = useState(false)
   const [openModalImg, setOpenModalImg] = useState(false)
@@ -123,14 +123,14 @@ export const CardPhotos = () => {
         </Modal>
       </React.Fragment>
 
-   <div className='min-w-full'>
+   {/* <div className='min-w-full'>
       <button
         type='submit'
         onClick={() => setOpenModalImg(true)}
         className='w-1/2 relative -top-2 bg-team-brown p-3 rounded-lg m-3 text-white hover:bg-team-dark hover:text-white'>
           Agregar fotos
       </button>
-   </div>
+   </div> */}
 
      <Card>
        <div className="flex flex-col items-center pb-10">

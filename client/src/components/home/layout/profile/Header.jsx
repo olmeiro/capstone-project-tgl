@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Tooltip, Button, Modal, Label } from 'flowbite-react'
 import { AdjustmentsIcon } from '@heroicons/react/outline'
 import { AiFillTool, AiOutlineCloudUpload } from 'react-icons/ai'
@@ -9,13 +9,15 @@ import { useAuthStore } from '../../../../hooks'
 const imagePath = '/assets/model.avif'
 
 export const Header = () => {
+  const { user } = useAuthStore()
+  const { loadingPhotoProfile, loadingDataProfile, profileData } = useProfileStore()
+
+  const [bio, setBio] = useState('Esta es la decripción de tu perfil')
+  const [image, setImage] = useState({ preview: '', data: '' })
+  const [imageProfile, setImageProfile] = useState(imagePath)
   const [openModal, setOpenModal] = useState(false)
   const [modalImg, setModalImg] = useState(false)
-  const [image, setImage] = useState({ preview: '', data: '' })
-
-  const { user } = useAuthStore()
-
-  const { loadingPhotoProfile } = useProfileStore()
+  const [idUser, setIdUser] = useState('')
 
   const inputRef = useRef()
 
@@ -29,9 +31,16 @@ export const Header = () => {
 
   const onHandleSubmit = async (e) => {
     e.preventDefault()
-    // const img = e.target.firstElementChild.files
-    loadingPhotoProfile(image.data, user.id)
+    loadingPhotoProfile(image.data, idUser)
+    loadingDataProfile(idUser)
+    setModalImg(false)
   }
+
+  useEffect(() => {
+    setIdUser(user.id)
+    setImageProfile(profileData.photoProfile)
+    setBio(profileData.bio)
+  }, [user.id, profileData.photoProfile, profileData.bio])
 
   return (
     <div>
@@ -87,15 +96,15 @@ export const Header = () => {
         <div className='flex flex-col mt-3'>
           <img
             className="md:h-16 md:w-16 sm:h-10 sm:w-10 rounded-full divide-gray-200"
-            src={imagePath}
-            alt=""
+            src={imageProfile === '' ? imagePath : imageProfile}
+            alt="foto de perfil"
           />
           <AiFillTool
             className='relative left-12 bottom-4 bg-team-blue rounded-lg'
             onClick={() => setModalImg(true)}
           />
         </div>
-        <p>Esta es una breve descripción sobre mí.</p>
+        <p>{bio === '' ? 'Esta es la decripcion de la Bio' : bio}</p>
         <Tooltip content="Editar" arrow={false}>
           <Button
             className="hover:bg-team-brown"

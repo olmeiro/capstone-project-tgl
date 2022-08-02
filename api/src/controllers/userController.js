@@ -30,14 +30,14 @@ const getUserByAlias = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
-  const { id } = req.body;
-  console.log("ID GETUSERBYID", id)
-  // try {
-  //   const user = await UserService.getUserById(id);
-  //   successResponse(req, res, user);
-  // } catch (error) {
-  //   errorResponse(req, res, error);
-  // }
+  const { id } = req.params;
+  console.log("id", id)
+  try {
+    const user = await UserService.getUserById(id);
+    successResponse(req, res, user);
+  } catch (error) {
+    errorResponse(req, res, error);
+  }
 };
 
 const postUser = async (req, res) => {
@@ -58,20 +58,37 @@ const postUser = async (req, res) => {
 };
 
 const putUserById = async (req, res) => {
-  const [photoProfile, photoCover] = req.files;
-  const { id, alias, name, email, phone, password } = req.body;
+  const { idUser, alias, name, bio, email, phone } = req.body;
+  console.log("REQUEST:",  req)
+
+  try {
+    
+    const userToUpdate = await UserService.putUserById({ alias, name, bio, email, phone }, idUser );
+    successResponse(req, res, userToUpdate);
+  } catch (error) {
+    console.log(error)
+    errorResponse(req, res, error);
+  }
+};
+
+const putPhotoUserById = async (req, res) => {
+  const {  SECRET_JWT_SEED } = require("../config/index")
+
+  const token = req.headers['x-token']
+
+  const { id } = jwt.verify(token, SECRET_JWT_SEED)
+  const idUser = id
+
+  const photoProfile = req.file;
+  
   try {
     const formDataProfile = new FormData();
-    const formDataCover = new FormData();
+
     const photo64PhotoProfile = fs.readFileSync(photoProfile.path, {
-      encoding: "base64",
-    });
-    const photo64PhotoCover = fs.readFileSync(photoCover.path, {
       encoding: "base64",
     });
 
     formDataProfile.append("image", photo64PhotoProfile);
-    formDataCover.append("image", photo64PhotoCover);
 
     const postPhotoProfile = axios({
       method: "post",
@@ -79,36 +96,25 @@ const putUserById = async (req, res) => {
       headers: formDataProfile.getHeaders(),
       data: formDataProfile,
     });
-    const postPhotoCover = axios({
-      method: "post",
-      url: `https://api.imgbb.com/1/upload?key=${API_KEY}`,
-      headers: formDataCover.getHeaders(),
-      data: formDataCover,
-    });
 
-    const arrayPromise = [postPhotoProfile, postPhotoCover];
+    const arrayPromise = [postPhotoProfile];
     const responseFromApi = await Promise.all(arrayPromise);
     const dataFromApi = responseFromApi.map((res) => res.data);
     const urls = dataFromApi.map((data) => data.data.url);
-    const [urlPhotoProfile, urlPhotoCover] = urls;
+    const [urlPhotoUser] = urls;
 
-    await UserService.putUserById(
+    const userUpdate = await UserService.putUserById(
       {
-        alias,
-        name,
-        email,
-        phone,
-        password,
-        photoProfile: urlPhotoProfile,
-        photoCover: urlPhotoCover,
+        photoCover: urlPhotoUser
       },
-      id
+      idUser
     );
-    successResponse(req, res, "¡User has been updated successfully!");
+    successResponse(req, res, urlPhotoUser);
   } catch (error) {
     errorResponse(req, res, error);
   }
-};
+}
+
 const putProfilePhotoUser = async (req, res) => {
   const {  SECRET_JWT_SEED } = require("../config/index")
 
@@ -141,15 +147,13 @@ const putProfilePhotoUser = async (req, res) => {
     const urls = dataFromApi.map((data) => data.data.url);
     const [urlPhotoProfile] = urls;
 
-    console.log("dataController:", {idUser, urlPhotoProfile})
-
-    await UserService.putUserById(
+    const userUpdate = await UserService.putUserById(
       {
         photoProfile: urlPhotoProfile
       },
       idUser
     );
-    successResponse(req, res, "¡User has been updated successfully!");
+    successResponse(req, res, urlPhotoUser);
   } catch (error) {
     errorResponse(req, res, error);
   }
@@ -192,6 +196,7 @@ module.exports = {
   getUserById,
   postUser,
   putUserById,
+  putPhotoUserById,
   putProfilePhotoUser,
   deleteUserById,
   loginUser,

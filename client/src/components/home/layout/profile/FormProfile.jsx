@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Label, TextInput } from 'flowbite-react'
 
-import { useForm } from '../../../../hooks'
+import { useAuthStore, useForm } from '../../../../hooks'
 import Swal from 'sweetalert2'
 import { useProfileStore } from '../../../../hooks/useProfileStore'
 
@@ -26,27 +26,32 @@ const formValidations = {
 }
 
 export const FormProfile = () => {
-  const [formSubmitted, setFormSubmitted] = useState(false)
-
+  const { user } = useAuthStore()
   const { changeDataProfile, profileData } = useProfileStore()
 
-  const { alias, name, bio, email, phone, password, password1, aliasValid, nameValid, bioValid, emailValid, phoneValid, passwordValid, password1Valid, onInputChange, isFormValid } = useForm(formData, formValidations)
+  const [formSubmitted, setFormSubmitted] = useState(false)
+  const [idUser, setIdUser] = useState()
+
+  // const { alias, name, bio, email, phone, password, password1, aliasValid, nameValid, bioValid, emailValid, phoneValid, passwordValid, password1Valid, onInputChange, isFormValid } = useForm(formData, formValidations)
+
+  const { alias, name, bio, email, phone, aliasValid, nameValid, bioValid, emailValid, phoneValid, onInputChange, isFormValid } = useForm(formData, formValidations)
 
   const onSubmit = (e) => {
     e.preventDefault()
     setFormSubmitted(true)
 
-    if (password !== password1) {
-      return Swal.fire('Contraseñas no coinciden', 'error')
-    }
+    // if (password !== password1) {
+    //   return Swal.fire('Contraseñas no coinciden', 'error')
+    // }
 
     if (isFormValid) {
-      changeDataProfile({ alias, name, bio, email, phone, password })
+      changeDataProfile({ idUser, alias, name, bio, email, phone })
     }
   }
 
   useEffect(() => {
-  }, [profileData])
+    setIdUser(user.id)
+  }, [user.id, profileData])
 
   return (
       <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
@@ -115,7 +120,7 @@ export const FormProfile = () => {
                  />
                <span className='text-[10px] text-end text-team-brown'>{formSubmitted && phoneValid}</span>
             </div>
-            <div>
+            {/* <div>
               <div className="mb-2 block">
                 <Label htmlFor="password" value="Your password" />
               </div>
@@ -138,7 +143,7 @@ export const FormProfile = () => {
                 type="password"
               />
                <span className='text-[10px] text-end text-team-brown'>{formSubmitted && password1Valid}</span>
-            </div>
+            </div> */}
             <div className="w-full mt-5">
               <button
                 type="submit"
