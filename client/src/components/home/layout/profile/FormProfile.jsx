@@ -23,7 +23,7 @@ const formValidations = {
 
 export const FormProfile = ({ close }) => {
   const { user } = useAuthStore()
-  const { changeDataProfile, profileData } = useProfileStore()
+  const { changeDataProfile, profile } = useProfileStore()
 
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [idUser, setIdUser] = useState()
@@ -42,7 +42,7 @@ export const FormProfile = ({ close }) => {
 
   useEffect(() => {
     setIdUser(user.id)
-  }, [profileData, user.id])
+  }, [profile, user.id])
 
   return (
       <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
