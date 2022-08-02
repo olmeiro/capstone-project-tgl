@@ -30,8 +30,6 @@ export function NavBar () {
   const { startLogout } = useAuthStore()
   return (
     <>
-      {/* <div className="min-h-full"> */}
-      <div className="w-full">
         <Disclosure as="nav" className="bg-team-dark">
           {({ open }) => (
             <>
@@ -181,7 +179,6 @@ export function NavBar () {
             </>
           )}
         </Disclosure>
-      </div>
     </>
   )
 }
