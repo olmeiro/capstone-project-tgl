@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { socialApi } from '../api'
-import { getPostsToHome, getFriendsFromFriends, checkComments } from '../store'
+import { getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference } from '../store'
 
 export const useHomeStore = () => {
     const dispatch = useDispatch()
@@ -63,13 +63,27 @@ export const useHomeStore = () => {
         comments = await Promise.all(comments);
         return comments
     }
-    const deleteComment = async(commentId)=>{
+    const deleteComment = async (commentId) => {
         await socialApi.delete(`/comments/${commentId}`);
     }
-    const checkCommentsHook = ()=>{
+    const checkCommentsHook = () => {
         dispatch(checkComments());
     }
-
+    const searchUserByAlias = async (aliasFromBody) => {
+        let foundUsers = null;
+        if (aliasFromBody.trim() != "") {
+            const response = await socialApi.get(`/user/all`);
+            const users = response.data.body;
+            foundUsers = users.filter(user => user.alias.toLowerCase().includes(aliasFromBody && aliasFromBody.toLowerCase()));
+        }
+        dispatch(getUserSearched(foundUsers))
+    }
+    const checkEmptySearchBarHook = () => {
+        dispatch(checkEmptySearchBar())
+    }
+    const sendPathHook = (pathReference) => {
+        dispatch(setPathReference(pathReference))
+    }
 
     return {
         getPostsToHomeHook,
@@ -79,6 +93,9 @@ export const useHomeStore = () => {
         makeAComment,
         getCommentsByPost,
         deleteComment,
-        checkCommentsHook
+        checkCommentsHook,
+        searchUserByAlias,
+        checkEmptySearchBarHook,
+        sendPathHook
     }
 }

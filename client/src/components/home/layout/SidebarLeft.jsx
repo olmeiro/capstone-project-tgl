@@ -4,7 +4,7 @@ import { PlusIcon } from '@heroicons/react/outline'
 import { useHomeStore } from '../../../hooks/useHomeStore'
 import { useSelector } from 'react-redux'
 import { useEffect } from "react"
-
+import photoDefault from "../../../../assets/photoDefault.png";
 
 const people = [
   {
@@ -33,7 +33,7 @@ export const SidebarLeft = () => {
   let { suggestions } = useSelector(state => state.home)
   suggestions = suggestions.slice(0, 6)
 
-  const handleAddFriend = (friendId)=>{
+  const handleAddFriend = (friendId) => {
     addFriendshipHook(friendId);
     alert("amistad agregada")
   }
@@ -47,7 +47,7 @@ export const SidebarLeft = () => {
       <ul className="divide-y divide-gray-200 flex flex-col md:place-items-stretch">
         {suggestions.map((user) => (
           <li key={user.id} className="py-4 flex justify-around">
-            <img className="h-10 w-10 rounded-full" src={user.photoProfile} alt="" />
+            <img className="h-10 w-10 rounded-full" src={user.photoProfile ? user.photoProfile : photoDefault} alt="" />
             <div className="ml-3">
               <p className="text-sm font-medium text-gray-900">{user.alias}</p>
               {/* <p className="text-sm text-gray-500 inline-block">{user.name}</p> */}
@@ -55,7 +55,7 @@ export const SidebarLeft = () => {
             </div>
             <div className='w-8'>
               <Tooltip content="Agregar amistad" arrow={false}>
-                <button onClick={()=> handleAddFriend(user.id)}>
+                <button onClick={() => handleAddFriend(user.id)}>
                   <PlusIcon
                     className="h-6 w-6 mb-3 relative top-1  rounded-full text-white bg-team-dark"
                     aria-hidden="true"
@@ -65,23 +65,6 @@ export const SidebarLeft = () => {
             </div>
           </li>
         ))}
-        {/* {people.map((person) => (
-          <li key={person.email} className="py-4 flex justify-around">
-            <img className="h-10 w-10 rounded-full" src={person.image} alt="" />
-            <div className="ml-3">
-              <p className="text-sm font-medium text-gray-900">{person.name}</p>
-              <p className="text-sm text-gray-500 inline-block">{person.email}</p>
-            </div>
-            <div className='w-8'>
-              <Tooltip content="Agregar amistad" arrow={false}>
-                <PlusIcon
-                  className="h-6 w-6 mb-3 relative top-1  rounded-full text-white bg-team-dark"
-                  aria-hidden="true"
-                />
-              </Tooltip>
-            </div>
-          </li>
-        ))} */}
       </ul>
     </div>
   )
