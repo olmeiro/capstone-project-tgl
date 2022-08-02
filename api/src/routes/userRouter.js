@@ -11,6 +11,8 @@ const {
     getUserById,
     postUser,
     putUserById,
+    putPhotoUserById,
+    putProfilePhotoUser,
     deleteUserById,
     loginUser,
     renewToken,
@@ -20,8 +22,9 @@ router.get("/all", getAllUsers);
 router.get("/byalias/:alias", getUserByAlias);
 router.get("/byid/:id", getUserById)
 router.post("/", postUser);
-// router.post("/", validateDataJoi(userSchema, "body"), postUser);
-router.put("/", upload.single("file"), putUserById);
+router.put("/", putUserById);
+router.put("/photouser", upload.single("file"), putPhotoUserById);
+router.put("/profilephoto", upload.single("file"), putProfilePhotoUser);
 router.delete("/", deleteUserById);
 router.post("/login", loginUser);
 router.get("/renew", validarJWT, renewToken);

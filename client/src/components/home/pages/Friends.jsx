@@ -1,8 +1,8 @@
 import React from 'react'
 import { HomeLayout } from '../layout/HomeLayout'
 import { Header } from '../layout/profile/Header'
-import { CardPhotos } from '../layout/profile/CardPhotos'
 import { FormOtherUser } from '../layout/profile/FormOtherUser'
+import { CardPhotosFriends } from '../layout/profile/CardPhotosFriends'
 
 export const Friends = () => {
   return (
@@ -10,7 +10,7 @@ export const Friends = () => {
       <Header>
         <FormOtherUser />
       </Header>
-      <CardPhotos />
+      <CardPhotosFriends />
     </HomeLayout>
   )
 }
