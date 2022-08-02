@@ -27,11 +27,12 @@ const getPostsByUser = async (req, res) => {
 }
 
 const uploadPost = async (req, res) => {
-    const { path } = req.file;
+    const { path }  = req.file;
     const {
         description,
         loginUserId
     } = req.body;
+
     try {
         const formData = new FormData();
         const foto64 = fs.readFileSync(path, { encoding: 'base64' });
@@ -52,10 +53,13 @@ const uploadPost = async (req, res) => {
             date: new Date().toUTCString().split(",")[1].split("GMT")[0].trim()
         });
 
+        console.log("POST", post)
+
         const usuarioLogeado = await UserService.getUserById(loginUserId)
         await usuarioLogeado.addPost(post);
         successResponse(req, res, post);
     } catch (error) {
+        console.log(error)
         errorResponse(req, res, error);
     }
 }
@@ -76,6 +80,7 @@ const putPost = async (req, res) => {
 
 const deletePost = async (req, res) => {
     const { postId } = req.body;
+    console.log("postId", postId)
     try {
         await PostService.deletePost(postId);
         successResponse(req, res, "¡Post has been successfully deleted!");

@@ -23,7 +23,7 @@ router.get("/byalias/:alias", getUserByAlias);
 router.get("/byid/:id", getUserById)
 router.post("/", postUser);
 router.put("/", putUserById);
-router.put("/photouser", upload.single("file"), putPhotoUserById);
+// router.put("/photouser", upload.single("file"), putPhotoUserById);
 router.put("/profilephoto", upload.single("file"), putProfilePhotoUser);
 router.delete("/", deleteUserById);
 router.post("/login", loginUser);
