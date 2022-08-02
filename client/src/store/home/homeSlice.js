@@ -35,6 +35,7 @@ export const homeSlice = createSlice({
             state.pathReference = payload;
         }
     }
+  }
 })
 
 export const { getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference } = homeSlice.actions

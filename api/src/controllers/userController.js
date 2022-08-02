@@ -70,48 +70,48 @@ const putUserById = async (req, res) => {
   }
 };
 
-const putPhotoUserById = async (req, res) => {
-  const {  SECRET_JWT_SEED } = require("../config/index")
+// const putPhotoUserById = async (req, res) => {
+//   const {  SECRET_JWT_SEED } = require("../config/index")
 
-  const token = req.headers['x-token']
+//   const token = req.headers['x-token']
 
-  const { id } = jwt.verify(token, SECRET_JWT_SEED)
-  const idUser = id
+//   const { id } = jwt.verify(token, SECRET_JWT_SEED)
+//   const idUser = id
 
-  const photoProfile = req.file;
+//   const photoProfile = req.file;
   
-  try {
-    const formDataProfile = new FormData();
+//   try {
+//     const formDataProfile = new FormData();
 
-    const photo64PhotoProfile = fs.readFileSync(photoProfile.path, {
-      encoding: "base64",
-    });
+//     const photo64PhotoProfile = fs.readFileSync(photoProfile.path, {
+//       encoding: "base64",
+//     });
 
-    formDataProfile.append("image", photo64PhotoProfile);
+//     formDataProfile.append("image", photo64PhotoProfile);
 
-    const postPhotoProfile = axios({
-      method: "post",
-      url: `https://api.imgbb.com/1/upload?key=${API_KEY}`,
-      headers: formDataProfile.getHeaders(),
-      data: formDataProfile,
-    });
-    const response = postPhotoProfile.data
-    const urlPhotoProfile = response.data.url
-    await UserService.putUserById({
-        alias,
-        name,
-        email,
-        phone,
-        password,
-        photoProfile: urlPhotoProfile,
-      },
-      idUser
-    );
-    successResponse(req, res, urlPhotoUser);
-  } catch (error) {
-    errorResponse(req, res, error);
-  }
-}
+//     const postPhotoProfile = axios({
+//       method: "post",
+//       url: `https://api.imgbb.com/1/upload?key=${API_KEY}`,
+//       headers: formDataProfile.getHeaders(),
+//       data: formDataProfile,
+//     });
+//     const response = postPhotoProfile.data
+//     const urlPhotoProfile = response.data.url
+//     await UserService.putUserById({
+//         alias,
+//         name,
+//         email,
+//         phone,
+//         password,
+//         photoProfile: urlPhotoProfile,
+//       },
+//       idUser
+//     );
+//     successResponse(req, res, urlPhotoUser);
+//   } catch (error) {
+//     errorResponse(req, res, error);
+//   }
+// }
 
 const putProfilePhotoUser = async (req, res) => {
   const {  SECRET_JWT_SEED } = require("../config/index")
@@ -142,10 +142,10 @@ const putProfilePhotoUser = async (req, res) => {
     const arrayPromise = [postPhotoProfile];
     const responseFromApi = await Promise.all(arrayPromise);
     const dataFromApi = responseFromApi.map((res) => res.data);
-    const urls = dataFromApi.map((data) => data.data.url);
-    const [urlPhotoProfile] = urls;
+    const url = dataFromApi.map((data) => data.data.url);
+    const [urlPhotoProfile] = url;
 
-    const userUpdate = await UserService.putUserById(
+    await UserService.putUserById(
       {
         photoProfile: urlPhotoProfile
       },
@@ -194,7 +194,7 @@ module.exports = {
   getUserById,
   postUser,
   putUserById,
-  putPhotoUserById,
+  // putPhotoUserById,
   putProfilePhotoUser,
   deleteUserById,
   loginUser,
