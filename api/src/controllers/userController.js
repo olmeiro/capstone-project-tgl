@@ -31,7 +31,6 @@ const getUserByAlias = async (req, res) => {
 
 const getUserById = async (req, res) => {
   const { id } = req.params;
-  console.log("id", id)
   try {
     const user = await UserService.getUserById(id);
     successResponse(req, res, user);
@@ -96,16 +95,15 @@ const putPhotoUserById = async (req, res) => {
       headers: formDataProfile.getHeaders(),
       data: formDataProfile,
     });
-
-    const arrayPromise = [postPhotoProfile];
-    const responseFromApi = await Promise.all(arrayPromise);
-    const dataFromApi = responseFromApi.map((res) => res.data);
-    const urls = dataFromApi.map((data) => data.data.url);
-    const [urlPhotoUser] = urls;
-
-    const userUpdate = await UserService.putUserById(
-      {
-        photoCover: urlPhotoUser
+    const response = postPhotoProfile.data
+    const urlPhotoProfile = response.data.url
+    await UserService.putUserById({
+        alias,
+        name,
+        email,
+        phone,
+        password,
+        photoProfile: urlPhotoProfile,
       },
       idUser
     );
@@ -156,7 +154,7 @@ const putProfilePhotoUser = async (req, res) => {
     successResponse(req, res, urlPhotoUser);
   } catch (error) {
     errorResponse(req, res, error);
-  }
+  } 
 };
 
 const deleteUserById = async (req, res) => {

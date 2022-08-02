@@ -3,15 +3,15 @@ const router = express.Router();
 
 const  {
     getCommentsByPost,
-    uploadPost,
+    uploadComment,
     putComment,
     deleteComment
 } = require("../controllers/commentsController");
 
-router.get("/bypost", getCommentsByPost)
-router.post("/", uploadPost)
+router.get("/bypost/:postid", getCommentsByPost)
+router.post("/", uploadComment)
 router.put("/", putComment)
-router.delete("/", deleteComment)
+router.delete("/:commentId", deleteComment)
 
 
 module.exports = router

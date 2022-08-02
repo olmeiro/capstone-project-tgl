@@ -29,6 +29,7 @@ class UserService {
             }
             return user;
         } catch (error) {
+            console.log("ACCCCCCCCCCCCCCCCCCCCC",error)
             throw boom.internal(error.message);
         }
 
@@ -48,6 +49,7 @@ class UserService {
 
     static async postUser(newUser) {
         try {
+            console.log("nnnnNNNNNNNNNNNNNNNNNNNNN ", newUser)
             const encryptPassword = await bcrypt.hash(newUser.password, 14)
             const user = await User.create({
                 ...newUser,
@@ -55,10 +57,11 @@ class UserService {
             });
             return user;
         } catch (error) {
+            console.log("AAAAAAAAAAAAAAAA ", error)
             if(error.name =  'SequelizeUniqueConstraintError'){
-                throw boom.badRequest(`El usuario con alias ${newUser.alias} ya se encuentra registrado. Intente con un nuevo alias.`);
+                throw boom.badRequest(`user with nickName ${newUser.alias} already is registered. Try other nickname.`);
             }else{
-                throw boom.badRequest('Error en el registro.')
+                throw boom.badRequest('Error in registering.')
             }
         }
     }
@@ -83,7 +86,7 @@ class UserService {
         try {
             const user = await User.findOne({ where: { alias } })
             if (!user) {
-                throw boom.notFound(`Usuario ${alias} no fue encontrado.`);
+                throw boom.notFound(`User ${alias} has not been found.`);
             }
             
             const validPassword = bcrypt.compareSync(password, user.password)
