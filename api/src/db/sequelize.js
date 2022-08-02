@@ -2,8 +2,8 @@ const { Sequelize } = require("sequelize");
 const setupModels = require("./init.db");
 
 const { User } = require("./models/userSchema");
-const { Publicacion } = require("./models/publicacionSchema");
-const { Comentario } = require("./models/comentarioSchema");
+const { Post } = require("./models/postSchema");
+const { Comment } = require("./models/commentSchema");
 
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_DATABASE } = require("../config/index");
 
@@ -16,12 +16,12 @@ const sequelize = new Sequelize(URI, {
 setupModels(sequelize);
 
 //relaciones de uno a muchos
-User.hasMany(Publicacion);
-Publicacion.belongsTo(User);
-User.hasMany(Comentario);
-Comentario.belongsTo(User);
-Publicacion.hasMany(Comentario);
-Comentario.belongsTo(Publicacion);
+User.hasMany(Post);
+Post.belongsTo(User);
+User.hasMany(Comment);
+Comment.belongsTo(User);
+Post.hasMany(Comment);
+Comment.belongsTo(Post);
 
 sequelize.sync({
     force: false

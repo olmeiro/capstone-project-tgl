@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { socialApi } from '../api'
-import { clearErrorMessage, onChecking, onLogin, onLogout } from '../store'
+import { clearErrorMessage, onChecking, onLogin, onLogout, onLoadDataProfile } from '../store'
 
 export const useAuthStore = () => {
   const { status, user, errorMessage } = useSelector(state => state.auth)
+
   const dispatch = useDispatch()
 
   const startLogin = async ({ alias, password }) => {
@@ -11,13 +12,24 @@ export const useAuthStore = () => {
     try {
       const { data } = await socialApi.post('/user/login', { alias, password })
       localStorage.setItem('token', data.body.token)
-      localStorage.setItem('token-init-data', new Date().getTime())
-      dispatch(onLogin({ alias: data.body.user.alias, name: data.body.user.name }))
+
+      const id = data.body.user.id
+      const aliasUser = data.body.user.alias
+      const name = data.body.user.name
+      const bio = data.body.user.bio
+      const email = data.body.user.email
+      const phone = data.body.user.phone
+      const photoProfile = data.body.user.photoProfile
+      const favorites = data.body.user.favorites
+      const friends = data.body.user.friends
+
+      dispatch(onLoadDataProfile({ id, aliasUser, name, bio, email, phone, photoProfile, favorites, friends }))
+      dispatch(onLogin({ id: data.body.user.id, alias: data.body.user.alias, name: data.body.user.name, photoProfile: data.body.user.photoProfile, friends: data.body.user.friends }))
     } catch (error) {
       dispatch(onLogout(error.response.data?.message || ''))
       setTimeout(() => {
         dispatch(clearErrorMessage())
-      })
+      }, 10)
     }
   }
 
@@ -26,13 +38,12 @@ export const useAuthStore = () => {
     try {
       const { data } = await socialApi.post('/user', { alias, name, email, phone, password })
       localStorage.setItem('token', data.body.token)
-      localStorage.setItem('token-init', new Date().getTime())
-      dispatch(onLogin({ alias: data.body.alias, name: data.body.name }))
+      dispatch(onLogin({ id: data.body.user.id, alias: data.body.user.alias, name: data.body.user.name }))
     } catch (error) {
       dispatch(onLogout(error.response.data?.message || ''))
       setTimeout(() => {
         dispatch(clearErrorMessage())
-      })
+      }, 10)
     }
   }
 
@@ -45,8 +56,21 @@ export const useAuthStore = () => {
     try {
       const { data } = await socialApi('/user/renew')
       localStorage.setItem('token', data.body.token)
-      localStorage.setItem('token-init-date', new Date().getTime())
-      dispatch(onLogin({ alias: data.name, id: data.id }))
+
+      const dataUser = await socialApi.get(`/user/byid/${data.body.id}`)
+
+      const id = dataUser.data.body.id
+      const aliasUser = dataUser.data.body.alias
+      const name = dataUser.data.body.name
+      const bio = dataUser.data.body.bio
+      const email = dataUser.data.body.email
+      const phone = dataUser.data.body.phone
+      const photoProfile = dataUser.data.body.photoProfile
+      const favorites = dataUser.data.body.favorites
+      const friends = dataUser.data.body.friends
+
+      dispatch(onLoadDataProfile({ id, aliasUser, name, bio, email, phone, photoProfile, favorites, friends }))
+      dispatch(onLogin({ id: data.body.id, alias: data.body.alias, name: data.body.name }))
     } catch (error) {
       localStorage.clear()
       dispatch(onLogout())
