@@ -3,63 +3,66 @@ import { createSlice } from '@reduxjs/toolkit'
 export const profileSlice = createSlice({
   name: 'profile',
   initialState: {
-    profileData: {
-      id: '',
-      alias: '',
-      name: '',
-      bio: '',
-      status: true,
-      email: '',
-      phone: '',
-      password: '',
-      photoProfile: '',
-      photoCover: '',
-      friends: [],
-      photos: [],
-      favorites: []
-    }
+    id: '',
+    alias: '',
+    name: '',
+    bio: '',
+    status: true,
+    email: '',
+    phone: '',
+    password: '',
+    photoProfile: '',
+    photoCover: '',
+    friends: [],
+    photos: [],
+    favorites: [],
+    publications: []
+
   },
   reducers: {
     onLoadDataProfile: (state, { payload }) => {
-      state.profileData.alias = payload.aliasUser
-      state.profileData.name = payload.name
-      state.profileData.bio = payload.bio
-      state.profileData.email = payload.email
-      state.profileData.phone = payload.phone
-      state.profileData.photoProfile = payload.photoProfile
-      state.profileData.favorites = payload.favorites
-      state.profileData.friends = payload.friends
+      state.alias = payload.aliasUser
+      state.name = payload.name
+      state.bio = payload.bio
+      state.email = payload.email
+      state.phone = payload.phone
+      state.photoProfile = payload.photoProfile
+      state.favorites = payload.favorites
+      state.friends = payload.friends
     },
     onLoadFriendsUser: (state, { payload }) => {
       state.friends = ['friend1', 'friend2']
     },
     onLoadPhotoProfile: (state, { payload }) => {
-      state.profileData.photoProfile = payload
+      state.photoProfile = payload
     },
-    onLoadPhotosUser: (state, { payload }) => {
-      state.profileData.photos = payload
+    onSendPublication: (state, { payload }) => {
+      state.publications[0].push(payload)
+    },
+    onLoadPublication: (state, { payload }) => {
+      state.publications = payload
     },
     onChangeDataProfile: (state, { payload }) => {
-      state.profileData.alias = payload.alias
-      state.profileData.name = payload.name
-      state.profileData.bio = payload.bio
-      state.profileData.email = payload.email
-      state.profileData.phone = payload.phone
-      state.profileData.password = payload.password
+      state.alias = payload.alias
+      state.name = payload.name
+      state.bio = payload.bio
+      state.email = payload.email
+      state.phone = payload.phone
+      state.password = payload.password
     },
     onLoadCommentPhoto: (state, { payload }) => {
-      state.profileData = payload
+      state = payload
     },
     deletePhotoUser: (state, { payload }) => {
-      state.profileData = payload
+      state = payload
     },
     inactivatingCount: (state, { payload }) => {
-      state.profileData = payload
+      state = payload
     },
     deletingCount: (state, { payload }) => {
-      state.profileData = payload
+      state = payload
     }
   }
 })
 
-export const { onLoadDataProfile, onLoadFriendsUser, onLoadPhotoProfile, onLoadPhotosUser, onChangeDataProfile, onLoadCommentPhoto, inactivatingCount, deletingCount, profileData, photos, friends } = profileSlice.actions
+export const { onLoadDataProfile, onLoadFriendsUser, onLoadPhotoProfile, onSendPublication, onLoadPublication, onChangeDataProfile, onLoadCommentPhoto, inactivatingCount, deletingCount, profile, photos, friends } = profileSlice.actions

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Label, TextInput } from 'flowbite-react'
+import PropTypes from 'prop-types'
 
 import { useAuthStore, useForm } from '../../../../hooks'
-import Swal from 'sweetalert2'
 import { useProfileStore } from '../../../../hooks/useProfileStore'
 
 const formData = {
@@ -10,9 +10,7 @@ const formData = {
   name: '',
   bio: '',
   email: '',
-  phone: '',
-  password: '',
-  password1: ''
+  phone: ''
 }
 
 const formValidations = {
@@ -20,19 +18,15 @@ const formValidations = {
   name: [(value) => value.length >= 4, 'El nombre debe tener al menos 4 caracteres'],
   bio: [(value) => value.length >= 4, 'La bio debe tener al menos 4 palabras'],
   email: [(value) => value.includes('@'), 'El email es obligatorio'],
-  phone: [(value) => value.length >= 7, 'El número de telefono es númerico de 7 digitos'],
-  password: [(value) => value.length >= 6, 'El password es numerico de 6 digitos'],
-  password1: [(value) => value.length >= 6, 'El password es numerico de 6 digitos']
+  phone: [(value) => value.length >= 7, 'El número de telefono es númerico de 7 digitos']
 }
 
-export const FormProfile = () => {
+export const FormProfile = ({ close }) => {
   const { user } = useAuthStore()
-  const { changeDataProfile, profileData } = useProfileStore()
+  const { changeDataProfile, profile } = useProfileStore()
 
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [idUser, setIdUser] = useState()
-
-  // const { alias, name, bio, email, phone, password, password1, aliasValid, nameValid, bioValid, emailValid, phoneValid, passwordValid, password1Valid, onInputChange, isFormValid } = useForm(formData, formValidations)
 
   const { alias, name, bio, email, phone, aliasValid, nameValid, bioValid, emailValid, phoneValid, onInputChange, isFormValid } = useForm(formData, formValidations)
 
@@ -40,25 +34,21 @@ export const FormProfile = () => {
     e.preventDefault()
     setFormSubmitted(true)
 
-    // if (password !== password1) {
-    //   return Swal.fire('Contraseñas no coinciden', 'error')
-    // }
-
     if (isFormValid) {
       changeDataProfile({ idUser, alias, name, bio, email, phone })
+      close(false)
     }
   }
 
   useEffect(() => {
     setIdUser(user.id)
-  }, [user.id, profileData])
+  }, [profile, user.id])
 
   return (
       <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
         <h3 className="text-xl font-medium text-gray-900 dark:text-white">
           Editar datos de perfil
         </h3>
-        <div>
           <form onSubmit={onSubmit}>
             <div>
               <div className="mb-2 block">
@@ -120,40 +110,19 @@ export const FormProfile = () => {
                  />
                <span className='text-[10px] text-end text-team-brown'>{formSubmitted && phoneValid}</span>
             </div>
-            {/* <div>
-              <div className="mb-2 block">
-                <Label htmlFor="password" value="Your password" />
-              </div>
-              <TextInput
-                name="password"
-                value={password}
-                onChange={onInputChange}
-                type="password"
-                 />
-               <span className='text-[10px] text-end text-team-brown'>{formSubmitted && passwordValid}</span>
-            </div>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="password1" value="confirmar password" />
-              </div>
-              <TextInput
-                name="password1"
-                value={password1}
-                onChange={onInputChange}
-                type="password"
-              />
-               <span className='text-[10px] text-end text-team-brown'>{formSubmitted && password1Valid}</span>
-            </div> */}
-            <div className="w-full mt-5">
+            <div >
               <button
                 type="submit"
-                className="w-full h-10 rounded-lg text-white hover:bg-team-dark bg-team-blue"
+                className="w-full mt-5 h-10 rounded-lg text-white hover:bg-team-dark bg-team-blue"
               >
                 Editar
               </button>
             </div>
           </form>
-        </div>
       </div>
   )
+}
+
+FormProfile.propTypes = {
+  close: PropTypes.func
 }
