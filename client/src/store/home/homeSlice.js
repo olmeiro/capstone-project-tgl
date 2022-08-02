@@ -25,11 +25,9 @@ export const homeSlice = createSlice({
         },
         checkEmptySearchBar:(state, { payload })=>{
             if(state.userSearch == null){
-                console.log("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE",state.userSearch)
                 state.checkEmptySearchBar = true
             }
             else{
-                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaa", state.userSearch)
                 state.checkEmptySearchBar = false
             }
         },
