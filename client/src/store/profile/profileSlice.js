@@ -17,7 +17,6 @@ export const profileSlice = createSlice({
     photos: [],
     favorites: [],
     publications: []
-
   },
   reducers: {
     onLoadDataProfile: (state, { payload }) => {
@@ -37,7 +36,7 @@ export const profileSlice = createSlice({
       state.photoProfile = payload
     },
     onSendPublication: (state, { payload }) => {
-      state.publications[0].push(payload)
+      state.publications.push(payload)
     },
     onLoadPublication: (state, { payload }) => {
       state.publications = payload

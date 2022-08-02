@@ -65,9 +65,9 @@ export const CardPublication = ({ userId, date, description, id, likes, photo })
       </React.Fragment>
       <div className="max-w-sm">
         <Card>
-          <div className="flex flex-col items-center pb-10">
+          <div className="flex flex-col items-center pb-10 ">
             <img
-              className="mb-3 h-24 w-24 rounded-full shadow-lg"
+              className="mb-3 h-24 w-24  shadow-lg"
               src={photo}
               alt="Bonnie image"
             />

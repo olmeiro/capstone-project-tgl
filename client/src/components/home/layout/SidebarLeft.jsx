@@ -5,6 +5,8 @@ import { useHomeStore } from '../../../hooks/useHomeStore'
 import { useSelector } from 'react-redux'
 import { useEffect } from "react"
 import photoDefault from "../../../../assets/photoDefault.png";
+import Swal from 'sweetalert2';
+
 
 const people = [
   {
@@ -35,7 +37,8 @@ export const SidebarLeft = () => {
 
   const handleAddFriend = (friendId) => {
     addFriendshipHook(friendId);
-    alert("amistad agregada")
+    // alert("amistad agregada")
+    Swal.fire("amistad agregada")
   }
 
   useEffect(() => {

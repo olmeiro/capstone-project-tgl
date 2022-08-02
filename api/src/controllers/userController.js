@@ -58,63 +58,16 @@ const postUser = async (req, res) => {
 
 const putUserById = async (req, res) => {
   const { idUser, alias, name, bio, email, phone } = req.body;
-  console.log("REQUEST:",  req)
-
   try {
-    
-    const userToUpdate = await UserService.putUserById({ alias, name, bio, email, phone }, idUser );
-    successResponse(req, res, userToUpdate);
+    await UserService.putUserById({ alias, name, bio, email, phone }, idUser);
+    successResponse(req, res, "USUARIO ACTUALIZADO!!");
   } catch (error) {
-    console.log(error)
     errorResponse(req, res, error);
   }
 };
 
-// const putPhotoUserById = async (req, res) => {
-//   const {  SECRET_JWT_SEED } = require("../config/index")
-
-//   const token = req.headers['x-token']
-
-//   const { id } = jwt.verify(token, SECRET_JWT_SEED)
-//   const idUser = id
-
-//   const photoProfile = req.file;
-  
-//   try {
-//     const formDataProfile = new FormData();
-
-//     const photo64PhotoProfile = fs.readFileSync(photoProfile.path, {
-//       encoding: "base64",
-//     });
-
-//     formDataProfile.append("image", photo64PhotoProfile);
-
-//     const postPhotoProfile = axios({
-//       method: "post",
-//       url: `https://api.imgbb.com/1/upload?key=${API_KEY}`,
-//       headers: formDataProfile.getHeaders(),
-//       data: formDataProfile,
-//     });
-//     const response = postPhotoProfile.data
-//     const urlPhotoProfile = response.data.url
-//     await UserService.putUserById({
-//         alias,
-//         name,
-//         email,
-//         phone,
-//         password,
-//         photoProfile: urlPhotoProfile,
-//       },
-//       idUser
-//     );
-//     successResponse(req, res, urlPhotoUser);
-//   } catch (error) {
-//     errorResponse(req, res, error);
-//   }
-// }
-
 const putProfilePhotoUser = async (req, res) => {
-  const {  SECRET_JWT_SEED } = require("../config/index")
+  const { SECRET_JWT_SEED } = require("../config/index")
 
   const token = req.headers['x-token']
 
@@ -151,10 +104,10 @@ const putProfilePhotoUser = async (req, res) => {
       },
       idUser
     );
-    successResponse(req, res, urlPhotoUser);
+    successResponse(req, res, urlPhotoProfile);
   } catch (error) {
     errorResponse(req, res, error);
-  } 
+  }
 };
 
 const deleteUserById = async (req, res) => {

@@ -9,7 +9,7 @@ export const HomeLayout = ({ children }) => {
   const { checkEmptySearchBar } = useSelector(state => state.home)
 
   return (
-    <div className='bg-purple-100'>
+    <div className='bg-purple-100 h-full' >
       <NavBar />
       {children}
       <Footer />
