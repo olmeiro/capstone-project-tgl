@@ -1,15 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { Footer } from './Footer'
 import { NavBar } from './NavBar'
+import { useSelector } from 'react-redux'
 
 export const HomeLayout = ({ children }) => {
+
+  const { checkEmptySearchBar } = useSelector(state => state.home)
+
   return (
     <div className='bg-purple-100'>
       <NavBar />
-      { children }
+      {children}
       <Footer />
+      {/* {!checkEmptySearchBar ? null: <Footer />} */}
     </div>
   )
 }
