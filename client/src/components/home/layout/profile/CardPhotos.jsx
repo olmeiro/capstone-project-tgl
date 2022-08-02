@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Card, Modal, Label, TextInput } from 'flowbite-react'
-import { AiOutlineCloudUpload } from 'react-icons/ai'
+import { Card, Modal, Label, TextInput, Tooltip } from 'flowbite-react'
+import { AiOutlineCloudUpload, AiFillPlusCircle } from 'react-icons/ai'
 
 import { useAuthStore, useForm } from '../../../../hooks'
 import { useProfileStore } from '../../../../hooks/useProfileStore'
@@ -14,48 +14,48 @@ const formValidations = {
 }
 
 export const CardPhotos = () => {
-  const [idUser, setIdUser] = useState('')
+  const [loginUserId, setIdUser] = useState('')
   const [openModal, setOpenModal] = useState(false)
   const [openModalImg, setOpenModalImg] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
-  const [images, setImages] = useState({ data: '' })
+  const [imagePublication, setImagePublication] = useState({ preview: '', data: '' })
 
-  const inputFiles = useRef()
+  const inputRef = useRef()
 
   const { comment, commentValid, onInputChange, isFormValid } = useForm(formData, formValidations)
 
   const { user } = useAuthStore()
-  const { loadingPhotoUser, uploadCommentPhoto, deletePhotoUser } = useProfileStore()
-
-  const onSubmit = (e) => {
-    e.preventDefault()
-    setFormSubmitted(true)
-    if (isFormValid) {
-      uploadCommentPhoto(comment, idUser)
-    }
-  }
+  const { loadingPublicationUser, deletePhotoUser } = useProfileStore()
 
   const deletePhoto = () => {
     // necesito id foto
-    deletePhotoUser(idUser)
+    deletePhotoUser(loginUserId)
+  }
+
+  const onSubmitCommentPhoto = () => {
+    console.log('here')
   }
 
   const handleFileChange = (e) => {
-    if (e.target.files === 0) return
     const img = {
+      preview: URL.createObjectURL(e.target.files[0]),
       data: e.target.files[0]
-    }
-    setImages(img)
+    } 
+    setImagePublication(img)
   }
 
-  const uploadPhotosUser = (e) => {
+  const onHandleSubmitPublication = async (e) => {
     e.preventDefault()
-    loadingPhotoUser(images.data)
+    setFormSubmitted(true)
+    if (isFormValid) {
+      loadingPublicationUser(loginUserId, comment, imagePublication.data)
+    }
+    setOpenModalImg(false)
   }
 
   useEffect(() => {
     setIdUser(user.id)
-  }, [])
+  }, [user.id])
 
   return (
   <div className="flex gap-4 mt-3 mb-3 justify-center flex-wrap">
@@ -68,11 +68,9 @@ export const CardPhotos = () => {
         >
           <Modal.Header />
           <Modal.Body>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmitCommentPhoto}>
             <div>
-              <div className="mb-2 block">
                 <Label htmlFor="comment" value="Agrega tu comentario" />
-              </div>
               <TextInput
                 name="comment"
                 value={comment}
@@ -81,9 +79,7 @@ export const CardPhotos = () => {
               />
               <span className='text-[10px] text-end text-team-brown'>{formSubmitted && commentValid}</span>
             </div>
-            <div className='w-full flex justify-end'>
               <button className='bg-team-blue h-10 p-2 m-4 rounded-lg hover:bg-team-brown' type='submit'>Enviar comentario</button>
-            </div>
             </form>
           </Modal.Body>
         </Modal>
@@ -93,43 +89,59 @@ export const CardPhotos = () => {
           show={openModalImg}
           size="md"
           popup={true}
-          onChange={handleFileChange}
           onClose={() => setOpenModalImg(false)}
         >
           <Modal.Header />
           <Modal.Body>
-            <form onSubmit={uploadPhotosUser}>
-            <div className='flex flex-col justify-center'>
-              <div className="mb-2 block">
-                <Label htmlFor="comment" value="Agrega tus fotos" />
+            <form onSubmit={onHandleSubmitPublication}>
+              <div className='flex flex-col justify-center'>
+                <div className="mb-2 block">
+                  <Label htmlFor="comment" value="Agrega foto y comentario de publicación" />
+                </div>
+                <div className='flex flex-row justify-center mb-5 '>
+                  <label>Agregar foto</label>
+                  <input
+                    type='file'
+                    ref={inputRef}
+                    className='invisible'
+                    onChange={handleFileChange}
+                    />
+                  <AiOutlineCloudUpload
+                    className='w-12 h-12 m-auto hover:bg-team-green rounded-md'
+                    onClick={() => inputRef.current.click()}
+                    />
+                </div>
+                <div className='flex justify-center'>
+                  {imagePublication.preview && <img src={imagePublication.preview} width='100' height='100' />}
+                </div>
+                <hr></hr>
+                <div className='flex flex-col'>
+                  <label htmlFor="comment">Comentario</label>
+                  <input
+                    name="comment"
+                    value={comment}
+                    onChange={onInputChange}
+                    placeholder="Agrega tu comentario"
+                  />
+                </div>
               </div>
-              <input
-                type='file'
-                ref={inputFiles}
-                className='invisible'
-              />
-              <AiOutlineCloudUpload
-                className='w-12 h-12 m-auto hover:bg-team-green rounded-md'
-                onClick={() => inputFiles.current.click()}
-              />
-            </div>
-            <div className='w-full flex justify-end'>
               <button
                 className='bg-team-blue h-10 p-2 m-4 rounded-lg hover:bg-team-brown'
-                type='submit'>Enviar fotos</button>
-            </div>
+                type='submit'>Enviar publicación
+              </button>
             </form>
           </Modal.Body>
         </Modal>
       </React.Fragment>
 
-   <div className='min-w-full'>
-      <button
-        type='submit'
-        onClick={() => setOpenModalImg(true)}
-        className='w-1/2 relative -top-2 bg-team-brown p-3 rounded-lg m-3 text-white hover:bg-team-dark hover:text-white'>
-          Agregar fotos
-      </button>
+   <div className='min-w-full bg-team-brown flex justify-center items-center'>
+    <p className='mr-2'>Agregar publicación</p>
+     <Tooltip content="agregar publicación" arrow={false}>
+        <AiFillPlusCircle
+          className='w-10 h-10 rounded-full hover:bg-team-blue hover:text-white '
+          onClick={() => setOpenModalImg(true)}
+        />
+      </Tooltip>
    </div>
 
      <Card>

@@ -16,7 +16,8 @@ export const profileSlice = createSlice({
       photoCover: '',
       friends: [],
       photos: [],
-      favorites: []
+      favorites: [],
+      publications: []
     }
   },
   reducers: {
@@ -36,8 +37,8 @@ export const profileSlice = createSlice({
     onLoadPhotoProfile: (state, { payload }) => {
       state.profileData.photoProfile = payload
     },
-    onLoadPhotosUser: (state, { payload }) => {
-      state.profileData.photos = payload
+    onLoadPublication: (state, { payload }) => {
+      state.profileData.publications.push(payload)
     },
     onChangeDataProfile: (state, { payload }) => {
       state.profileData.alias = payload.alias
@@ -62,4 +63,4 @@ export const profileSlice = createSlice({
   }
 })
 
-export const { onLoadDataProfile, onLoadFriendsUser, onLoadPhotoProfile, onLoadPhotosUser, onChangeDataProfile, onLoadCommentPhoto, inactivatingCount, deletingCount, profileData, photos, friends } = profileSlice.actions
+export const { onLoadDataProfile, onLoadFriendsUser, onLoadPhotoProfile, onLoadPublication, onChangeDataProfile, onLoadCommentPhoto, inactivatingCount, deletingCount, profileData, photos, friends } = profileSlice.actions

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import { socialApi } from '../api'
-import { onLoadDataProfile, onChangeDataProfile, onLoadCommentPhoto, inactivatingCount, deletingCount, onLoadFriendsUser, onLoadPhotosUser, onLoadPhotoProfile } from '../store'
+import { onLoadDataProfile, onChangeDataProfile, onLoadCommentPhoto, inactivatingCount, deletingCount, onLoadFriendsUser, onLoadPublication, onLoadPhotoProfile } from '../store'
 
 export const useProfileStore = () => {
   const { profileData } = useSelector(state => state.profile)
@@ -35,22 +35,36 @@ export const useProfileStore = () => {
     try {
       const { data } = await socialApi.put('/user/profilephoto', formData)
       dispatch(onLoadPhotoProfile(data.body))
+      Swal.fire({
+        icon: 'success',
+        title: 'Fotos de perfil cargada correctamente.'
+      })
     } catch (error) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Something went wrong!'
+        text: 'Algo ha ido mal!'
       })
     }
   }
 
-  const loadingPhotoUser = async (image) => {
+  const loadingPublicationUser = async (loginUserId, comment, image) => {
     const formData = new FormData()
+    formData.append('loginUserId', loginUserId)
+    formData.append('description', comment)
     formData.append('file', image)
+
+    const newData = formData.getAll('file')
+    console.log('newData', newData)
+
     try {
-      const { data } = await socialApi.put('/user/photouser', formData)
-      console.log('data:', data)
-      dispatch(onLoadPhotosUser(data.body))
+      const { data } = await socialApi.post('/posts', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      console.log('data', data)
+      dispatch(onLoadPublication(data.body))
       Swal.fire({
         icon: 'success',
         title: 'Fotos cargadas correctamente.'
@@ -109,7 +123,7 @@ export const useProfileStore = () => {
     profileData,
     loadingFriendsUser,
     loadingPhotoProfile,
-    loadingPhotoUser,
+    loadingPublicationUser,
     // methods
     loadingDataProfile,
     changeDataProfile,

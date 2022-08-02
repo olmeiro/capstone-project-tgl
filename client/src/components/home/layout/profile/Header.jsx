@@ -31,7 +31,7 @@ export const Header = () => {
 
   const onHandleSubmit = async (e) => {
     e.preventDefault()
-    loadingPhotoProfile(image.data, idUser)
+    loadingPhotoProfile(image.data)
     loadingDataProfile(idUser)
     setModalImg(false)
   }
@@ -53,7 +53,7 @@ export const Header = () => {
         >
           <Modal.Header />
           <Modal.Body>
-            <FormProfile />
+            <FormProfile close={setOpenModal} />
           </Modal.Body>
         </Modal>
       </React.Fragment>
@@ -96,15 +96,15 @@ export const Header = () => {
         <div className='flex flex-col mt-3'>
           <img
             className="md:h-16 md:w-16 sm:h-10 sm:w-10 rounded-full divide-gray-200"
-            src={imageProfile === '' ? imagePath : imageProfile}
+            src={imageProfile === '' || imageProfile === null ? imagePath : imageProfile}
             alt="foto de perfil"
           />
           <AiFillTool
-            className='relative left-12 bottom-4 bg-team-blue rounded-lg'
+            className='relative left-10 bottom-4 bg-team-blue rounded-lg sm:left-8 sm:bottom-2'
             onClick={() => setModalImg(true)}
           />
         </div>
-        <p>{bio === '' ? 'Esta es la decripcion de la Bio' : bio}</p>
+        <p>{bio === '' || bio === null ? 'Esta es la decripcion de la Bio' : bio}</p>
         <Tooltip content="Editar" arrow={false}>
           <Button
             className="hover:bg-team-brown"
