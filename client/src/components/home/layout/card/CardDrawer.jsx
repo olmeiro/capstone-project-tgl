@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export default function CarDrawer ({ children, isOpen, setIsOpen }) {
+export default function CarDrawer({ children, isOpen, setIsOpen }) {
   return (
     <main
       className={
@@ -18,10 +18,14 @@ export default function CarDrawer ({ children, isOpen, setIsOpen }) {
         }
       >
         <article className="relative w-screen max-w-lg pb-10 flex flex-col space-y-6 overflow-y-scroll h-full">
-          <header className="p-4 font-bold text-lg">Header  <button
-        className="bg-green-600 text-team-dark rounded px-4 py-1"
-        onClick={() => setIsOpen(false)}
-      >X</button></header>
+          <header className="p-4 font-bold text-lg flex justify-between">
+            Comentarios
+            <button
+              className="bg text-white rounded px-4 py-1 hover:bg-team-blue"
+              onClick={() => setIsOpen(false)}>
+              X
+            </button>
+          </header>
           {children}
         </article>
       </section>

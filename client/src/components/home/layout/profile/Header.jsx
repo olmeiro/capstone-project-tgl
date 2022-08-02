@@ -31,8 +31,8 @@ export const Header = () => {
 
   const onHandleSubmit = async (e) => {
     e.preventDefault()
-    loadingPhotoProfile(image.data)
-    loadingDataProfile(idUser)
+    loadingPhotoProfile(image.data, idUser)
+    // loadingDataProfile(idUser)
     setModalImg(false)
   }
 

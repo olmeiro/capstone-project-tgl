@@ -6,9 +6,9 @@ export const homeSlice = createSlice({
         posts: [],
         suggestions: [],
         checkComments: false,
-        userSearch:[],
-        checkEmptySearchBar:true,
-        pathReference:"/"
+        userSearch: [],
+        checkEmptySearchBar: true,
+        pathReference: "/"
     },
     reducers: {
         getPostsToHome: (state, { payload }) => {
@@ -20,24 +20,21 @@ export const homeSlice = createSlice({
         checkComments: (state, { payload }) => {
             state.checkComments = !state.checkComments
         },
-        getUserSearched:(state, { payload })=>{
+        getUserSearched: (state, { payload }) => {
             state.userSearch = payload
         },
-        checkEmptySearchBar:(state, { payload })=>{
-            if(state.userSearch == null){
-                console.log("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE",state.userSearch)
+        checkEmptySearchBar: (state, { payload }) => {
+            if (state.userSearch == null) {
                 state.checkEmptySearchBar = true
             }
-            else{
-                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaa", state.userSearch)
+            else {
                 state.checkEmptySearchBar = false
             }
         },
-        setPathReference:(state, { payload })=>{
+        setPathReference: (state, { payload }) => {
             state.pathReference = payload;
         }
     }
-  }
 })
 
 export const { getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference } = homeSlice.actions

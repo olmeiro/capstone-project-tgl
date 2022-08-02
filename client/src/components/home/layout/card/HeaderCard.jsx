@@ -90,14 +90,14 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
               <Tooltip content="like" arrow={false}>
                 <button onClick={() => handleLike()}>
                   <ThumbUpIcon
-                    className="h-6 w-6 mb-3 relative top-1  rounded-md"
+                    className="h-6 w-6 mb-3 relative top-1  rounded-md  hover:fill-black"
                     aria-hidden="true"
                   />
                 </button>
               </Tooltip>
               <Tooltip content="guardar" arrow={false}>
                 <StarIcon
-                  className="h-6 w-6 mb-3 relative top-1  rounded-md"
+                  className="h-6 w-6 mb-3 relative top-1  rounded-md hover:fill-black"
                   aria-hidden="true"
                 />
               </Tooltip>
@@ -105,7 +105,7 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
                 <button>
                   <PlusCircleIcon
                     onClick={() => setOpenModal(true)}
-                    className="h-6 w-6 mb-3 relative top-1  rounded-md"
+                    className="h-6 w-6 mb-3 relative top-1  rounded-md  hover:fill-black hover:text-white"
                     aria-hidden="true"
                   />
                 </button>

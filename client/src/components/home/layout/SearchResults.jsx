@@ -16,8 +16,8 @@ const SearchResults = () => {
     }
 
     return (
-
-        <div className='basis-1/4 px-4'>
+                //sm:h-[30vh] lg:h-[70vh] RESPONSIVE!!
+        <div className='basis-1/4 px-4 flex justify-center h-[80vh]'>
             <ul className="divide-y divide-gray-200 flex flex-col md:place-items-stretch">
                 {userSearch && userSearch.length > 0 ?
                     userSearch.map((user) => {
@@ -41,7 +41,7 @@ const SearchResults = () => {
                             </li>
                         )
                     })
-                    : <img src={userNotFound} />}
+                    : <img className = "w-[750px] " src={userNotFound} />}
             </ul>
         </div>
     )
