@@ -1,6 +1,10 @@
 import React from 'react'
 import { Tooltip } from 'flowbite-react'
 import { PlusIcon } from '@heroicons/react/outline'
+import { useHomeStore } from '../../../hooks/useHomeStore'
+import { useSelector } from 'react-redux'
+import { useEffect } from "react"
+
 
 const people = [
   {
@@ -24,27 +28,61 @@ const people = [
 ]
 
 export const SidebarLeft = () => {
+
+  const { getFriendsFromFriendsHook, addFriendshipHook } = useHomeStore()
+  let { suggestions } = useSelector(state => state.home)
+  suggestions = suggestions.slice(0, 6)
+
+  const handleAddFriend = (friendId)=>{
+    addFriendshipHook(friendId);
+    alert("amistad agregada")
+  }
+
+  useEffect(() => {
+    getFriendsFromFriendsHook();
+  }, []);
+
   return (
     <div className='basis-1/4 px-4'>
       <ul className="divide-y divide-gray-200 flex flex-col md:place-items-stretch">
-      {people.map((person) => (
-        <li key={person.email} className="py-4 flex justify-around">
-          <img className="h-10 w-10 rounded-full" src={person.image} alt="" />
-          <div className="ml-3">
-            <p className="text-sm font-medium text-gray-900">{person.name}</p>
-            <p className="text-sm text-gray-500 inline-block">{person.email}</p>
-          </div>
-          <div className='w-8'>
-            <Tooltip content="Agregar amistad" arrow={false}>
-              <PlusIcon
-                className="h-6 w-6 mb-3 relative top-1  rounded-full text-white bg-team-dark"
-                aria-hidden="true"
-              />
-            </Tooltip>
-          </div>
-        </li>
-      ))}
-    </ul>
+        {suggestions.map((user) => (
+          <li key={user.id} className="py-4 flex justify-around">
+            <img className="h-10 w-10 rounded-full" src={user.photoProfile} alt="" />
+            <div className="ml-3">
+              <p className="text-sm font-medium text-gray-900">{user.alias}</p>
+              {/* <p className="text-sm text-gray-500 inline-block">{user.name}</p> */}
+              <p className="text-sm text-gray-500 inline-block">{user.email}</p>
+            </div>
+            <div className='w-8'>
+              <Tooltip content="Agregar amistad" arrow={false}>
+                <button onClick={()=> handleAddFriend(user.id)}>
+                  <PlusIcon
+                    className="h-6 w-6 mb-3 relative top-1  rounded-full text-white bg-team-dark"
+                    aria-hidden="true"
+                  />
+                </button>
+              </Tooltip>
+            </div>
+          </li>
+        ))}
+        {/* {people.map((person) => (
+          <li key={person.email} className="py-4 flex justify-around">
+            <img className="h-10 w-10 rounded-full" src={person.image} alt="" />
+            <div className="ml-3">
+              <p className="text-sm font-medium text-gray-900">{person.name}</p>
+              <p className="text-sm text-gray-500 inline-block">{person.email}</p>
+            </div>
+            <div className='w-8'>
+              <Tooltip content="Agregar amistad" arrow={false}>
+                <PlusIcon
+                  className="h-6 w-6 mb-3 relative top-1  rounded-full text-white bg-team-dark"
+                  aria-hidden="true"
+                />
+              </Tooltip>
+            </div>
+          </li>
+        ))} */}
+      </ul>
     </div>
   )
 }

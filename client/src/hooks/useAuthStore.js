@@ -11,7 +11,7 @@ export const useAuthStore = () => {
     try {
       const { data } = await socialApi.post('/user/login', { alias, password })
       localStorage.setItem('token', data.body.token)
-      dispatch(onLogin({ id: data.body.user.id, alias: data.body.user.alias, name: data.body.user.name }))
+      dispatch(onLogin({ id: data.body.user.id, alias: data.body.user.alias, name: data.body.user.name, photoProfile:data.body.user.photoProfile, friends:data.body.user.friends }))
     } catch (error) {
       dispatch(onLogout(error.response.data?.message || ''))
       setTimeout(() => {

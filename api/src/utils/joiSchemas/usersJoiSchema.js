@@ -1,15 +1,19 @@
 const joi = require("joi");
 
-const nickName = joi.string().alphanum().min(1).max(10)
-const firstName = joi.string().alphanum().min(1).max(20)
-const phoneNumber = joi.number().positive().min()
+const alias = joi.string().alphanum().min(1).max(20)
+const name = joi.string().alphanum().min(1).max(20)
+const phone = joi.number().positive().min(1).max(30)
+const email = joi.string().alphanum().min(1).max(20)
+const password = joi.string().alphanum().min(1).max(20)
 
 const id = joi.number();
 
 const userSchema = joi.object({
-    alias: nickName.required(),
-    nombre: firstName.required(),
-    phoneNumber: phoneNumber.optional()
+    alias: alias.required(),
+    name: name.required(),
+    phone: phone.optional(),
+    email: email.required(),
+    password:password.required()
 })
 
 const userDetailSchema = joi.object({
