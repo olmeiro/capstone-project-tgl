@@ -112,12 +112,34 @@ export const useProfileStore = () => {
     dispatch(onLoadCommentPhoto(comment))
   }
 
-  const deletePostUser = async (postId) => {
+  const deletePostUser = async (postId, userId) => {
     onLoadChanging('changing')
     try {
-      await socialApi.delete(`/posts/${postId}`)
+      Swal.fire({
+        title: 'Esta seguro de eliminar publicación?',
+        text: 'No puedes revertir esta acción!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, borrar!'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            await socialApi.delete(`/posts/${postId}`)
+            loadingPublicationUser(userId)
+            Swal.fire('Borrado!', 'La publicación ha sido eliminada.', 'success')
+          } catch (error) {
+            Swal.fire('No se pudo eliminar la publicación.')
+          }
+        }
+      })
     } catch (error) {
       console.log(error)
+      Swal.fire({
+        icon: 'error',
+        title: 'Información no actualizada correctamente.'
+      })
     }
   }
 
@@ -135,8 +157,8 @@ export const useProfileStore = () => {
     // onLogout auth
   }
 
-  const onLoadChanging = (value) => {
-    dispatch(onChanging(value))
+  const onLoadChanging = () => {
+    dispatch(onChanging())
   }
 
   return {

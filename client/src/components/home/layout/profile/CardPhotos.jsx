@@ -23,9 +23,7 @@ export const CardPhotos = () => {
   const inputRef = useRef()
 
   const { user } = useAuthStore()
-  const { loadingPublicationUser, sendPublicationUser } = useProfileStore()
-
-  const { publications } = useSelector(state => state.profile)
+  const { sendPublicationUser } = useProfileStore()
 
   const { comment, commentValid, onInputChange, isFormValid } = useForm(formData, formValidations)
   const [formSubmitted, setFormSubmitted] = useState(false)
@@ -49,7 +47,7 @@ export const CardPhotos = () => {
 
   useEffect(() => {
     setIdUser(user.id)
-    loadingPublicationUser(loginUserId)
+    // loadingPublicationUser(loginUserId)
   }, [loginUserId])
 
   return (
@@ -93,6 +91,7 @@ export const CardPhotos = () => {
                     onChange={onInputChange}
                     placeholder="Agrega tu comentario"
                   />
+                  <span className='text-[10px] text-end text-team-blue'>{formSubmitted && commentValid}</span>
                 </div>
               </div>
               <button
@@ -114,20 +113,10 @@ export const CardPhotos = () => {
       </Tooltip>
    </div>
 
-    {
-      publications.length === 0
-        ? null
-        : publications.map(publication => <CardPublication
-            key={publication.id}
-            userId={publication.UserId}
-            date={publication.date}
-            description={publication.description}
-            id={publication.id}
-            likes={publication.likes}
-            photo={publication.photo}
-          />)
-    }
+      <div className=''>
+        <CardPublication />
+      </div>
 
-    </div>
+  </div>
   )
 }

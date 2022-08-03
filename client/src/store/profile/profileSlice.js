@@ -21,7 +21,7 @@ export const profileSlice = createSlice({
   },
   reducers: {
     onChanging: (state, { payload }) => {
-      state.changing = payload
+      state.changing = !state.changing
     },
     onLoadDataProfile: (state, { payload }) => {
       state.alias = payload.aliasUser
