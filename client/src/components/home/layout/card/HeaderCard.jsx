@@ -76,21 +76,27 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
         </Modal>
       </React.Fragment>
 
-      <div>
-        <img className="h-10 w-10 rounded-full" src={userOfPost && userOfPost.photoProfile} alt="" />
-        <div className="ml-3">
-          <p className="text-sm font-medium text-gray-900">{userOfPost && userOfPost.alias}</p>
-          <p className="text-sm text-gray-500 inline-block">{date}</p>
+      <div className="mt-16 bg-team-blue rounded-lg ">
+        <div className='flex '>
+          <div>
+            <img className="h-16 w-16 rounded-full" src={userOfPost && userOfPost.photoProfile} alt="" />
+          </div>
+          <div>
+            <div className=" text-sm font-medium text-gray-900">{userOfPost && userOfPost.alias}</div>
+            <div className=" text-sm text-gray-500 inline-block">{date}</div>
+          </div>
         </div>
         <div>
           {description}
         </div>
-        <div className="box-content max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl mt-2">
-          <img
-            className="h-20 w-full object-contain md:h-80 md:w-80 sm:h-80 sm:w-80 "
-            src={photo}/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            alt="Man looking at item at a store"
-          />
+        <div className=" box-content max-w-md mx-auto rounded-br-lg rounded-bl-lg bg-myColor shadow-md overflow-hidden md:max-w-2xl mt-2">
+          <div className=' flex justify-center'>
+            <img
+              className="h-20 w-full object-contain md:h-80 md:w-80 sm:h-80 sm:w-80 m-5 "
+              src={photo}/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+              alt="Man looking at item at a store"
+            />
+          </div>
           <header className="flex justify-around items-center p-4 bg-team-blue">
             <button
               className="bg-team-dark text-team-green sm:text-sm sm:mr-2 rounded px-4 py-1"

@@ -6,7 +6,7 @@ export const useHomeStore = () => {
     const dispatch = useDispatch()
     const { user } = useSelector(state => state.auth)
     const userId = user.id
-
+    
     const entire = socialApi.get(`/user/byid/${userId}`).then(response => response.data.body)
     let friends = entire.then(user => user.friends)
 
