@@ -8,7 +8,7 @@ import tula from "../../../../assets/tula.jpeg"
 export const SidebarRight = () => {
   return (
     <div className='container px-4 basis-1/6 flex-col gap-2'>
-      <a href="https://edu.teaminternational.com/" target="_blank" >
+      <a href="https://www.teaminternational.com/" target="_blank" >
         <img
           className="rounded-md m-5"
           src={cohete} alt="team international photo"
@@ -18,7 +18,6 @@ export const SidebarRight = () => {
       <img className='rounded-md m-5 w-[280px] h-[213px]' src={photo3} alt="" />
       <img className='rounded-md m-5 w-[280px] h-[213px]' src={photo1} alt="" />
       <img className='rounded-md m-5 w-[280px] h-[213px]' src={tula} alt="" />
-      {/* 280*213 */}
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import { socialApi } from '../api'
-import { onLoadDataProfile, onChangeDataProfile, onLoadCommentPhoto, inactivatingCount, deletingCount, onLoadFriendsUser, onLoadPublication, onSendPublication, onLoadPhotoProfile } from '../store'
+import { onLoadDataProfile, onChangeDataProfile, onLoadCommentPhoto, inactivatingCount, deletingCount, onLoadFriendsUser, onLoadPublication, onSendPublication, onLoadPhotoProfile, onChanging } from '../store'
 
 export const useProfileStore = () => {
   const profile = useSelector(state => state.profile)
@@ -35,7 +35,7 @@ export const useProfileStore = () => {
     try {
       await socialApi.put('/user/profilephoto', formData)
       let user = await socialApi.get(`/user/byid/${idUser}`)
-      user = user.data.body;
+      user = user.data.body
       dispatch(onLoadPhotoProfile(user.photoProfile))
       Swal.fire({
         icon: 'success',
@@ -62,14 +62,12 @@ export const useProfileStore = () => {
           'Content-Type': 'multipart/form-data'
         }
       })
-      console.log("DATAAAAAAAA", data)
       dispatch(onSendPublication(data.body))
       Swal.fire({
         icon: 'success',
         title: 'Fotos cargadas correctamente.'
       })
     } catch (error) {
-      console.log("ERROR CATHCCCC", error)
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -112,9 +110,34 @@ export const useProfileStore = () => {
     dispatch(onLoadCommentPhoto(comment))
   }
 
-  const deletePhotoUser = (id) => {
-    // hacer put photo user id
-    // dispatch()
+  const deletePostUser = async (postId, userId) => {
+    onLoadChanging('changing')
+    try {
+      Swal.fire({
+        title: 'Esta seguro de eliminar publicación?',
+        text: 'No puedes revertir esta acción!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, borrar!'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            await socialApi.delete(`/posts/${postId}`)
+            loadingPublicationUser(userId)
+            Swal.fire('Borrado!', 'La publicación ha sido eliminada.', 'success')
+          } catch (error) {
+            Swal.fire('No se pudo eliminar la publicación.')
+          }
+        }
+      })
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Información no actualizada correctamente.'
+      })
+    }
   }
 
   const inactiveCount = (id) => {
@@ -131,6 +154,10 @@ export const useProfileStore = () => {
     // onLogout auth
   }
 
+  const onLoadChanging = () => {
+    dispatch(onChanging())
+  }
+
   return {
     // properties
     profile,
@@ -139,10 +166,11 @@ export const useProfileStore = () => {
     sendPublicationUser,
     loadingPublicationUser,
     // methods
+    onLoadChanging,
     loadingDataProfile,
     changeDataProfile,
     uploadCommentPhoto,
-    deletePhotoUser,
+    deletePostUser,
     inactiveCount,
     deleteCount
   }
