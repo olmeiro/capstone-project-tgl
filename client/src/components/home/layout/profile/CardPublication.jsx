@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Card } from 'flowbite-react'
+import { AiOutlineArrowUp } from "react-icons/ai";
+
 import { useProfileStore } from '../../../../hooks/useProfileStore'
 import { useAuthStore } from '../../../../hooks'
-import { useSelector } from 'react-redux'
 
 export const CardPublication = () => {
   const { user } = useAuthStore()
@@ -21,9 +23,10 @@ export const CardPublication = () => {
   }, [loginUserId])
 
   return (
-    <div className='h-[52vh] flex flex-wrap justify-center gap-6'>
+    <div className='sm:h-[52vh] flex flex-wrap justify-center gap-6'>
         {publications.length === 0
-          ? <div className='flex items-center'>
+          ? <div className='flex flex-col justify-center items-center'>
+            <AiOutlineArrowUp />
               <h3
                 className='text-xl text-team-blue font-bold'
               >Agrega una publicación</h3>
@@ -59,5 +62,3 @@ export const CardPublication = () => {
     </div>
   )
 }
-
-// { userId, date, description, id: postId, likes, photo }

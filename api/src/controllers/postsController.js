@@ -52,9 +52,6 @@ const uploadPost = async (req, res) => {
             photo: urlFoto,
             date: new Date().toUTCString().split(",")[1].split("GMT")[0].trim()
         });
-
-        console.log("POST", post)
-
         const usuarioLogeado = await UserService.getUserById(loginUserId)
         await usuarioLogeado.addPost(post);
         successResponse(req, res, post);

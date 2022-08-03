@@ -95,7 +95,7 @@ export const Header = () => {
       <div className="h-20 flex flex-row justify-around items-center bg-team-green ">
         <div className='flex flex-col mt-3'>
           <img
-            className="md:h-16 md:w-16 sm:h-10 sm:w-10 rounded-full divide-gray-200"
+            className="md:h-16 md:w-16 sm:h-16 sm:w-16 rounded-full divide-gray-200"
             src={imageProfile === '' || imageProfile === null ? imagePath : imageProfile}
             alt="foto de perfil"
           />
@@ -104,7 +104,7 @@ export const Header = () => {
             onClick={() => setModalImg(true)}
           />
         </div>
-        <p>{bio === '' || bio === null ? 'Esta es la decripcion de la Bio' : bio}</p>
+        <p className='sm:invisible'>{bio === '' || bio === null ? 'Esta es la decripcion de la Bio' : bio}</p>
         <Tooltip content="Editar" arrow={false}>
           <Button
             className="hover:bg-team-brown"

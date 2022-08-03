@@ -68,7 +68,7 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
         <div className="box-content max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl mt-2">
           <img
             className="h-20 w-full object-contain md:h-80 md:w-80 sm:h-80 sm:w-80 "
-            src={photo}/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            src={photo}
             alt="Man looking at item at a store"
           />
           <header className="flex justify-around items-center p-4 bg-team-blue">
