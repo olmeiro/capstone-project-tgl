@@ -5,7 +5,7 @@ import { AiOutlineCloudUpload } from 'react-icons/ai'
 import { useAuthStore, useForm } from '../../../../hooks'
 import { useProfileStore } from '../../../../hooks/useProfileStore'
 import { useSelector } from 'react-redux'
-import photoDefault from "../../../../../assets/photoDefault.png";
+import photoDefault from '../../../../../assets/photoDefault.png'
 import { useFriendStore } from '../../../../hooks/useFriendStore'
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
@@ -29,14 +29,14 @@ export const CardPhotosFriends = () => {
   const inputFiles = useRef()
   const { comment, commentValid, onInputChange, isFormValid } = useForm(formData, formValidations)
   const { user } = useAuthStore()
-  const { loadingPhotoUser, uploadCommentPhoto, deletePhotoUser } = useProfileStore()
+  const { loadingPhotoUser, uploadCommentPhoto } = useProfileStore()
 
-  const { friends } = useSelector(state => state.friends);
-  const { deleteFriendHook } = useFriendStore();
+  const { friends } = useSelector(state => state.friends)
+  const { deleteFriendHook } = useFriendStore()
   const { setLastUserVisitedHook } = useHomeStore()
 
   const handleLastUserVisited = (userAlias, userId) => {
-    setLastUserVisitedHook(userAlias, userId);
+    setLastUserVisitedHook(userAlias, userId)
   }
 
   const handleDeleteFriend = (friendId) => {
@@ -66,11 +66,6 @@ export const CardPhotosFriends = () => {
     if (isFormValid) {
       uploadCommentPhoto(comment, idUser)
     }
-  }
-
-  const deletePhoto = () => {
-    // necesito id foto
-    deletePhotoUser(idUser)
   }
 
   const handleFileChange = (e) => {
@@ -165,11 +160,10 @@ export const CardPhotosFriends = () => {
       </button>
    </div> */}
 
-
       {
         friends.map(friend => {
           return (
-            <Card>
+            <Card key={friend.id}>
               <div className="flex flex-col items-center pb-10">
                 <Link to={`/profile/${friend.alias}`} onClick={() => handleLastUserVisited(friend.alias, friend.id)}>
                   <img
@@ -195,7 +189,6 @@ export const CardPhotosFriends = () => {
                 </div>
               </div>
             </Card>
-
           )
         })
       }

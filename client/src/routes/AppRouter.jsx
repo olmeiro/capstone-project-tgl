@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { useEffect } from 'react'
 
 import { useAuthStore } from '../hooks'
+import LoadingSpinner from '../loading/LoadingSpinner'
 import { HomePage } from '../components/home/pages/HomePage'
 import { ProfilePage } from '../components/home/pages/ProfilePage'
 import { Friends } from '../components/home/pages/Friends'
@@ -16,11 +17,12 @@ export const AppRouter = () => {
     checkToken()
   }, [])
 
-  if (status === 'checking') {
+ if (status === 'checking') {
     return (
-      <h3>Cargando...</h3>
+      // aca va el cargando cuando pasa del login a la pagina principal
+        <LoadingSpinner />
     )
-  }
+ }
 
   return (
     <Routes>
