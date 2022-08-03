@@ -22,9 +22,9 @@ const addFriend = async (req, res) => {
 }
 
 const deleteFriend = async (req, res) => {
-    const { friendId, userId } = req.body;
+    const { friendid, userid } = req.query;
     try {
-        await FriendService.deleteFriend(friendId, userId);
+        await FriendService.deleteFriend(friendid, userid);
         successResponse(req, res, "¡Friend has been successfully deleted!");
     } catch (error) {
         errorResponse(req, res, error);

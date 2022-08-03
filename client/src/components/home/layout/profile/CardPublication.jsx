@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Card } from 'flowbite-react'
-import { AiOutlineArrowUp } from "react-icons/ai";
+import { AiOutlineArrowUp } from 'react-icons/ai'
 
 import { useProfileStore } from '../../../../hooks/useProfileStore'
 import { useAuthStore } from '../../../../hooks'

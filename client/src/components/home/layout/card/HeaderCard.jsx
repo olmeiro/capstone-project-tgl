@@ -7,13 +7,23 @@ import {
 } from '@heroicons/react/outline'
 import { Tooltip, Button, Modal, Label, Textarea } from 'flowbite-react'
 import { useHomeStore } from '../../../../hooks/useHomeStore';
+import Swal from 'sweetalert2';
+import { socialApi } from '../../../../api';
 
-export default function HeaderCard({ setIsOpen, photo, description, likes, date, likeAPost, postId }) {
+export default function HeaderCard({ setIsOpen, photo, description, likes, date, likeAPost, postId, userId }) {
   const [openModal, setOpenModal] = useState(false)
   const [likesRender, setLikesRender] = useState(likes);
   const [comment, setComment] = useState("")
-
   const { makeAComment, checkCommentsHook } = useHomeStore();
+  const [userOfPost, setUserOfPost] = useState();
+
+  let entireUser = socialApi.get(`/user/byid/${userId}`).then(response => response.data.body)
+  useEffect(() => {
+    (async () => {
+      entireUser = await entireUser;
+      setUserOfPost(entireUser)
+    })()
+  }, []);
 
   const handleLike = () => {
     likeAPost(postId)
@@ -23,12 +33,13 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
   }
   const handleSumit = async () => {
     await makeAComment(postId, comment);
+    setComment("");
     checkCommentsHook();
-    alert("Comentario publicado")
+    Swal.fire("Comentario publicado")
     setOpenModal(false)
   }
 
-  
+
 
   return (
     <div>
@@ -52,6 +63,7 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
                   placeholder="Escribe el comentario"
                   required={true}
                   onChange={(e) => handleComment(e)}
+                  value={comment}
                 />
               </div>
               <div className="w-full">
@@ -65,6 +77,14 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
       </React.Fragment>
 
       <div>
+        <img className="h-10 w-10 rounded-full" src={userOfPost && userOfPost.photoProfile} alt="" />
+        <div className="ml-3">
+          <p className="text-sm font-medium text-gray-900">{userOfPost && userOfPost.alias}</p>
+          <p className="text-sm text-gray-500 inline-block">{date}</p>
+        </div>
+        <div>
+          {description}
+        </div>
         <div className="box-content max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl mt-2">
           <img
             className="h-20 w-full object-contain md:h-80 md:w-80 sm:h-80 sm:w-80 "
@@ -72,9 +92,6 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
             alt="Man looking at item at a store"
           />
           <header className="flex justify-around items-center p-4 bg-team-blue">
-            <div>
-              {description}
-            </div>
             <button
               className="bg-team-dark text-team-green sm:text-sm sm:mr-2 rounded px-4 py-1"
               onClick={() => setIsOpen(true)}
@@ -117,3 +134,5 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
     </div>
   )
 }
+
+

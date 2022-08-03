@@ -5,6 +5,8 @@ import { AiFillTool, AiOutlineCloudUpload } from 'react-icons/ai'
 import { FormProfile } from './FormProfile'
 import { useProfileStore } from '../../../../hooks/useProfileStore'
 import { useAuthStore } from '../../../../hooks'
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux'
 
 const imagePath = '/assets/model.avif'
 
@@ -18,8 +20,10 @@ export const Header = () => {
   const [openModal, setOpenModal] = useState(false)
   const [modalImg, setModalImg] = useState(false)
   const [idUser, setIdUser] = useState('')
-
   const inputRef = useRef()
+
+  const { userAlias } = useParams();
+  const { lastUserVisited } = useSelector(state => state.home)
 
   const handleFileChange = (e) => {
     const img = {
@@ -66,7 +70,7 @@ export const Header = () => {
         >
           <Modal.Header />
           <Modal.Body>
-          <div className='flex flex-col justify-center items-center'>
+            <div className='flex flex-col justify-center items-center'>
               <Label htmlFor="name" value="Elige foto de perfil" />
               <AiOutlineCloudUpload
                 className='w-12 h-12 m-10 hover:bg-team-green rounded-md'
@@ -87,7 +91,7 @@ export const Header = () => {
                   <button className='bg-team-blue p-4 rounded-lg'>Enviar</button>
                 </div>
               </form>
-          </div>
+            </div>
           </Modal.Body>
         </Modal>
       </React.Fragment>
@@ -95,8 +99,12 @@ export const Header = () => {
       <div className="h-20 flex flex-row justify-around items-center bg-team-green ">
         <div className='flex flex-col mt-3'>
           <img
-            className="md:h-16 md:w-16 sm:h-16 sm:w-16 rounded-full divide-gray-200"
-            src={imageProfile === '' || imageProfile === null ? imagePath : imageProfile}
+            className="md:h-16 md:w-16 sm:h-10 sm:w-10 rounded-full divide-gray-200"
+            src={
+              userAlias
+                ? lastUserVisited && lastUserVisited.photoProfile
+                : imageProfile === '' || imageProfile === null ? imagePath : imageProfile
+            }
             alt="foto de perfil"
           />
           <AiFillTool
@@ -104,18 +112,28 @@ export const Header = () => {
             onClick={() => setModalImg(true)}
           />
         </div>
-        <p className='sm:invisible'>{bio === '' || bio === null ? 'Esta es la decripcion de la Bio' : bio}</p>
-        <Tooltip content="Editar" arrow={false}>
-          <Button
-            className="hover:bg-team-brown"
-            onClick={() => setOpenModal(true)}
-          >
-            <AdjustmentsIcon
-              className="h-6 w-6 mb-3 relative top-1  rounded-md"
-              aria-hidden="true"
-            />
-          </Button>
-        </Tooltip>
+        {
+          userAlias
+            ? <p> {lastUserVisited && lastUserVisited.bio ? lastUserVisited.bio : 'Usuario sin bio todavia'}</p>
+            : <p>{bio === '' || bio === null ? 'Usuario sin bio todavia' : bio}</p>
+        }
+
+        {
+          userAlias
+            ? null
+            : <Tooltip content="Editar" arrow={false}>
+              <Button
+                className="hover:bg-team-brown"
+                onClick={() => setOpenModal(true)}
+              >
+                <AdjustmentsIcon
+                  className="h-6 w-6 mb-3 relative top-1  rounded-md"
+                  aria-hidden="true"
+                />
+              </Button>
+            </Tooltip>
+        }
+
       </div>
     </div>
   )

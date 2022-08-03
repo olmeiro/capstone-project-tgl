@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { socialApi } from '../api'
-import { getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference } from '../store'
+import { getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference, setLastUserVisited, getPostsOfLastUserVisited } from '../store'
 
 export const useHomeStore = () => {
   const dispatch = useDispatch()

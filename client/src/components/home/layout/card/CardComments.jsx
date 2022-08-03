@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useHomeStore } from '../../../../hooks/useHomeStore'
 import { useSelector } from 'react-redux';
 import photoDefault from "../../../../../assets/photoDefault.png";
-
+import Swal from 'sweetalert2';
 
 export default function CardComments({ postId }) {
   const { getCommentsByPost, deleteComment, checkCommentsHook } = useHomeStore();
@@ -17,12 +17,26 @@ export default function CardComments({ postId }) {
     let getComments = await getCommentsByPost(postId)
     setComments(getComments);
   }
-  const handleDeleteComment = async (commentId) => {
-    let confirmation = confirm("deseas eliminar este comentario?");
-    if (confirmation) {
-      await deleteComment(commentId)
-      checkCommentsHook()
-    }
+  const handleDeleteComment = (commentId) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(result => {
+      if (result.isConfirmed) {
+        deleteComment(commentId)
+        checkCommentsHook()
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    })
   }
   useEffect(() => {
     getComments()

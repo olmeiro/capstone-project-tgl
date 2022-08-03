@@ -6,6 +6,8 @@ import { useAuthStore, useForm } from '../../../../hooks'
 import { useProfileStore } from '../../../../hooks/useProfileStore'
 import { CardPublication } from './CardPublication'
 import Swal from 'sweetalert2'
+import { useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const formData = {
   comment: ''
@@ -20,11 +22,17 @@ export const CardPhotos = () => {
   const [openModalImg, setOpenModalImg] = useState(false)
   const [imagePublication, setImagePublication] = useState({ preview: '', data: '' })
 
-  const { sendPublicationUser } = useProfileStore()
   const { user } = useAuthStore()
   const inputRef = useRef()
 
   const { comment, commentValid, onInputChange, onResetForm } = useForm(formData, formValidations)
+  const { userAlias } = useParams()
+
+  const { loadingPublicationUser, sendPublicationUser } = useProfileStore()
+
+  const { publications } = useSelector(state => state.profile)
+  const { lastUserVisited } = useSelector(state => state.home)
+
   const [formSubmitted, setFormSubmitted] = useState(false)
 
   const handleFileChange = (e) => {
@@ -59,38 +67,35 @@ export const CardPhotos = () => {
   }, [loginUserId])
 
   return (
-  <div className="flex gap-4 mt-3 mb-3 justify-center flex-wrap">
-    <React.Fragment>
-      <Modal
-        show={openModalImg}
-        size="md"
-        popup={true}
-        onClose={() => setOpenModalImg(false)}
-      >
-        <Modal.Header />
-        <Modal.Body>
-          <form onSubmit={onHandleSubmitPublication}>
-            <div className='flex flex-col justify-center'>
-              {/* <div className="mb-2"> */}
-                <h2 className='text-center font-semibold'>
-                  Agrega foto y comentario de publicación
-                </h2>
-              {/* </div> */}
-              <div className='flex flex-col justify-center mb-5 '>
-                <input
-                  type='file'
-                  name='file'
-                  ref={inputRef}
-                  className='invisible'
-                  onChange={handleFileChange}
+    <div className="flex gap-4 mt-3 mb-3 justify-center flex-wrap ">
+      <React.Fragment>
+        <Modal
+          show={openModalImg}
+          size="md"
+          popup={true}
+          onClose={() => setOpenModalImg(false)}
+        >
+          <Modal.Header />
+          <Modal.Body>
+            <form onSubmit={onHandleSubmitPublication}>
+              <div className='flex flex-col justify-center'>
+                <div className="mb-2 block">
+                  <Label htmlFor="comment" value="Agrega foto y comentario de publicación" />
+                </div>
+                <div className='flex flex-row justify-center mb-5 '>
+                  <label>Agregar foto</label>
+                  <input
+                    type='file'
+                    ref={inputRef}
+                    className='invisible'
+                    onChange={handleFileChange}
                   />
-                <Tooltip className='flex justify-center' content="agregar foto" arrow={false}>
                   <AiOutlineCloudUpload
-                    className='w-12 h-12 md:ml-[170px] sm:ml-[95px] hover:bg-team-green rounded-md'
+                    className='w-12 h-12 m-auto hover:bg-team-green rounded-md'
                     onClick={() => inputRef.current.click()}
                   />
-                </Tooltip>
-              </div>
+                </div>
+                <hr></hr>
               <div className='flex justify-center mb-3'>
                 {imagePublication.preview && <img src={imagePublication.preview} width='100' height='100' />}
               </div>
