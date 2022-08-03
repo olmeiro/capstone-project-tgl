@@ -62,14 +62,12 @@ export const useProfileStore = () => {
           'Content-Type': 'multipart/form-data'
         }
       })
-      console.log("DATAAAAAAAA", data)
       dispatch(onSendPublication(data.body))
       Swal.fire({
         icon: 'success',
         title: 'Fotos cargadas correctamente.'
       })
     } catch (error) {
-      console.log("ERROR CATHCCCC", error)
       Swal.fire({
         icon: 'error',
         title: 'Oops...',

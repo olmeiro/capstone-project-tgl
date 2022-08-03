@@ -8,7 +8,8 @@ export const homeSlice = createSlice({
         checkComments: false,
         userSearch: [],
         checkEmptySearchBar: true,
-        pathReference: "/"
+        pathReference: "/",
+        lastUserVisited: null,
     },
     reducers: {
         getPostsToHome: (state, { payload }) => {
@@ -33,8 +34,11 @@ export const homeSlice = createSlice({
         },
         setPathReference: (state, { payload }) => {
             state.pathReference = payload;
+        },
+        setLastUserVisited: (state, { payload }) => {
+            state.lastUserVisited = payload
         }
     }
 })
 
-export const { getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference } = homeSlice.actions
+export const { getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference, setLastUserVisited, getPostsOfLastUserVisited } = homeSlice.actions

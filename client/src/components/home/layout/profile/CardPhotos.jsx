@@ -6,6 +6,7 @@ import { useAuthStore, useForm } from '../../../../hooks'
 import { useProfileStore } from '../../../../hooks/useProfileStore'
 import { useSelector } from 'react-redux'
 import { CardPublication } from './CardPublication'
+import { useParams } from 'react-router-dom'
 
 const formData = {
   comment: ''
@@ -21,11 +22,12 @@ export const CardPhotos = () => {
   const [imagePublication, setImagePublication] = useState({ preview: '', data: '' })
 
   const inputRef = useRef()
-
+  const { userAlias } = useParams();
   const { user } = useAuthStore()
   const { loadingPublicationUser, sendPublicationUser } = useProfileStore()
 
   const { publications } = useSelector(state => state.profile)
+  const { lastUserVisited } = useSelector(state => state.home)
 
   const { comment, commentValid, onInputChange, isFormValid } = useForm(formData, formValidations)
   const [formSubmitted, setFormSubmitted] = useState(false)
@@ -53,7 +55,7 @@ export const CardPhotos = () => {
   }, [loginUserId])
 
   return (
-  <div className="flex gap-4 mt-3 mb-3 justify-center flex-wrap">
+    <div className="flex gap-4 mt-3 mb-3 justify-center flex-wrap ">
       <React.Fragment>
         <Modal
           show={openModalImg}
@@ -75,11 +77,11 @@ export const CardPhotos = () => {
                     ref={inputRef}
                     className='invisible'
                     onChange={handleFileChange}
-                    />
+                  />
                   <AiOutlineCloudUpload
                     className='w-12 h-12 m-auto hover:bg-team-green rounded-md'
                     onClick={() => inputRef.current.click()}
-                    />
+                  />
                 </div>
                 <div className='flex justify-center'>
                   {imagePublication.preview && <img src={imagePublication.preview} width='100' height='100' />}
@@ -103,30 +105,48 @@ export const CardPhotos = () => {
           </Modal.Body>
         </Modal>
       </React.Fragment>
+      {
+        userAlias
+          ? null
+          : <div className='min-w-full bg-team-brown flex justify-center items-center'>
+            <p className='mr-2'>Agregar publicación</p>
+            <Tooltip content="agregar publicación" arrow={false}>
+              <AiFillPlusCircle
+                className='w-10 h-10 rounded-full hover:bg-team-blue hover:text-white '
+                onClick={() => setOpenModalImg(true)}
+              />
+            </Tooltip>
+          </div>
+      }
 
-   <div className='min-w-full bg-team-brown flex justify-center items-center'>
-    <p className='mr-2'>Agregar publicación</p>
-     <Tooltip content="agregar publicación" arrow={false}>
-        <AiFillPlusCircle
-          className='w-10 h-10 rounded-full hover:bg-team-blue hover:text-white '
-          onClick={() => setOpenModalImg(true)}
-        />
-      </Tooltip>
-   </div>
 
-    {
-      publications.length === 0
-        ? null
-        : publications.map(publication => <CardPublication
-            key={publication.id}
-            userId={publication.UserId}
-            date={publication.date}
-            description={publication.description}
-            id={publication.id}
-            likes={publication.likes}
-            photo={publication.photo}
-          />)
-    }
+      {
+        userAlias
+          ? lastUserVisited && lastUserVisited.posts.map(post => {
+            return (
+              <CardPublication
+                key={post.id}
+                userId={post.UserId}
+                date={post.date}
+                description={post.description}
+                id={post.id}
+                likes={post.likes}
+                photo={post.photo}
+              />
+            )
+          })
+          : publications.length === 0
+            ? null
+            : publications.map(publication => <CardPublication
+              key={publication.id}
+              userId={publication.UserId}
+              date={publication.date}
+              description={publication.description}
+              id={publication.id}
+              likes={publication.likes}
+              photo={publication.photo}
+            />)
+      }
 
     </div>
   )
