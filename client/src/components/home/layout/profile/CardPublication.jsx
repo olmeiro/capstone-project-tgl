@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Card, Label, Modal, TextInput } from 'flowbite-react'
 import { useProfileStore } from '../../../../hooks/useProfileStore'
 import { useAuthStore, useForm } from '../../../../hooks'
+import Swal from 'sweetalert2'
+import { useSelector } from 'react-redux'
+import { onChanging } from '../../../../store'
 
 const formData = {
   comment: ''
@@ -11,21 +14,42 @@ const formValidations = {
   comment: [(value) => value.length >= 4, 'El comentario debe tener al menos 4 letras']
 }
 
-export const CardPublication = ({ userId, date, description, id, likes, photo }) => {
+export const CardPublication = ({ userId, date, description, id: postId, likes, photo }) => {
   const { user } = useAuthStore()
+  const { changing } = useSelector(state => state.profile)
 
   const [loginUserId, setIdUser] = useState('')
   const [openModal, setOpenModal] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
+  const [onChangeState, setonChangeState] = useState(null)
 
   const { comment, commentValid, onInputChange, isFormValid } = useForm(formData, formValidations)
 
-  const { deletePhotoUser } = useProfileStore()
+  const {onLoadChanging, deletePostUser } = useProfileStore()
 
   const deletePhoto = () => {
-    // necesito id foto
-    console.log('eliminando foto')
-    // deletePhotoUser(loginUserId)
+    Swal.fire({
+      title: 'Esta seguro de eliminar publicación?',
+      text: 'No puedes revertir esta acción!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, borrar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        try {
+          deletePostUser(postId)
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        } catch (error) {
+          Swal.fire('Algo ha salido mal.')
+        }
+      }
+    })
   }
 
   const onSubmitCommentPhoto = () => {
@@ -34,7 +58,9 @@ export const CardPublication = ({ userId, date, description, id, likes, photo })
 
   useEffect(() => {
     setIdUser(user.id)
-  }, [loginUserId])
+    setonChangeState(changing)
+    console.log(changing)
+  }, [loginUserId, changing])
 
   return (
     <>
@@ -84,12 +110,6 @@ export const CardPublication = ({ userId, date, description, id, likes, photo })
                 className="inline-flex items-center rounded-lg bg-blue-700 py-2 px-4 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Eliminar foto
-              </button>
-              <button
-                onClick={() => setOpenModal(true)}
-                className="inline-flex items-center rounded-lg border border-gray-300 bg-white py-2 px-4 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-              >
-                Comentar
               </button>
             </div>
           </div>

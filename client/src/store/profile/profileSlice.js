@@ -16,9 +16,13 @@ export const profileSlice = createSlice({
     friends: [],
     photos: [],
     favorites: [],
-    publications: []
+    publications: [],
+    changing: 'not-changing'
   },
   reducers: {
+    onChanging: (state, { payload }) => {
+      state.changing = payload
+    },
     onLoadDataProfile: (state, { payload }) => {
       state.alias = payload.aliasUser
       state.name = payload.name
@@ -64,4 +68,4 @@ export const profileSlice = createSlice({
   }
 })
 
-export const { onLoadDataProfile, onLoadFriendsUser, onLoadPhotoProfile, onSendPublication, onLoadPublication, onChangeDataProfile, onLoadCommentPhoto, inactivatingCount, deletingCount, profile, photos, friends } = profileSlice.actions
+export const { onChanging, onLoadDataProfile, onLoadFriendsUser, onLoadPhotoProfile, onSendPublication, onLoadPublication, onChangeDataProfile, onLoadCommentPhoto, inactivatingCount, deletingCount, profile, photos, friends } = profileSlice.actions
