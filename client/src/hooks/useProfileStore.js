@@ -29,12 +29,14 @@ export const useProfileStore = () => {
     dispatch(onLoadFriendsUser()) // pasar info api
   }
 
-  const loadingPhotoProfile = async (image) => {
+  const loadingPhotoProfile = async (image, idUser) => {
     const formData = new FormData()
     formData.append('file', image)
     try {
-      const { data } = await socialApi.put('/user/profilephoto', formData)
-      dispatch(onLoadPhotoProfile(data.body))
+      await socialApi.put('/user/profilephoto', formData)
+      let user = await socialApi.get(`/user/byid/${idUser}`)
+      user = user.data.body;
+      dispatch(onLoadPhotoProfile(user.photoProfile))
       Swal.fire({
         icon: 'success',
         title: 'Fotos de perfil cargada correctamente.'

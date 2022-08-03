@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { socialApi } from '../api'
-import { getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference } from '../store'
+import { getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference, setLastUserVisited, getPostsOfLastUserVisited } from '../store'
 
 export const useHomeStore = () => {
-  const dispatch = useDispatch()
-  const { user } = useSelector(state => state.auth)
-  const userId = user.id
+    const dispatch = useDispatch()
+    const { user } = useSelector(state => state.auth)
+    const userId = user.id
 
-  const entire = socialApi.get(`/user/byid/${userId}`).then(response => response.data.body)
-  let friends = entire.then(user => user.friends)
+    const entire = socialApi.get(`/user/byid/${userId}`).then(response => response.data.body)
+    let friends = entire.then(user => user.friends)
 
     const getPostsToHomeHook = async () => {
         friends = await friends
@@ -84,6 +84,14 @@ export const useHomeStore = () => {
     const sendPathHook = (pathReference) => {
         dispatch(setPathReference(pathReference))
     }
+    const setLastUserVisitedHook = async (userAlias, id) => {
+        const response = await socialApi.get(`/user/byalias/${userAlias}`);
+        const user = response.data.body
+        const responsePosts = await socialApi.get(`/posts/byuser/${id}`)
+        const posts = responsePosts.data.body
+        user.posts = posts
+        dispatch(setLastUserVisited(user))
+    }
 
     return {
         getPostsToHomeHook,
@@ -96,6 +104,7 @@ export const useHomeStore = () => {
         checkCommentsHook,
         searchUserByAlias,
         checkEmptySearchBarHook,
-        sendPathHook
+        sendPathHook,
+        setLastUserVisitedHook,
     }
 }
