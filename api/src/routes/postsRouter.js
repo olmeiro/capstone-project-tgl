@@ -15,7 +15,7 @@ router.get("/all", getPosts)
 router.get("/byuser/:userid", getPostsByUser);
 router.post("/", upload.single("file"), uploadPost)
 router.put("/", putPost)
-router.delete("/", deletePost)
+router.delete("/:postId", deletePost)
 
 
 module.exports = router

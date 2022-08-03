@@ -22,7 +22,7 @@ export const ProfilePage = () => {
     <HomeLayout >
         <div>
            <Header />
-           <CarouselProfile />
+           {/* <CarouselProfile /> */}
            <CardPhotos />
            <OptionCount />
         </div>
