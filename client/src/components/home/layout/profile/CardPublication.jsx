@@ -23,7 +23,7 @@ export const CardPublication = () => {
   }, [loginUserId])
 
   return (
-    <div className='sm:h-[52vh] flex flex-wrap justify-center gap-6'>
+    <div className='flex flex-wrap justify-center gap-6'>
         {publications.length === 0
           ? <div className='flex flex-col justify-center items-center'>
             <AiOutlineArrowUp />
