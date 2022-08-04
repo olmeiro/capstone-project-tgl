@@ -151,9 +151,7 @@ export const CardPhotos = () => {
           />
         </Tooltip>
       </div>
-      <div className="">
         <CardPublication />
-      </div>
     </div>
   )
 }
