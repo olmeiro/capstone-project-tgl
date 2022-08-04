@@ -40,7 +40,7 @@ export const CardPublication = () => {
                       src={publication.photo}
                       alt="Bonnie image"
                     />
-                    <h5 className="mb-1  text-lg font-medium text-gray-900 dark:text-white">
+                    <h5 className="mb-1  text-lg font-medium text-gray-900 dark:text-white ">
                       {publication.description}
                     </h5>
                     <span className="text-sm text-gray-500 dark:text-gray-400">
