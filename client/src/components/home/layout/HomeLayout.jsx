@@ -2,8 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Footer } from './Footer'
 import { NavBar } from './NavBar'
+import { getEnvVariables } from '../../../helpers/getEnvVariables'
 
 export const HomeLayout = ({ children }) => {
+  const getEnv = getEnvVariables()
+  console.log(getEnv);
   return (
     <div className='bg-purple-100' >
       <NavBar />
