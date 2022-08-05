@@ -59,7 +59,7 @@ export function NavBar () {
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
                     <img
-                      className="h-8 w-24 rounded-none bg-team-dark"
+                      className="h-8 sm:w-[2.4rem] md:w-24 rounded-none bg-team-dark"
                       src={imagePath}
                       alt="Workflow"
                     />
