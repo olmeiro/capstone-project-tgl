@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Carousel } from 'flowbite-react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { useState, useEffect } from 'react'
 
 export const CarouselProfile = () => {
-
   const { lastUserVisited, postsFromUserLoggedIn } = useSelector(state => state.home)
   const { userAlias } = useParams()
   const [publications, setPublications] = useState() // publicaciones del usuario logeado
@@ -18,10 +16,11 @@ export const CarouselProfile = () => {
     <>
       {
         userAlias
-        ? lastUserVisited && lastUserVisited.posts.length == 0 ? null // esto es para que no se muestre nada cuando el usuario visitado no tiene posts
-        : <div className="bg-team-blue h-56 sm:h-64 xl:h-80 2xl:h-96">
+          ? lastUserVisited && lastUserVisited.posts.length == 0 ? null // esto es para que no se muestre nada cuando el usuario visitado no tiene posts
+            : <div className="bg-team-blue h-56 sm:h-64 xl:h-80 2xl:h-96">
           {
-            !lastUserVisited ? null
+            !lastUserVisited
+              ? null
               : <Carousel slideInterval={5000}>
                 {
 
@@ -36,10 +35,10 @@ export const CarouselProfile = () => {
               </Carousel>
           }
         </div>
-        : publications && publications.length === 0
-          ? (
-            <div className="bg-team-blue h-56 sm:h-64 xl:h-80 2xl:h-96">
-              <Carousel slideInterval={5000}>
+          : publications && publications.length === 0
+            ? (
+            <div className="bg-team-blue h-56 sm:h-64 xl:h-80 2xl:h-96" key={publications.idUser}>
+              <Carousel slideInterval={5000} >
                 <img
                   src="../../../../assets/logo.png"
                   alt="..."
@@ -62,10 +61,11 @@ export const CarouselProfile = () => {
                 />
               </Carousel>
             </div>
-          )
+              )
             : <div className="bg-team-blue h-56 sm:h-64 xl:h-80 2xl:h-96">
               {
-                !publications ? null
+                !publications
+                  ? null
                   : <Carousel slideInterval={5000}>
                     {
                       publications && publications.map(publication => (
