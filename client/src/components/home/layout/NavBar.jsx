@@ -1,12 +1,10 @@
-/* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Fragment, useState, useEffect } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+
 import { useAuthStore } from '../../../hooks'
-import image from '../../../../assets/photoDefault.png'
 import { useHomeStore } from '../../../hooks/useHomeStore'
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
 
 const userMock = {
   name: 'Tom Cook',

@@ -1,22 +1,22 @@
 import React from 'react'
-import cohete from "../../../../assets/cohete.jpeg"
-import photo1 from "../../../../assets/photo1.jpeg"
-import photo2 from "../../../../assets/photo2.jpeg"
-import photo3 from "../../../../assets/photo3.jpeg"
-import tula from "../../../../assets/tula.jpeg"
+import cohete from '../../../../assets/cohete.jpeg'
+import photo1 from '../../../../assets/photo1-removebg-preview.png'
+import photo2 from '../../../../assets/photo2-removebg-preview.png'
+import photo3 from '../../../../assets/photo3-removebg-preview.png'
+import tula from '../../../../assets/tula-removebg-preview.png'
 
 export const SidebarRight = () => {
   return (
     <div className='container px-4 basis-1/6 flex-col gap-2'>
-      <a href="https://www.teaminternational.com/" target="_blank" >
+      <a href="https://www.teaminternational.com/" target="_blank" rel="noreferrer" >
         <img
           className="rounded-md m-5"
           src={cohete} alt="team international photo"
         />
       </a>
-      <img className='rounded-md m-5 w-[280px] h-[213px]' src={photo2} alt="" />
-      <img className='rounded-md m-5 w-[280px] h-[213px]' src={photo3} alt="" />
-      <img className='rounded-md m-5 w-[280px] h-[213px]' src={photo1} alt="" />
+      <img className='bg-team-blue rounded-md m-5 w-[280px] h-[213px]' src={photo2} alt="" />
+      <img className='bg-team-blue rounded-md m-5 w-[280px] h-[213px]' src={photo3} alt="" />
+      <img className='bg-team-blue rounded-md m-5 w-[280px] h-[213px]' src={photo1} alt="" />
       <img className='rounded-md m-5 w-[280px] h-[213px]' src={tula} alt="" />
     </div>
   )
