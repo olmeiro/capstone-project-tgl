@@ -122,8 +122,8 @@ export const Header = () => {
         </div>
         {
           userAlias
-            ? <p> {lastUserVisited && lastUserVisited.bio ? lastUserVisited.bio : 'Usuario sin bio todavia'}</p>
-            : <p>{bio === '' || bio === null ? 'Usuario sin bio todavia' : bio}</p>
+            ? <p className='sm:text-xs'> {lastUserVisited && lastUserVisited.bio ? lastUserVisited.bio : 'Usuario sin bio todavia'}</p>
+            : <p className='sm:text-xs md:text-lg sm:w-40 md:w-auto' >{bio === '' || bio === null ? 'Usuario sin bio todavia' : bio}</p>
         }
 
         {
@@ -131,11 +131,11 @@ export const Header = () => {
             ? null
             : <Tooltip content="Editar" arrow={false}>
               <Button
-                className="hover:bg-team-brown"
+                className="hover:bg-team-brown sm:h-4 sm:w-4"
                 onClick={() => setOpenModal(true)}
               >
                 <AdjustmentsIcon
-                  className="h-6 w-6 mb-3 relative top-1  rounded-md"
+                  className="h-6 w-6 mb-3 relative top-1  rounded-md sm:h-4 sm:w-4"
                   aria-hidden="true"
                 />
               </Button>
