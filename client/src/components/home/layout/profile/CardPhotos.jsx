@@ -8,6 +8,7 @@ import { CardPublication } from './CardPublication'
 import Swal from 'sweetalert2'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { useHomeStore } from '../../../../hooks/useHomeStore'
 
 const formData = {
   comment: ''
@@ -27,11 +28,7 @@ export const CardPhotos = () => {
 
   const { comment, commentValid, onInputChange, onResetForm } = useForm(formData, formValidations)
   const { userAlias } = useParams()
-
   const { loadingPublicationUser, sendPublicationUser } = useProfileStore()
-
-  const { publications } = useSelector(state => state.profile)
-  const { lastUserVisited } = useSelector(state => state.home)
 
   const [formSubmitted, setFormSubmitted] = useState(false)
 
@@ -96,41 +93,45 @@ export const CardPhotos = () => {
                   />
                 </div>
                 <hr></hr>
-              <div className='flex justify-center mb-3'>
-                {imagePublication.preview && <img src={imagePublication.preview} width='100' height='100' />}
+                <div className='flex justify-center mb-3'>
+                  {imagePublication.preview && <img src={imagePublication.preview} width='100' height='100' />}
+                </div>
+                <hr></hr>
+                <div className='flex flex-col'>
+                  <Label htmlFor="comment" >Comentario</Label>
+                  <TextInput
+                    name="comment"
+                    value={comment}
+                    onChange={onInputChange}
+                    placeholder="Agrega tu comentario"
+                  />
+                  <span className='text-[10px] text-end text-team-blue'>{formSubmitted && commentValid}</span>
+                </div>
+                <button
+                  className='bg-team-blue h-10 p-2 m-4 rounded-lg hover:bg-team-brown font-semibold'
+                  type='submit'>Enviar publicación
+                </button>
               </div>
-              <hr></hr>
-              <div className='flex flex-col'>
-              <Label htmlFor="comment" >Comentario</Label>
-                <TextInput
-                  name="comment"
-                  value={comment}
-                  onChange={onInputChange}
-                  placeholder="Agrega tu comentario"
-                />
-                <span className='text-[10px] text-end text-team-blue'>{formSubmitted && commentValid}</span>
-              </div>
-            <button
-              className='bg-team-blue h-10 p-2 m-4 rounded-lg hover:bg-team-brown font-semibold'
-              type='submit'>Enviar publicación
-            </button>
-            </div>
-          </form>
-        </Modal.Body>
-      </Modal>
-    </React.Fragment>
+            </form>
+          </Modal.Body>
+        </Modal>
+      </React.Fragment>
 
-    <div className='min-w-full flex justify-center items-center'>
-      <Tooltip content="agregar publicación" arrow={false}>
-        <AiFillPlusCircle
-          className='w-12 h-12 rounded-full hover:bg-team-blue hover:text-white '
-          onClick={() => setOpenModalImg(true)}
-        />
-      </Tooltip>
+      {
+        userAlias
+          ? null
+          : <div className='min-w-full flex justify-center items-center'>
+            <Tooltip content="agregar publicación" arrow={false}>
+              <AiFillPlusCircle
+                className='w-12 h-12 rounded-full hover:bg-team-blue hover:text-white '
+                onClick={() => setOpenModalImg(true)}
+              />
+            </Tooltip>
+          </div>
+      }
+      <div className=''>
+        <CardPublication />
+      </div>
     </div>
-    <div className=''>
-      <CardPublication />
-    </div>
-  </div>
   )
 }

@@ -7,12 +7,13 @@ import { useSelector } from "react-redux"
 
 export const Histories = () => {
 
-  const { getPostsToHomeHook, likeAPost } = useHomeStore();
+  const { getPostsToHomeHook, likeAPost, getInfoFromTheUserLoggedIn } = useHomeStore();
   const { posts } = useSelector(state => state.home)
 
 
   useEffect(() => {
     getPostsToHomeHook();
+    getInfoFromTheUserLoggedIn()
   }, []);
 
   return (

@@ -1,55 +1,85 @@
 import React from 'react'
 import { Carousel } from 'flowbite-react'
 import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
 export const CarouselProfile = () => {
-  const { publications } = useSelector(state => state.profile)
+
+  const { lastUserVisited, postsFromUserLoggedIn } = useSelector(state => state.home)
+  const { userAlias } = useParams()
+  const [publications, setPublications] = useState() // publicaciones del usuario logeado
+
+  useEffect(() => {
+    setPublications(postsFromUserLoggedIn)
+  }, [postsFromUserLoggedIn])
 
   return (
     <>
       {
-        publications.length === 0
-          ? (
-          <div className="bg-team-blue h-56 sm:h-64 xl:h-80 2xl:h-96">
-            <Carousel slideInterval={5000}>
-              <img
-                src="../../../../assets/logo.png"
-                alt="..."
-              />
-              <img
-                src="/assets/carousel-2.svg"
-                alt="..."
-              />
-              <img
-                src="/assets/carousel-3.svg"
-                alt="..."
-              />
-              <img
-                src="/assets/carousel-4.svg"
-                alt="..."
-              />
-              <img
-                src="/assets/carousel-5.svg"
-                alt="..."
-              />
-            </Carousel>
-          </div>
-            )
-          : (
-            <div className="bg-team-blue h-56 sm:h-64 xl:h-80 2xl:h-96">
-              <Carousel slideInterval={5000}>
+        userAlias
+        ? lastUserVisited && lastUserVisited.posts.length == 0 ? null // esto es para que no se muestre nada cuando el usuario visitado no tiene posts
+        : <div className="bg-team-blue h-56 sm:h-64 xl:h-80 2xl:h-96">
+          {
+            !lastUserVisited ? null
+              : <Carousel slideInterval={5000}>
                 {
-                  publications.map(publication => (
+
+                  lastUserVisited && lastUserVisited.posts.map(post => (
                     <img
-                    key={publication.idUser}
-                  src={publication.photo}
-                  alt="..."
-                />
+                      key={post.idUser}
+                      src={post.photo}
+                      alt="..."
+                    />
                   ))
                 }
               </Carousel>
+          }
+        </div>
+        : publications && publications.length === 0
+          ? (
+            <div className="bg-team-blue h-56 sm:h-64 xl:h-80 2xl:h-96">
+              <Carousel slideInterval={5000}>
+                <img
+                  src="../../../../assets/logo.png"
+                  alt="..."
+                />
+                <img
+                  src="/assets/carousel-2.svg"
+                  alt="..."
+                />
+                <img
+                  src="/assets/carousel-3.svg"
+                  alt="..."
+                />
+                <img
+                  src="/assets/carousel-4.svg"
+                  alt="..."
+                />
+                <img
+                  src="/assets/carousel-5.svg"
+                  alt="..."
+                />
+              </Carousel>
             </div>
-            )
+          )
+            : <div className="bg-team-blue h-56 sm:h-64 xl:h-80 2xl:h-96">
+              {
+                !publications ? null
+                  : <Carousel slideInterval={5000}>
+                    {
+                      publications && publications.map(publication => (
+                        <img
+                          key={publication.idUser}
+                          src={publication.photo}
+                          alt="..."
+                        />
+                      ))
+                    }
+                  </Carousel>
+              }
+
+            </div>
       }
     </>
   )
