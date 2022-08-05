@@ -6,24 +6,24 @@ import {
   ThumbUpIcon
 } from '@heroicons/react/outline'
 import { Tooltip, Button, Modal, Label, Textarea } from 'flowbite-react'
-import { useHomeStore } from '../../../../hooks/useHomeStore';
-import Swal from 'sweetalert2';
-import { socialApi } from '../../../../api';
+import { useHomeStore } from '../../../../hooks/useHomeStore'
+import Swal from 'sweetalert2'
+import { socialApi } from '../../../../api'
 
-export default function HeaderCard({ setIsOpen, photo, description, likes, date, likeAPost, postId, userId }) {
+export default function HeaderCard ({ setIsOpen, photo, description, likes, date, likeAPost, postId, userId }) {
   const [openModal, setOpenModal] = useState(false)
-  const [likesRender, setLikesRender] = useState(likes);
-  const [comment, setComment] = useState("")
-  const { makeAComment, checkCommentsHook } = useHomeStore();
-  const [userOfPost, setUserOfPost] = useState();
+  const [likesRender, setLikesRender] = useState(likes)
+  const [comment, setComment] = useState('')
+  const { makeAComment, checkCommentsHook } = useHomeStore()
+  const [userOfPost, setUserOfPost] = useState()
 
   let entireUser = socialApi.get(`/user/byid/${userId}`).then(response => response.data.body)
   useEffect(() => {
     (async () => {
-      entireUser = await entireUser;
+      entireUser = await entireUser
       setUserOfPost(entireUser)
     })()
-  }, []);
+  }, [])
 
   const handleLike = () => {
     likeAPost(postId)
@@ -32,14 +32,12 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
     setComment(e.target.value)
   }
   const handleSumit = async () => {
-    await makeAComment(postId, comment);
-    setComment("");
-    checkCommentsHook();
-    Swal.fire("Comentario publicado")
+    await makeAComment(postId, comment)
+    setComment('')
+    checkCommentsHook()
+    Swal.fire('Comentario publicado')
     setOpenModal(false)
   }
-
-
 
   return (
     <div>
@@ -93,7 +91,7 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
           <div className=' flex justify-center'>
             <img
               className="h-20 w-full object-contain md:h-80 md:w-80 sm:h-80 sm:w-80 m-5 "
-              src={photo}/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+              src={photo}
               alt="Man looking at item at a store"
             />
           </div>
@@ -140,5 +138,3 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
     </div>
   )
 }
-
-
