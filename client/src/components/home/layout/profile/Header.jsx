@@ -7,6 +7,7 @@ import { useProfileStore } from '../../../../hooks/useProfileStore'
 import { useAuthStore } from '../../../../hooks'
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux'
+import photoDefault from "../../../../../assets/photoDefault.png"
 
 const imagePath = '/assets/model.avif'
 
@@ -32,7 +33,6 @@ export const Header = () => {
     }
     setImage(img)
   }
-
   const onHandleSubmit = async (e) => {
     e.preventDefault()
     loadingPhotoProfile(image.data, idUser)
@@ -102,15 +102,23 @@ export const Header = () => {
             className="md:h-16 md:w-16 sm:h-10 sm:w-10 rounded-full divide-gray-200"
             src={
               userAlias
-                ? lastUserVisited && lastUserVisited.photoProfile
+                ? lastUserVisited && lastUserVisited.photoProfile == null
+                  ? photoDefault
+                  : lastUserVisited && lastUserVisited.photoProfile
                 : imageProfile === '' || imageProfile === null ? imagePath : imageProfile
             }
             alt="foto de perfil"
           />
-          <AiFillTool
-            className='relative left-10 bottom-4 bg-team-blue rounded-lg sm:left-8 sm:bottom-2'
-            onClick={() => setModalImg(true)}
-          />
+          {
+            userAlias
+              ? null
+              : <AiFillTool
+                className='relative left-10 bottom-4 bg-team-blue rounded-lg sm:left-8 sm:bottom-2'
+                onClick={() => setModalImg(true)}
+              />
+          }
+
+
         </div>
         {
           userAlias
