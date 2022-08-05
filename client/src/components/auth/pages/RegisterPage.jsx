@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 import { AuthLayout } from '../layout/AuthLayout'
 import { useForm, useAuthStore } from '../../../hooks'
 
@@ -14,18 +14,39 @@ const formData = {
 }
 
 const formValidations = {
-  alias: [(value) => value.length >= 4, 'El alias de usuario tener al menos 4 caracteres'],
-  name: [(value) => value.length >= 4, 'El nombre debe tener al menos 4 caracteres'],
-  email: [(value) => value.includes('@'), 'El email es obligatorio'],
-  phone: [(value) => value.length >= 7, 'El número de telefono es númerico de 7 digitos'],
-  password: [(value) => value.length >= 6, 'El password es numerico de 6 digitos'],
+  alias: [(value) => {
+    const regex = /[a-zA-Z][a-zA-Z0-9-_]{3,32}/
+    const regexAlias = regex.test(value)
+    return regexAlias
+  }, 'El alias de usuario tener al menos 4 caracteres, pueden ser letras con números.'],
+  name: [(value) => {
+    const regex = /^[a-z\s]+$/i
+    const regexName = regex.test(value)
+    return regexName
+  }, 'Se require primer nombre y primer apellido. Sólo letras.'],
+  email: [(value) => {
+    const regex = /[a-z0-9]+[_a-z0-9/.-]*[a-z0-9]+@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})/ig
+    const regexEmail = regex.test(value)
+    return regexEmail
+  }, 'El email es incorrecto.'],
+  phone: [(value) => {
+    // value.length >= 7
+    const regex = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/
+    const testRegex = regex.test(value)
+    return testRegex
+  }, 'El número de contacto es número móvil de 10 dígitos.'],
+  password: [(value) => {
+    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/gm
+    const regexPassword = regex.test(value)
+    return regexPassword
+  }, 'El password debe contener almenos 6 caracteres, al menos una mayuscula, minúscula, puede contener carácteres especiales.'],
   password1: [(value) => value.length >= 6, 'El password es numerico de 6 digitos']
 }
 
 export const RegisterPage = () => {
   const [formSubmitted, setFormSubmitted] = useState(false)
   const { startRegister, errorMessage } = useAuthStore()
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const { alias, name, email, phone, password, password1, onInputChange, aliasValid, nameValid, emailValid, phoneValid, passwordValid, password1Valid, isFormValid } = useForm(formData, formValidations)
 
@@ -46,10 +67,9 @@ export const RegisterPage = () => {
     }
   }, [errorMessage])
 
-
   const handleClick = () => {
-    navigate('LoginPage');
-    //history.push("/LoginPage");
+    navigate('LoginPage')
+    // history.push("/LoginPage");
   }
 
   return (
@@ -95,11 +115,11 @@ export const RegisterPage = () => {
         />
         <span className='text-[10px] text-end text-team-brown'>{formSubmitted && emailValid}</span>
 
-        <label htmlFor="">Teléfono</label>
+        <label htmlFor="">Celular</label>
         <input
           className="form-input px-4 py-3 rounded-full"
           type="text"
-          placeholder="teléfono"
+          placeholder="celular"
           id="phone"
           name="phone"
           value={phone}

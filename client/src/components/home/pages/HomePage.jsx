@@ -22,7 +22,7 @@ export const HomePage = () => {
   return (
     <HomeLayout>
       {!checkEmptySearchBar ? <SearchResults /> :
-        <div className='mx-auto flex flex-row gap-2 justify-center sm:flex-col md:flex-row mt-8 font-inter'>
+        <div className='mx-auto flex flex-row gap-2 justify-center sm:flex-col md:flex-row mt-6 font-inter mb-6'>
           <SidebarLeft />
           <Histories />
           <SidebarRight />
