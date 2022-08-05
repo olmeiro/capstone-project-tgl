@@ -7,17 +7,17 @@ import tula from '../../../../assets/tula-removebg-preview.png'
 
 export const SidebarRight = () => {
   return (
-    <div className='container px-4 basis-1/6 flex-col gap-2'>
+    <div className='container px-4 basis-1/6 flex-col'>
       <a href="https://www.teaminternational.com/" target="_blank" rel="noreferrer" >
         <img
-          className="rounded-md m-5"
+          className="rounded-md w-[280px]"
           src={cohete} alt="team international photo"
         />
       </a>
-      <img className='bg-team-blue rounded-md m-5 w-[280px] h-[213px]' src={photo2} alt="" />
-      <img className='bg-team-blue rounded-md m-5 w-[280px] h-[213px]' src={photo3} alt="" />
-      <img className='bg-team-blue rounded-md m-5 w-[280px] h-[213px]' src={photo1} alt="" />
-      <img className='rounded-md m-5 w-[280px] h-[213px]' src={tula} alt="" />
+      <img className='bg-team-blue rounded-md mt-1 w-[280px] h-[213px]' src={photo2} alt="" />
+      <img className='bg-team-blue rounded-md mt-1 w-[280px] h-[213px]' src={photo3} alt="" />
+      <img className='bg-team-blue rounded-md mt-1 w-[280px] h-[213px]' src={photo1} alt="" />
+      <img className='rounded-md bg-team-green mt-1 w-[280px] h-[213px]' src={tula} alt="" />
     </div>
   )
 }
