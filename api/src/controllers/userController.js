@@ -62,6 +62,7 @@ const putUserById = async (req, res) => {
     await UserService.putUserById({ alias, name, bio, email, phone }, idUser);
     successResponse(req, res, "USUARIO ACTUALIZADO!!");
   } catch (error) {
+    console.log(error)
     errorResponse(req, res, error);
   }
 };
