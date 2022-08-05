@@ -8,7 +8,7 @@ import { CardPublication } from './CardPublication'
 import Swal from 'sweetalert2'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-
+// esta es la rama Alberto
 const formData = {
   comment: ''
 }
