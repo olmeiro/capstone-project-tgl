@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Footer } from './Footer'
+import { FooterPage } from './Footer'
 import { NavBar } from './NavBar'
 
 export const HomeLayout = ({ children }) => {
@@ -8,7 +8,7 @@ export const HomeLayout = ({ children }) => {
     <div className='bg-purple-100' >
       <NavBar />
       {children}
-      <Footer />
+      <FooterPage />
     </div>
   )
 }
