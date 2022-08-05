@@ -76,7 +76,7 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
         </Modal>
       </React.Fragment>
 
-      <div className="mt-16 bg-team-blue rounded-lg ">
+      <div className="bg-team-blue rounded-lg ">
         <div className='flex '>
           <div>
             <img className="h-16 w-16 rounded-full" src={userOfPost && userOfPost.photoProfile} alt="" />

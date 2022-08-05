@@ -14,11 +14,28 @@ const formData = {
 }
 
 const formValidations = {
-  alias: [(value) => value.length >= 4, 'El alias de usuario tener al menos 4 caracteres'],
-  name: [(value) => value.length >= 4, 'El nombre debe tener al menos 4 caracteres'],
+  alias: [(value) => {
+    const regex = /[a-zA-Z][a-zA-Z0-9-_]{3,32}/
+    const regexAlias = regex.test(value)
+    return regexAlias
+  }, 'El alias de usuario tener al menos 4 caracteres, pueden ser letras con números.'],
   bio: [(value) => value.length >= 4, 'La bio debe tener al menos 4 palabras'],
-  email: [(value) => value.includes('@'), 'El email es obligatorio'],
-  phone: [(value) => value.length >= 7, 'El número de telefono es númerico de 7 digitos']
+  name: [(value) => {
+    const regex = /^[a-z\s]+$/i
+    const regexName = regex.test(value)
+    return regexName
+  }, 'Se require primer nombre y primer apellido. Sólo letras.'],
+  email: [(value) => {
+    const regex = /[a-z0-9]+[_a-z0-9/.-]*[a-z0-9]+@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})/ig
+    const regexEmail = regex.test(value)
+    return regexEmail
+  }, 'El email es incorrecto.'],
+  phone: [(value) => {
+    // value.length >= 7
+    const regex = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/
+    const testRegex = regex.test(value)
+    return testRegex
+  }, 'El número de contacto es número móvil de 10 dígitos.'],
 }
 
 export const FormProfile = ({ close }) => {

@@ -2,11 +2,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import { socialApi } from '../api'
 import { onLoadDataProfile, onChangeDataProfile, onLoadCommentPhoto, inactivatingCount, deletingCount, onLoadFriendsUser, onLoadPublication, onSendPublication, onLoadPhotoProfile, onChanging } from '../store'
+import { useHomeStore } from './useHomeStore'
 
 export const useProfileStore = () => {
   const profile = useSelector(state => state.profile)
   const dispatch = useDispatch()
-
+  const { getPostsFromUserLoggedIn} = useHomeStore()
   const loadingDataProfile = async (id) => {
     try {
       const { data } = await socialApi.get(`/user/byid/${id}`)
@@ -62,6 +63,7 @@ export const useProfileStore = () => {
           'Content-Type': 'multipart/form-data'
         }
       })
+      getPostsFromUserLoggedIn()
       dispatch(onSendPublication(data.body))
       Swal.fire({
         icon: 'success',
@@ -125,6 +127,7 @@ export const useProfileStore = () => {
         if (result.isConfirmed) {
           try {
             await socialApi.delete(`/posts/${postId}`)
+            getPostsFromUserLoggedIn()
             loadingPublicationUser(userId)
             Swal.fire('Borrado!', 'La publicación ha sido eliminada.', 'success')
           } catch (error) {

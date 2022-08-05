@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { socialApi } from '../api'
-import { getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference, setLastUserVisited, getPostsOfLastUserVisited } from '../store'
+import { actionKeepLastUserVisitesOnRedux, getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference, setLastUserVisited, setInfoFromUserLoggedIn, setcheckInfoUser, setPostsFromUserLoggedIn } from '../store'
 
 export const useHomeStore = () => {
-    const dispatch = useDispatch()
-    const { user } = useSelector(state => state.auth)
-    const userId = user.id
-    
-    const entire = socialApi.get(`/user/byid/${userId}`).then(response => response.data.body)
-    let friends = entire.then(user => user.friends)
+  const dispatch = useDispatch()
+  const { user } = useSelector(state => state.auth)
+  const userId = user.id
+
+  const entire = socialApi.get(`/user/byid/${userId}`).then(response => response.data.body)
+  let friends = entire.then(user => user.friends)
 
   const getPostsToHomeHook = async () => {
     friends = await friends
@@ -84,6 +84,38 @@ export const useHomeStore = () => {
   const sendPathHook = (pathReference) => {
     dispatch(setPathReference(pathReference))
   }
+  const setLastUserVisitedHook = async (userAlias, userId) => {
+    const responseUser = await socialApi.get(`user/byalias/${userAlias}`)
+    const user = responseUser.data.body;
+    const responsePosts = await socialApi.get(`/posts/byuser/${userId}`)
+    const posts = responsePosts.data.body;
+    user.posts = posts;
+    localStorage.setItem('lastUserVisited', JSON.stringify(user));
+    const lastUserVisited = JSON.parse(localStorage.getItem('lastUserVisited'));
+    dispatch(setLastUserVisited(lastUserVisited));
+  }
+  const keepLastUserVisitesOnRedux = async()=>{
+    const lastUserVisited = JSON.parse(localStorage.getItem('lastUserVisited'));
+    dispatch(actionKeepLastUserVisitesOnRedux(lastUserVisited));
+  }
+  const getInfoFromTheUserLoggedIn = async () => {
+    const user = await entire
+    const responsePosts = await socialApi.get(`/posts/byuser/${userId}`)
+    const posts = responsePosts.data.body;
+    const newUser = {
+      ...user,
+      posts
+    }
+    dispatch(setInfoFromUserLoggedIn(newUser))
+  }
+  const checkInfoUserHook = async () => {
+    dispatch(setcheckInfoUser())
+  }
+  const getPostsFromUserLoggedIn = async () => {
+    const responsePosts = await socialApi.get(`/posts/byuser/${userId}`)
+    const posts = responsePosts.data.body;
+    dispatch(setPostsFromUserLoggedIn(posts))
+  }
 
   return {
     getPostsToHomeHook,
@@ -96,6 +128,11 @@ export const useHomeStore = () => {
     checkCommentsHook,
     searchUserByAlias,
     checkEmptySearchBarHook,
-    sendPathHook
+    sendPathHook,
+    setLastUserVisitedHook,
+    getInfoFromTheUserLoggedIn,
+    checkInfoUserHook,
+    getPostsFromUserLoggedIn,
+    keepLastUserVisitesOnRedux
   }
 }
