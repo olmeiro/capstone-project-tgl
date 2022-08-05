@@ -13,7 +13,7 @@ const imagePath = '/assets/model.avif'
 
 export const Header = () => {
   const { user } = useAuthStore()
-  const { loadingPhotoProfile, loadingDataProfile, profile } = useProfileStore()
+  const { loadingPhotoProfile, profile } = useProfileStore()
 
   const [bio, setBio] = useState('Esta es la decripción de tu perfil')
   const [image, setImage] = useState({ preview: '', data: '' })

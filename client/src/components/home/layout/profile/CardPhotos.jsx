@@ -7,8 +7,6 @@ import { useProfileStore } from '../../../../hooks/useProfileStore'
 import { CardPublication } from './CardPublication'
 import Swal from 'sweetalert2'
 import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { useHomeStore } from '../../../../hooks/useHomeStore'
 
 const formData = {
   comment: ''
@@ -28,7 +26,7 @@ export const CardPhotos = () => {
 
   const { comment, commentValid, onInputChange, onResetForm } = useForm(formData, formValidations)
   const { userAlias } = useParams()
-  const { loadingPublicationUser, sendPublicationUser } = useProfileStore()
+  const {  sendPublicationUser } = useProfileStore()
 
   const [formSubmitted, setFormSubmitted] = useState(false)
 
