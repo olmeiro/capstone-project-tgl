@@ -7,6 +7,7 @@ import { useProfileStore } from '../../../../hooks/useProfileStore'
 import { CardPublication } from './CardPublication'
 import Swal from 'sweetalert2'
 import { useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const formData = {
   comment: ''
