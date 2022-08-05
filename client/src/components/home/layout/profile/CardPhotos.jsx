@@ -13,22 +13,32 @@ const formData = {
 }
 
 const formValidations = {
-  comment: [(value) => value.length >= 0, 'El comentario debe tener al menos 4 letras']
+  comment: [
+    (value) => value.length >= 0,
+    'El comentario debe tener al menos 4 letras'
+  ]
 }
 
 export const CardPhotos = () => {
   const [loginUserId, setIdUser] = useState('')
   const [openModalImg, setOpenModalImg] = useState(false)
-  const [imagePublication, setImagePublication] = useState({ preview: '', data: '' })
+  const [imagePublication, setImagePublication] = useState({
+    preview: '',
+    data: ''
+  })
 
   const { user } = useAuthStore()
   const inputRef = useRef()
+
 
   const { comment, commentValid, onInputChange, onResetForm } = useForm(formData, formValidations)
   const { userAlias } = useParams()
   const {  sendPublicationUser } = useProfileStore()
 
   const [formSubmitted, setFormSubmitted] = useState(false)
+
+  const { userAlias } = useParams()
+  const { lastUserVisited } = useSelector((state) => state.home)
 
   const handleFileChange = (e) => {
     const img = {
@@ -73,36 +83,56 @@ export const CardPhotos = () => {
           <Modal.Header />
           <Modal.Body>
             <form onSubmit={onHandleSubmitPublication}>
-              <div className='flex flex-col justify-center'>
-                <div className="mb-2 block">
-                  <Label htmlFor="comment" value="Agrega foto y comentario de publicación" />
-                </div>
-                <div className='flex flex-row justify-center mb-5 '>
-                  <label>Agregar foto</label>
+              <div className="flex flex-col justify-center">
+                {/* <div className="mb-2"> */}
+                <h2 className="text-center font-semibold">
+                  Agrega foto y comentario de publicación
+                </h2>
+                {/* </div> */}
+                <div className="flex flex-col justify-center mb-5 ">
                   <input
-                    type='file'
+                    type="file"
+                    name="file"
                     ref={inputRef}
-                    className='invisible'
+                    className="invisible"
                     onChange={handleFileChange}
                   />
-                  <AiOutlineCloudUpload
-                    className='w-12 h-12 m-auto hover:bg-team-green rounded-md'
-                    onClick={() => inputRef.current.click()}
-                  />
+                  <Tooltip
+                    className="flex justify-center"
+                    content="agregar foto"
+                    arrow={false}
+                  >
+                    <AiOutlineCloudUpload
+                      className="w-12 h-12 md:ml-[170px] sm:ml-[95px] hover:bg-team-green rounded-md"
+                      onClick={() => inputRef.current.click()}
+                    />
+                  </Tooltip>
+                </div>
+                <div className="flex justify-center mb-3">
+                  {imagePublication.preview && (
+                    <img
+                      src={imagePublication.preview}
+                      width="100"
+                      height="100"
+                    />
+                  )}
                 </div>
                 <hr></hr>
+
                 <div className='flex justify-center mb-3'>
                   {imagePublication.preview && <img src={imagePublication.preview} width='100' height='100' />}
                 </div>
                 <hr></hr>
                 <div className='flex flex-col'>
                   <Label htmlFor="comment" >Comentario</Label>
+
                   <TextInput
                     name="comment"
                     value={comment}
                     onChange={onInputChange}
                     placeholder="Agrega tu comentario"
                   />
+
                   <span className='text-[10px] text-end text-team-blue'>{formSubmitted && commentValid}</span>
                 </div>
                 <button
@@ -114,6 +144,7 @@ export const CardPhotos = () => {
           </Modal.Body>
         </Modal>
       </React.Fragment>
+
 
       {
         userAlias
@@ -130,6 +161,7 @@ export const CardPhotos = () => {
       <div className=''>
         <CardPublication />
       </div>
+
     </div>
   )
 }
