@@ -5,13 +5,15 @@ import { CarouselProfile } from '../layout/profile/CarouselProfile'
 import { useHomeStore } from '../../../hooks/useHomeStore'
 
 import { useSelector } from 'react-redux'
+import { HomeLayout } from '../layout/HomeLayout'
+import { Header } from '../layout/profile/Header'
+import { CardPhotos } from '../layout/profile/CardPhotos'
 
 export const ProfilePage = () => {
   const { sendPathHook } = useHomeStore()
-  const location = useLocation();
+  const location = useLocation()
   const { getInfoFromTheUserLoggedIn, getPostsFromUserLoggedIn } = useHomeStore()
   const { checkInfoUser } = useSelector(state => state.home)
-
 
   useEffect(() => {
     sendPathHook(location.pathname)

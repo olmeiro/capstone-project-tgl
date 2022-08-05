@@ -24,7 +24,7 @@ Post.hasMany(Comment);
 Comment.belongsTo(Post);
 
 sequelize.sync({
-    force: true
+    force: false
 })
 
 module.exports = sequelize;
