@@ -32,7 +32,7 @@ export const CardPublication = () => {
   }, [loginUserId, postsFromUserLoggedIn, checkInfoUser])
 
   return (
-    <div className='flex flex-wrap justify-center gap-6'>
+    <div className='flex flex-wrap justify-center gap-6 m-1'>
       {
         userAlias
           ? lastUserVisited && lastUserVisited.posts.length === 0
