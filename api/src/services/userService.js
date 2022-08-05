@@ -83,7 +83,7 @@ class UserService {
         try {
             const user = await User.findOne({ where: { alias } })
             if (!user) {
-                throw boom.notFound(`User ${alias} has not been found.`);
+                throw boom.notFound(`Usuario con alias: ${alias} no fue encontrado en el sistema.`);
             }
             
             const validPassword = bcrypt.compareSync(password, user.password)

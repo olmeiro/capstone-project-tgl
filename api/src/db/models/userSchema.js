@@ -31,7 +31,7 @@ const UserModel = {
     },
     phone:{
         allowNull: true,
-        type: DataTypes.INTEGER
+        type: DataTypes.BIGINT
     },
     password:{
         allowNull: true,

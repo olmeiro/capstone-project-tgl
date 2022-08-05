@@ -30,14 +30,12 @@ export const CardPhotos = () => {
   const { user } = useAuthStore()
   const inputRef = useRef()
 
-
   const { comment, commentValid, onInputChange, onResetForm } = useForm(formData, formValidations)
   const { userAlias } = useParams()
   const {  sendPublicationUser } = useProfileStore()
 
   const [formSubmitted, setFormSubmitted] = useState(false)
 
-  const { userAlias } = useParams()
   const { lastUserVisited } = useSelector((state) => state.home)
 
   const handleFileChange = (e) => {
@@ -108,17 +106,6 @@ export const CardPhotos = () => {
                     />
                   </Tooltip>
                 </div>
-                <div className="flex justify-center mb-3">
-                  {imagePublication.preview && (
-                    <img
-                      src={imagePublication.preview}
-                      width="100"
-                      height="100"
-                    />
-                  )}
-                </div>
-                <hr></hr>
-
                 <div className='flex justify-center mb-3'>
                   {imagePublication.preview && <img src={imagePublication.preview} width='100' height='100' />}
                 </div>
@@ -144,7 +131,6 @@ export const CardPhotos = () => {
           </Modal.Body>
         </Modal>
       </React.Fragment>
-
 
       {
         userAlias

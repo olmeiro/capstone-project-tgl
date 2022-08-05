@@ -1,12 +1,10 @@
-/* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Fragment, useState, useEffect } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+
 import { useAuthStore } from '../../../hooks'
-import image from '../../../../assets/photoDefault.png'
 import { useHomeStore } from '../../../hooks/useHomeStore'
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
 
 const userMock = {
   name: 'Tom Cook',
@@ -57,11 +55,11 @@ export function NavBar () {
         {({ open }) => (
           <>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex items-center justify-between h-16">
+              <div className="flex items-center justify-between h-24">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
                     <img
-                      className="h-8 w-24 rounded-md bg-team-dark"
+                      className="h-8 sm:w-[2.4rem] md:w-24 rounded-none bg-team-dark"
                       src={imagePath}
                       alt="Workflow"
                     />
