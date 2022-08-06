@@ -23,10 +23,10 @@ export const Favorites = () => {
     useEffect(() => {
         sendPathHook(location.pathname)
     }, [])
-    // flex justify-center h-[80vh]
+
     return (
         <HomeLayout >
-            <div className='h-[79vh] md:h-auto'>
+            <div  className='min-h-screen'>
                 <Header>
                     <FormOtherUser />
                 </Header>
