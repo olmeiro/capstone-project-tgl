@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Card, Modal, Label, TextInput } from 'flowbite-react'
 import { AiOutlineCloudUpload } from 'react-icons/ai'
+import { Link } from 'react-router-dom'
 
 import { useAuthStore, useForm } from '../../../../hooks'
 import { useProfileStore } from '../../../../hooks/useProfileStore'
@@ -8,7 +9,6 @@ import { useSelector } from 'react-redux'
 import photoDefault from '../../../../../assets/photoDefault.png'
 import { useFriendStore } from '../../../../hooks/useFriendStore'
 import Swal from 'sweetalert2'
-import { Link } from 'react-router-dom'
 import { useHomeStore } from '../../../../hooks/useHomeStore'
 
 const formData = {
@@ -16,7 +16,10 @@ const formData = {
 }
 
 const formValidations = {
-  comment: [(value) => value.length >= 4, 'El comentario debe tener al menos 4 letras']
+  comment: [
+    (value) => value.length >= 4,
+    'El comentario debe tener al menos 4 letras'
+  ]
 }
 
 export const CardPhotosFriends = () => {
@@ -27,11 +30,14 @@ export const CardPhotosFriends = () => {
   const [images, setImages] = useState({ data: '' })
 
   const inputFiles = useRef()
-  const { comment, commentValid, onInputChange, isFormValid } = useForm(formData, formValidations)
+  const { comment, commentValid, onInputChange, isFormValid } = useForm(
+    formData,
+    formValidations
+  )
   const { user } = useAuthStore()
   const { loadingPhotoUser, uploadCommentPhoto } = useProfileStore()
 
-  const { friends } = useSelector(state => state.friends)
+  const { friends } = useSelector((state) => state.friends)
   const { deleteFriendHook } = useFriendStore()
   const { setLastUserVisitedHook } = useHomeStore()
 
@@ -48,14 +54,10 @@ export const CardPhotosFriends = () => {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
-    }).then(result => {
+    }).then((result) => {
       if (result.isConfirmed) {
         deleteFriendHook(friendId)
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
+        Swal.fire('Deleted!', 'Your file has been deleted.', 'success')
       }
     })
   }
@@ -82,6 +84,7 @@ export const CardPhotosFriends = () => {
   }
 
   useEffect(() => {
+    console.log('friends', friends)
     setIdUser(user.id)
   }, [])
 
@@ -107,10 +110,17 @@ export const CardPhotosFriends = () => {
                   onChange={onInputChange}
                   placeholder="Agrega tu comentario"
                 />
-                <span className='text-[10px] text-end text-team-brown'>{formSubmitted && commentValid}</span>
+                <span className="text-[10px] text-end text-team-brown">
+                  {formSubmitted && commentValid}
+                </span>
               </div>
-              <div className='w-full flex justify-end'>
-                <button className='bg-team-blue h-10 p-2 m-4 rounded-lg hover:bg-team-brown' type='submit'>Enviar comentario</button>
+              <div className="w-full flex justify-end">
+                <button
+                  className="bg-team-blue h-10 p-2 m-4 rounded-lg hover:bg-team-brown"
+                  type="submit"
+                >
+                  Enviar comentario
+                </button>
               </div>
             </form>
           </Modal.Body>
@@ -127,24 +137,23 @@ export const CardPhotosFriends = () => {
           <Modal.Header />
           <Modal.Body>
             <form onSubmit={uploadPhotosUser}>
-              <div className='flex flex-col justify-center'>
+              <div className="flex flex-col justify-center">
                 <div className="mb-2 block">
                   <Label htmlFor="comment" value="Agrega tus fotos" />
                 </div>
-                <input
-                  type='file'
-                  ref={inputFiles}
-                  className='invisible'
-                />
+                <input type="file" ref={inputFiles} className="invisible" />
                 <AiOutlineCloudUpload
-                  className='w-12 h-12 m-auto hover:bg-team-green rounded-md'
+                  className="w-12 h-12 m-auto hover:bg-team-green rounded-md"
                   onClick={() => inputFiles.current.click()}
                 />
               </div>
-              <div className='w-full flex justify-end'>
+              <div className="w-full flex justify-end">
                 <button
-                  className='bg-team-blue h-10 p-2 m-4 rounded-lg hover:bg-team-brown'
-                  type='submit'>Enviar fotos</button>
+                  className="bg-team-blue h-10 p-2 m-4 rounded-lg hover:bg-team-brown"
+                  type="submit"
+                >
+                  Enviar fotos
+                </button>
               </div>
             </form>
           </Modal.Body>
@@ -160,15 +169,31 @@ export const CardPhotosFriends = () => {
       </button>
    </div> */}
 
-      {
-        friends.map(friend => {
-          return (
+      {friends.length === 0
+        ? (
+        <div className="flex flex-col justify-center items-center h-[49vh] m-4">
+          <h3 className="text-xl text-team-blue font-bold text-center">
+            Agrega nuevos amigos en la pestaña
+            <Link to="/" className="underline ml-4 hover:cursor-pointer">
+              TEAM
+            </Link>
+          </h3>
+        </div>
+          )
+        : (
+            friends.map((friend) => {
+              return (
             <Card key={friend.id}>
               <div className="flex flex-col items-center pb-10">
-                <Link to={`/profile/${friend.alias}`} onClick={() => handleLastUserVisited(friend.alias, friend.id)}>
+                <Link
+                  to={`/profile/${friend.alias}`}
+                  onClick={() => handleLastUserVisited(friend.alias, friend.id)}
+                >
                   <img
                     className="mb-3 h-24 w-24 rounded-full shadow-lg"
-                    src={friend.photoProfile ? friend.photoProfile : photoDefault}
+                    src={
+                      friend.photoProfile ? friend.photoProfile : photoDefault
+                    }
                     alt="Bonnie image"
                   />
                   <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
@@ -189,9 +214,9 @@ export const CardPhotosFriends = () => {
                 </div>
               </div>
             </Card>
-          )
-        })
-      }
+              )
+            })
+          )}
     </div>
   )
 }

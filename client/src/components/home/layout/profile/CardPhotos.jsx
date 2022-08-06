@@ -69,7 +69,6 @@ export const CardPhotos = () => {
   }
 
   useEffect(() => {
-    console.log('changing', changing)
     setIdUser(user.id)
   }, [loginUserId, changing])
 
