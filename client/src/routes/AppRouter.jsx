@@ -25,28 +25,31 @@ export const AppRouter = () => {
   }
 
   return (
-    <Routes>
-      {
-        (status === 'not-authenticated')
-          ? (
-            <>
-              <Route path="/auth/login" element={<LoginPage />} />
-              <Route path="/auth/register" element={<RegisterPage />} />
+    <div className='bg-purple-100'>
+      <Routes>
+        {
+          (status === 'not-authenticated')
+            ? (
+              <>
+                <Route path="/auth/login" element={<LoginPage />} />
+                <Route path="/auth/register" element={<RegisterPage />} />
 
-              <Route path='/*' element={<Navigate to="/auth/login" />} />
-            </>
-            )
-          : (
-            <>
-              <Route path='/' element={<HomePage />} />
-              <Route path='/profile' element={<ProfilePage />} />
-              <Route path='/friends' element={<Friends />} />
-              <Route path='/profile/:userAlias' element={<ProfilePageOfOneUser />} />
+                <Route path='/*' element={<Navigate to="/auth/login" />} />
+              </>
+              )
+            : (
+              <>
+                <Route path='/' element={<HomePage />} />
+                <Route path='/profile' element={<ProfilePage />} />
+                <Route path='/friends' element={<Friends />} />
+                <Route path='/profile/:userAlias' element={<ProfilePageOfOneUser />} />
+                <Route path='/loading' element={<LoadingSpinner />} />
 
-              <Route path='/*' element={<Navigate to="/" />} />
-            </>
-            )
-      }
-    </Routes>
+                <Route path='/*' element={<Navigate to="/" />} />
+              </>
+              )
+        }
+      </Routes>
+    </div>
   )
 }
