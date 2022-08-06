@@ -70,7 +70,7 @@ export const CarouselProfile = () => {
                     {
                       publications && publications.map(publication => (
                         <img
-                          key={publication.idUser}
+                          key={publication.id}
                           src={publication.photo}
                           alt="..."
                         />
