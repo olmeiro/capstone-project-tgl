@@ -36,11 +36,11 @@ export const CardFavorites = () => {
         setFavoriteToRender(favorites)
     }, [favorites, checkFavorites])
     return (
-        <div >
+        <div className="flex  flex-wrap justify-center gap-6 m-1" >
             {
                 favoriteToRender && favoriteToRender.map(favorite => {
                     return (
-                        <div className='flex flex-wrap justify-center gap-6 m-1'>
+                        <div className=''>
                             <div key={favorite.id} className='rounded-lg'>
                                 <div className='bg h-72 w-72 rounded-md'>
                                     <img

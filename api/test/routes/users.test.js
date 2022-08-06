@@ -10,26 +10,26 @@ const { getAllUsersStub } = require("../../testsData/service.test")
 let server = null
 let serviceStub = null
 
-// test.beforeEach(async () => {
-//     serviceStub = sandbox.stub(UserService.prototype, "getAllUsers").callsFake(() => getAllUsersStub)
-//     // require("../../src/routes/index")
-//     const dataService = proxyquire("../../src/routes/userRouter", {
-//         "../../src/services/userService": serviceStub
-//     })
+test.beforeEach(async () => {
+    serviceStub = sandbox.stub(UserService.prototype, 'getAllUsers').callsFake(() => getAllUsersStub)
 
-//     app = proxyquire("../../app", {
-//         "./src/routes/index/userRouter": dataService
-//     })
+    const dataService = proxyquire("../../src/routes/userRouter", {
+        "../services/userService": serviceStub  // ruta de servicios 
+    })
 
-//     server = await request(app)
-// })
+    app = proxyquire("../../app", {
+        "./src/routes/index": dataService // ruta de usuarios peticiones
+    })
 
-// test.afterEach(() => {
-//     sandbox.restore()
-// })
+    server = await request(app)
+})
+
+test.afterEach(() => {
+    sandbox.restore()
+})
 
 test.serial("/user/all", async t => {
-    const response = await request(app).get("/user/all")
+    const response = server.get("/user/all")
     t.is(response.statusCode, 200)
     t.is(response.headers["content-type"], "application/json; charset=utf-8")
     t.pass()

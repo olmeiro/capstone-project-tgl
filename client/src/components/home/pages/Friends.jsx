@@ -20,10 +20,10 @@ export const Friends = () => {
   useEffect(() => {
     sendPathHook(location.pathname)
   }, [])
-  // flex justify-center h-[80vh]
+
   return (
     <HomeLayout >
-      <div>
+      <div  className='min-h-screen'>
         <Header>
           <FormOtherUser />
         </Header>
