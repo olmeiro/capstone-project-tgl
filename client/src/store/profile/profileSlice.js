@@ -17,10 +17,10 @@ export const profileSlice = createSlice({
     photos: [],
     favorites: [],
     publications: [],
-    changing: 'not-changing'
+    changing: false
   },
   reducers: {
-    onChanging: (state, { payload }) => {
+    onChanging: (state) => {
       state.changing = !state.changing
     },
     onLoadDataProfile: (state, { payload }) => {

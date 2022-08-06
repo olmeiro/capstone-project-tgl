@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Modal, Label, Tooltip, TextInput } from 'flowbite-react'
+import { Modal, Label, Tooltip, TextInput, Spinner } from 'flowbite-react'
 import { AiOutlineCloudUpload, AiFillPlusCircle } from 'react-icons/ai'
 
 import { useAuthStore, useForm } from '../../../../hooks'
@@ -39,6 +39,7 @@ export const CardPhotos = () => {
   const [formSubmitted, setFormSubmitted] = useState(false)
 
   const { lastUserVisited } = useSelector((state) => state.home)
+  const { changing } = useSelector(state => state.profile)
 
   const handleFileChange = (e) => {
     const img = {
@@ -68,8 +69,21 @@ export const CardPhotos = () => {
   }
 
   useEffect(() => {
+    console.log('changing', changing)
     setIdUser(user.id)
-  }, [loginUserId])
+  }, [loginUserId, changing])
+
+  if (changing) {
+    return (
+      <div className="flex justify-center sm:h-[49vh] h-[40vh] items-center bg-team-blue">
+        <div className="text-center">
+          <Spinner
+            size="lg"
+            aria-label="Center-aligned spinner example" />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="flex gap-4 mt-3 mb-3 justify-center flex-wrap ">
