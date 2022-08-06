@@ -7,7 +7,7 @@ const {
     deleteFavorite
 } = require("../controllers/favoritesController");
 
-router.get("/", getFavoritesByUserId)
+router.get("/:userId", getFavoritesByUserId)
 router.post("/", addFavorite)
 router.delete("/", deleteFavorite)
 

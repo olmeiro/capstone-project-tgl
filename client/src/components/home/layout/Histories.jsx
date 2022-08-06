@@ -5,12 +5,13 @@ import { Card } from './card/Card'
 import { useSelector } from 'react-redux'
 
 export const Histories = () => {
-  const { getPostsToHomeHook, likeAPost, getInfoFromTheUserLoggedIn } = useHomeStore()
+  const { getPostsToHomeHook, likeAPost, getInfoFromTheUserLoggedIn, getFavoritesHook } = useHomeStore()
   const { posts } = useSelector(state => state.home)
 
   useEffect(() => {
     getPostsToHomeHook()
     getInfoFromTheUserLoggedIn()
+    getFavoritesHook()
   }, [])
 
   return (

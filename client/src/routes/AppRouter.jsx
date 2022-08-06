@@ -9,6 +9,7 @@ import { Friends } from '../components/home/pages/Friends'
 import { LoginPage } from '../components/auth/pages/LoginPage'
 import { RegisterPage } from '../components/auth/pages/RegisterPage'
 import { ProfilePageOfOneUser } from "../components/home/pages/ProfilePageOfOneUser"
+import { Favorites } from '../components/home/pages/Favorites'
 
 export const AppRouter = () => {
   const { status, checkToken } = useAuthStore()
@@ -17,12 +18,12 @@ export const AppRouter = () => {
     checkToken()
   }, [])
 
- if (status === 'checking') {
+  if (status === 'checking') {
     return (
       // aca va el cargando cuando pasa del login a la pagina principal
-        <LoadingSpinner />
+      <LoadingSpinner />
     )
- }
+  }
 
   return (
     <Routes>
@@ -42,6 +43,7 @@ export const AppRouter = () => {
               <Route path='/profile' element={<ProfilePage />} />
               <Route path='/friends' element={<Friends />} />
               <Route path='/profile/:userAlias' element={<ProfilePageOfOneUser />} />
+              <Route path='/favorites' element={<Favorites />} />
 
               <Route path='/*' element={<Navigate to="/" />} />
             </>
