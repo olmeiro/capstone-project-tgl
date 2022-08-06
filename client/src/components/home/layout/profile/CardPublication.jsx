@@ -39,17 +39,19 @@ export const CardPublication = () => {
             ? <div> Este usuario no tiene publicaciones agregadas</div>
             : lastUserVisited && lastUserVisited.posts.map((post) => {
               return (
-                <Card key={post.id} >
-                  <div className="flex flex-col items-center pb-10 w-72 sm:w-64 shadow-md">
+                <div key={post.id} className="rounded-lg">
+                  <div className='bg h-72 w-72 rounded-md'>
                     <img
-                      className="mb-3 h-24 w-24  shadow-lg rounded-md"
+                      className="h-72 w-72 rounded-tr-lg rounded-tl-lg shadow-lg"
                       src={post.photo}
-                      alt="Bonnie image"
+                      alt="image publication"
                     />
-                    <h5 className="mb-1  text-lg font-medium text-gray-900 dark:text-white">
+                  </div>
+                  <div className='flex flex-col items-center pb-10 bg rounded-br-lg rounded-bl-lg'>
+                    <h5 className="w-60 h-6 mb-1 mt-2 text-sm font-semibold text-team-blue tracking-wide text-center">
                       {post.description}
                     </h5>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                    <span className="mt-4 text-team-green dark:text-gray-400 font-thin">
                       {post.date}
                     </span>
                     {
@@ -66,7 +68,7 @@ export const CardPublication = () => {
                         : null
                     }
                   </div>
-                </Card>
+                </div>
               )
             })
           : publications && publications.length === 0
@@ -79,31 +81,31 @@ export const CardPublication = () => {
             : publications && publications.map((publication) => {
               return (
                 <div key={publication.id} className='rounded-lg'>
-                <div className='bg h-72 w-72 rounded-md'>
-                  <img
-                    className=" h-72 w-72 rounded-tr-lg rounded-tl-lg shadow-lg"
-                    src={publication.photo}
-                    alt="image publication"
+                  <div className='bg h-72 w-72 rounded-md'>
+                    <img
+                      className=" h-72 w-72 rounded-tr-lg rounded-tl-lg shadow-lg"
+                      src={publication.photo}
+                      alt="image publication"
                     />
-                </div>
-                <div className="flex flex-col items-center pb-10 bg rounded-br-lg rounded-bl-lg">
-                  <h5 className="w-60 h-6 mb-1 mt-2 text-sm font-semibold text-team-blue tracking-wide text-center">
-                    {publication.description}
-                  </h5>
-                  <span className="mt-4 text-team-green dark:text-gray-400 font-thin">
-                    {publication.date}
-                  </span>
-                  <div className="mt-2 flex space-x-3">
-                    <button
-                      href="#"
-                      onClick={() => deletePhoto(publication.id, publication.UserId)}
-                      className="relative -bottom-4 inline-flex items-center rounded-lg bg-team-brown py-2 px-4 text-center text-sm font-medium text-bg hover:bg-blue-800 hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                      Eliminar foto
-                    </button>
+                  </div>
+                  <div className="flex flex-col items-center pb-10 bg rounded-br-lg rounded-bl-lg">
+                    <h5 className="w-60 h-6 mb-1 mt-2 text-sm font-semibold text-team-blue tracking-wide text-center">
+                      {publication.description}
+                    </h5>
+                    <span className="mt-4 text-team-green dark:text-gray-400 font-thin">
+                      {publication.date}
+                    </span>
+                    <div className="mt-2 flex space-x-3">
+                      <button
+                        href="#"
+                        onClick={() => deletePhoto(publication.id, publication.UserId)}
+                        className="relative -bottom-4 inline-flex items-center rounded-lg bg-team-brown py-2 px-4 text-center text-sm font-medium text-bg hover:bg-blue-800 hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      >
+                        Eliminar foto
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
               )
             })
 
