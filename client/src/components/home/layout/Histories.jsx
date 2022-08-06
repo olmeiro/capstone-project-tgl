@@ -15,8 +15,7 @@ export const Histories = () => {
   }, [])
 
   return (
-    // <div className=" sm:flex-col basis-1 md:basis-1/3 scroll-smooth">
-    <div className="flex flex-col-reverse basis-1 md:basis-1/3 scroll-smooth">
+    <div className="flex flex-col basis-1 md:basis-1/3 scroll-smooth">
       {
         posts.length === 0
           ? null
