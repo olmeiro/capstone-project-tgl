@@ -112,7 +112,7 @@ const putProfilePhotoUser = async (req, res) => {
 };
 
 const deleteUserById = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   try {
     await UserService.deleteUserById(id);
     successResponse(req, res, "¡User has been deleted successfully!");
