@@ -9,13 +9,16 @@ import { Tooltip, Button, Modal, Label, Textarea } from 'flowbite-react'
 import { useHomeStore } from '../../../../hooks/useHomeStore'
 import Swal from 'sweetalert2'
 import { socialApi } from '../../../../api'
+import { useSelector } from 'react-redux'
 
-export default function HeaderCard ({ setIsOpen, photo, description, likes, date, likeAPost, postId, userId }) {
+export default function HeaderCard({ setIsOpen, photo, description, likes, date, likeAPost, postId, userId }) {
   const [openModal, setOpenModal] = useState(false)
   const [likesRender, setLikesRender] = useState(likes)
   const [comment, setComment] = useState('')
-  const { makeAComment, checkCommentsHook } = useHomeStore()
+  const { makeAComment, checkCommentsHook, addToFavorites } = useHomeStore()
   const [userOfPost, setUserOfPost] = useState()
+  const { user } = useSelector(state => state.auth)
+  console.log("user", user)
 
   let entireUser = socialApi.get(`/user/byid/${userId}`).then(response => response.data.body)
   useEffect(() => {
@@ -24,6 +27,11 @@ export default function HeaderCard ({ setIsOpen, photo, description, likes, date
       setUserOfPost(entireUser)
     })()
   }, [])
+
+  const handleAddFavorite = () => {
+    addToFavorites(postId, user.id)
+    Swal.fire('¡Publicación agregada a favoritos!')
+  }
 
   const handleLike = () => {
     likeAPost(postId)
@@ -115,10 +123,12 @@ export default function HeaderCard ({ setIsOpen, photo, description, likes, date
                 </button>
               </Tooltip>
               <Tooltip content="guardar" arrow={false}>
-                <StarIcon
-                  className="h-6 w-6 mb-3 relative top-1  rounded-md hover:fill-black"
-                  aria-hidden="true"
-                />
+                <button onClick={() => handleAddFavorite()}>
+                  <StarIcon
+                    className="h-6 w-6 mb-3 relative top-1  rounded-md hover:fill-black"
+                    aria-hidden="true"
+                  />
+                </button>
               </Tooltip>
               <Tooltip content="comentar" arrow={false}>
                 <button>

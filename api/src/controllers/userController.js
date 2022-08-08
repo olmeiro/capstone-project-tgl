@@ -112,14 +112,13 @@ const putProfilePhotoUser = async (req, res) => {
 };
 
 const deleteUserById = async (req, res) => {
-  const { id } = req.body;
-  console.log("ID", id)
-  // try {
-  //   await UserService.deleteUserById(id);
-  //   successResponse(req, res, "¡User has been deleted successfully!");
-  // } catch (error) {
-  //   errorResponse(req, res, error);
-  // }
+  const { id } = req.params;
+  try {
+    await UserService.deleteUserById(id);
+    successResponse(req, res, "¡User has been deleted successfully!");
+  } catch (error) {
+    errorResponse(req, res, error);
+  }
 };
 
 const loginUser = async (req, res) => {

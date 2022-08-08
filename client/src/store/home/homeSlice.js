@@ -12,7 +12,9 @@ export const homeSlice = createSlice({
         lastUserVisited: null,
         infoFromUserLoggedIn: null,
         checkInfoUser: false,
-        postsFromUserLoggedIn: []
+        postsFromUserLoggedIn: [],
+        favorites: [],
+        checkFavorites: false
     },
     reducers: {
         getPostsToHome: (state, { payload }) => {
@@ -52,8 +54,14 @@ export const homeSlice = createSlice({
         },
         actionKeepLastUserVisitesOnRedux: (state, { payload }) => {
             state.lastUserVisited = payload
+        },
+        getFavorites: (state, { payload }) => {
+            state.favorites = payload
+        },
+        checkFavorites: (state, { payload }) => {
+            state.checkFavorites = !state.checkFavorites
         }
     }
 })
 
-export const { actionKeepLastUserVisitesOnRedux, setPostsFromUserLoggedIn, setcheckInfoUser, setInfoFromUserLoggedIn, getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference, setLastUserVisited, getPostsOfLastUserVisited } = homeSlice.actions
+export const { checkFavorites, getFavorites, actionKeepLastUserVisitesOnRedux, setPostsFromUserLoggedIn, setcheckInfoUser, setInfoFromUserLoggedIn, getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference, setLastUserVisited, getPostsOfLastUserVisited } = homeSlice.actions

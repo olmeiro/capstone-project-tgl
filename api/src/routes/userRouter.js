@@ -25,7 +25,7 @@ router.post("/", postUser);
 router.put("/", putUserById);
 // router.put("/photouser", upload.single("file"), putPhotoUserById);
 router.put("/profilephoto", upload.single("file"), putProfilePhotoUser);
-router.delete("/", deleteUserById);
+router.delete("/:id", deleteUserById);
 router.post("/login", loginUser);
 router.get("/renew", validarJWT, renewToken);
 
