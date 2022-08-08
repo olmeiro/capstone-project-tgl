@@ -160,15 +160,6 @@ export const CardPhotosFriends = () => {
         </Modal>
       </React.Fragment>
 
-      {/* <div className='min-w-full'>
-      <button
-        type='submit'
-        onClick={() => setOpenModalImg(true)}
-        className='w-1/2 relative -top-2 bg-team-brown p-3 rounded-lg m-3 text-white hover:bg-team-dark hover:text-white'>
-          Agregar fotos
-      </button>
-   </div> */}
-
       {friends.length === 0
         ? (
         <div className="flex flex-col justify-center items-center h-[49vh] m-4">

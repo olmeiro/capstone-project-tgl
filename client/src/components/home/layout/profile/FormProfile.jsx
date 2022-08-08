@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Label, TextInput } from 'flowbite-react'
 import PropTypes from 'prop-types'
 
 import { useAuthStore, useForm } from '../../../../hooks'
 import { useProfileStore } from '../../../../hooks/useProfileStore'
-import { OptionCount } from './OptionCount'
 
 const formData = {
   alias: '',
