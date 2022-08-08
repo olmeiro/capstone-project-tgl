@@ -130,7 +130,7 @@ export const OptionCount = () => {
           Inactivar
         </button>
         <button
-          className="h-10 w-28 text-white bg rounded-md hover:bg-team-blue"
+          className="h-10 w-28 text-white bg-pink-500 rounded-md hover:bg-team-blue"
           onClick={() => setModalDelete(true)}
         >
           Eliminar

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Modal, Label, Tooltip, TextInput } from 'flowbite-react'
+import { Modal, Label, Tooltip, TextInput, Spinner } from 'flowbite-react'
 import { AiOutlineCloudUpload, AiFillPlusCircle } from 'react-icons/ai'
 
 import { useAuthStore, useForm } from '../../../../hooks'
@@ -8,8 +8,7 @@ import { CardPublication } from './CardPublication'
 import Swal from 'sweetalert2'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { useHomeStore } from '../../../../hooks/useHomeStore'
-
+// esta es la rama Alberto  new alberto2
 const formData = {
   comment: ''
 }
@@ -34,11 +33,12 @@ export const CardPhotos = () => {
 
   const { comment, commentValid, onInputChange, onResetForm } = useForm(formData, formValidations)
   const { userAlias } = useParams()
-  const { sendPublicationUser } = useProfileStore()
+  const {  sendPublicationUser } = useProfileStore()
 
   const [formSubmitted, setFormSubmitted] = useState(false)
 
   const { lastUserVisited } = useSelector((state) => state.home)
+  const { changing } = useSelector(state => state.profile)
 
   const handleFileChange = (e) => {
     const img = {
@@ -69,7 +69,19 @@ export const CardPhotos = () => {
 
   useEffect(() => {
     setIdUser(user.id)
-  }, [loginUserId])
+  }, [loginUserId, changing])
+
+  if (changing) {
+    return (
+      <div className="flex justify-center sm:h-[49vh] h-[40vh] items-center bg-team-blue">
+        <div className="text-center">
+          <Spinner
+            size="lg"
+            aria-label="Center-aligned spinner example" />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="flex gap-4 mt-3 mb-3 justify-center flex-wrap ">

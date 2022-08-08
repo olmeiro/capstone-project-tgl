@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux'
-import { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { UserIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { Tooltip } from 'flowbite-react'
 
 import { useAuthStore } from '../../../hooks'
 import { useHomeStore } from '../../../hooks/useHomeStore'
@@ -34,7 +35,7 @@ export function NavBar () {
 
   const { searchUserByAlias, checkEmptySearchBarHook } = useHomeStore()
   const { pathReference } = useSelector(state => state.home)
-  const { photoProfile, email } = useSelector(state => state.profile)
+  const { alias, photoProfile, email } = useSelector(state => state.profile)
 
   const handleSearch = (e) => {
     setSearch(e.target.value)
@@ -112,13 +113,17 @@ export function NavBar () {
 
                 <div className="hidden md:block">
                   <div className="ml-4 flex items-center md:ml-6">
-                    <button
-                      type="button"
-                      className="bg-gray-800 p-1 rounded-full text-team-green hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                    <Tooltip
+                    content={email}
                     >
-                      <span className="sr-only">View notifications</span>
-                      <BellIcon className="h-6 w-6  rounded-md" aria-hidden="true" />
-                    </button>
+                      <div
+                        className="flex bg-gray-800 p-1 rounded-full text-team-green hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                      >
+                        <span className="sr-only">View notifications</span>
+                        <p>Bienvenido {alias}</p>
+                        <UserIcon className="h-6 w-6  rounded-md" aria-hidden="true" />
+                      </div>
+                    </Tooltip>
 
                     {/* Profile dropdown */}
                     <Menu as="div" className="ml-3 relative">
@@ -201,13 +206,17 @@ export function NavBar () {
                     <div className="text-base font-medium leading-none text-white">{userMock.user}</div>
                     <div className="text-sm font-medium leading-none text-gray-400">{email !== '' ? email : userMock.email}</div>
                   </div>
-                  <button
-                    type="button"
-                    className="ml-auto bg-gray-800 flex-shrink-0 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                  >
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
+                  <Tooltip
+                    content={email}
+                    >
+                      <div
+                        className="flex bg-gray-800 p-1 rounded-full text-team-green hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white sm:invisible"
+                      >
+                        <span className="sr-only">View notifications</span>
+                        <p>Bienvenido {alias}</p>
+                        <UserIcon className="h-6 w-6  rounded-md" aria-hidden="true" />
+                      </div>
+                    </Tooltip>
                 </div>
                 <div className="mt-3 px-2 space-y-1">
                   {userNavigation.map((item) => (

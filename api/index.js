@@ -7,7 +7,6 @@ const { PORT } = require("./src/config/index");
 
 app.use(cors());
 app.use(express.json());
-
 app.use(router);
 
 app.listen(PORT, () => {

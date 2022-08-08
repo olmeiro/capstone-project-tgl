@@ -6,24 +6,24 @@ import {
   ThumbUpIcon
 } from '@heroicons/react/outline'
 import { Tooltip, Button, Modal, Label, Textarea } from 'flowbite-react'
-import { useHomeStore } from '../../../../hooks/useHomeStore';
-import Swal from 'sweetalert2';
-import { socialApi } from '../../../../api';
+import { useHomeStore } from '../../../../hooks/useHomeStore'
+import Swal from 'sweetalert2'
+import { socialApi } from '../../../../api'
 
-export default function HeaderCard({ setIsOpen, photo, description, likes, date, likeAPost, postId, userId }) {
+export default function HeaderCard ({ setIsOpen, photo, description, likes, date, likeAPost, postId, userId }) {
   const [openModal, setOpenModal] = useState(false)
-  const [likesRender, setLikesRender] = useState(likes);
-  const [comment, setComment] = useState("")
-  const { makeAComment, checkCommentsHook } = useHomeStore();
-  const [userOfPost, setUserOfPost] = useState();
+  const [likesRender, setLikesRender] = useState(likes)
+  const [comment, setComment] = useState('')
+  const { makeAComment, checkCommentsHook } = useHomeStore()
+  const [userOfPost, setUserOfPost] = useState()
 
   let entireUser = socialApi.get(`/user/byid/${userId}`).then(response => response.data.body)
   useEffect(() => {
     (async () => {
-      entireUser = await entireUser;
+      entireUser = await entireUser
       setUserOfPost(entireUser)
     })()
-  }, []);
+  }, [])
 
   const handleLike = () => {
     likeAPost(postId)
@@ -32,14 +32,12 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
     setComment(e.target.value)
   }
   const handleSumit = async () => {
-    await makeAComment(postId, comment);
-    setComment("");
-    checkCommentsHook();
-    Swal.fire("Comentario publicado")
+    await makeAComment(postId, comment)
+    setComment('')
+    checkCommentsHook()
+    Swal.fire('Comentario publicado')
     setOpenModal(false)
   }
-
-
 
   return (
     <div>
@@ -77,34 +75,32 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
       </React.Fragment>
 
       <div className="bg-team-blue rounded-lg ">
-        <div className='flex '>
-          <div>
-            <img className="h-16 w-16 rounded-full" src={userOfPost && userOfPost.photoProfile} alt="" />
-          </div>
-          <div>
-            <div className=" text-sm font-medium text-gray-900">{userOfPost && userOfPost.alias}</div>
-            <div className=" text-sm text-gray-500 inline-block">{date}</div>
-          </div>
+        <div className='flex items-center rounded'>
+            <img className="h-16 w-16 p-1 rounded-full" src={userOfPost && userOfPost.photoProfile} alt="" />
+            <div>
+              <p className='underline leading-3 text-lg antialiased font-extrabold'>{userOfPost && userOfPost.alias.toUpperCase()}</p>
+              <p className='text-xs leading-5 italic mt-2'>{ date }</p>
+            </div>
         </div>
-        <div>
+        <div className='text-left ml-16 italic text tracking-wide'>
           {description}
         </div>
-        <div className=" box-content max-w-md mx-auto rounded-br-lg rounded-bl-lg bg-myColor shadow-md overflow-hidden md:max-w-2xl mt-2">
+        <div className=" box-content max-w-md mx-auto rounded-br-lg rounded-bl-lg  shadow-md overflow-hidden md:max-w-2xl mt-2">
           <div className=' flex justify-center'>
             <img
-              className="h-20 w-full object-contain md:h-80 md:w-80 sm:h-80 sm:w-80 m-5 "
-              src={photo}/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+              className="sm:h-48 sm:w-full object-cover md:h-80 md:w-full "
+              src={photo}
               alt="Man looking at item at a store"
             />
           </div>
-          <header className="flex justify-around items-center p-4 bg-team-blue">
+          <header className="flex items-center p-4">
             <button
-              className="bg-team-dark text-team-green sm:text-sm sm:mr-2 rounded px-4 py-1"
+              className="bg-team-dark w-1/3 text-team-green sm:text-sm sm:mr-2 rounded px-4 py-2 hover:text-white"
               onClick={() => setIsOpen(true)}
             >
-              Comentarios
+              Ver comentarios
             </button>
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row w-2/3 justify-end items-center gap-4">
               <Tooltip content="likes" arrow={false}>
                 <div>
                   {likesRender}
@@ -140,5 +136,3 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
     </div>
   )
 }
-
-

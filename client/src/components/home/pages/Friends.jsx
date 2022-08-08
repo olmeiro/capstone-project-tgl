@@ -23,7 +23,7 @@ export const Friends = () => {
   // flex justify-center h-[80vh]
   return (
     <HomeLayout >
-      <div className='h-[79vh] md:h-auto'>
+      <div>
         <Header>
           <FormOtherUser />
         </Header>

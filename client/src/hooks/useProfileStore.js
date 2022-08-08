@@ -7,7 +7,7 @@ import { useHomeStore } from './useHomeStore'
 export const useProfileStore = () => {
   const profile = useSelector(state => state.profile)
   const dispatch = useDispatch()
-  const { getPostsFromUserLoggedIn} = useHomeStore()
+  const { getPostsFromUserLoggedIn } = useHomeStore()
   const loadingDataProfile = async (id) => {
     try {
       const { data } = await socialApi.get(`/user/byid/${id}`)
@@ -58,6 +58,7 @@ export const useProfileStore = () => {
     formData.append('file', image)
 
     try {
+      onLoadChanging()
       const { data } = await socialApi.post('/posts', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -65,6 +66,7 @@ export const useProfileStore = () => {
       })
       getPostsFromUserLoggedIn()
       dispatch(onSendPublication(data.body))
+      onLoadChanging()
       Swal.fire({
         icon: 'success',
         title: 'Fotos cargadas correctamente.'
@@ -113,7 +115,6 @@ export const useProfileStore = () => {
   }
 
   const deletePostUser = async (postId, userId) => {
-    onLoadChanging('changing')
     try {
       Swal.fire({
         title: 'Esta seguro de eliminar publicación?',
@@ -146,14 +147,14 @@ export const useProfileStore = () => {
   const inactiveCount = (id) => {
     // console.log('inactiveUser', id)
     // change data api user id borrado logico
-    dispatch(inactivatingCount())
+    dispatch(inactivatingCount(id))
     // onLogout auth
   }
 
   const deleteCount = (id) => {
     // console.log('deleteUser', id)
     // change data api user id
-    dispatch(deletingCount())
+    dispatch(deletingCount(id))
     // onLogout auth
   }
 
