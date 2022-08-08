@@ -1,32 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Tooltip } from 'flowbite-react'
 import { PlusIcon } from '@heroicons/react/outline'
 import { useHomeStore } from '../../../hooks/useHomeStore'
 import { useSelector } from 'react-redux'
-import { useEffect } from "react"
-import photoDefault from "../../../../assets/photoDefault.png";
-import Swal from 'sweetalert2';
+
+import photoDefault from '../../../../assets/photoDefault.png'
+import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
 
-
 export const SidebarLeft = () => {
-
   const { getFriendsFromFriendsHook, addFriendshipHook, setLastUserVisitedHook } = useHomeStore()
   let { suggestions } = useSelector(state => state.home)
   suggestions = suggestions.slice(0, 10) // para que sugiera como maximo 10 usuarios
 
   const handleAddFriend = (friendId) => {
-    addFriendshipHook(friendId);
-    Swal.fire("amistad agregada")
+    addFriendshipHook(friendId)
+    Swal.fire('amistad agregada')
   }
 
   const handleLastUserVisited = (userAlias, userId) => {
-    setLastUserVisitedHook(userAlias, userId);
+    setLastUserVisitedHook(userAlias, userId)
   }
 
   useEffect(() => {
-    getFriendsFromFriendsHook();
-  }, []);
+    getFriendsFromFriendsHook()
+  }, [])
 
   return (
     <div className='basis-1/4 px-4'>
