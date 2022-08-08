@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 
 import { useAuthStore, useForm } from '../../../../hooks'
 import { useProfileStore } from '../../../../hooks/useProfileStore'
+import { OptionCount } from './OptionCount'
 
 const formData = {
   alias: '',
@@ -35,7 +36,7 @@ const formValidations = {
     const regex = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/
     const testRegex = regex.test(value)
     return testRegex
-  }, 'El número de contacto es número móvil de 10 dígitos.'],
+  }, 'El número de contacto es número móvil de 10 dígitos.']
 }
 
 export const FormProfile = ({ close }) => {
@@ -136,6 +137,10 @@ export const FormProfile = ({ close }) => {
               </button>
             </div>
           </form>
+          { // TODO : implementar borrado logico de usuario
+          /* <div className='bg p-4 rounded-md'>
+            <OptionCount />
+          </div> */}
       </div>
   )
 }
