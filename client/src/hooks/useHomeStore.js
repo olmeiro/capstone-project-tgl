@@ -118,15 +118,15 @@ export const useHomeStore = () => {
     dispatch(setPostsFromUserLoggedIn(posts))
   }
   const addToFavorites = async (postFavoriteId, userLogeadoId) => {
-    await socialApi.post(`http://localhost:3000/favorites?postId=${postFavoriteId}&userId=${userLogeadoId}`)
+    await socialApi.post(`/favorites?postId=${postFavoriteId}&userId=${userLogeadoId}`)
   }
   const getFavoritesHook = async () => {
-    const response = await socialApi.get(`http://localhost:3000/favorites/${userId}`)
+    const response = await socialApi.get(`/favorites/${userId}`)
     const favorites = response.data.body
     dispatch(getFavorites(favorites))
   }
   const deleteFavoriteHook = async (postId) => {
-    await socialApi.delete(`http://localhost:3000/favorites?postId=${postId}&userId=${userId}`)
+    await socialApi.delete(`/favorites?postId=${postId}&userId=${userId}`)
   }
   const checkFavoritesHook = async () => {
     dispatch(checkFavorites())
