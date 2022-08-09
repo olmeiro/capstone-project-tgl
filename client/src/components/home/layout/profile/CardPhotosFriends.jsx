@@ -84,7 +84,6 @@ export const CardPhotosFriends = () => {
   }
 
   useEffect(() => {
-    console.log('friends', friends)
     setIdUser(user.id)
   }, [])
 

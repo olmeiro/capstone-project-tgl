@@ -9,7 +9,6 @@ describe('Test on authSlice', () => {
 
   test('should must login', () => {
     const state = authSlice.reducer(initialState, onLogin(testUserCredentials))
-    // console.log(state)
     expect(state).toEqual({
       status: 'authenticated',
       user: testUserCredentials,
@@ -19,7 +18,6 @@ describe('Test on authSlice', () => {
 
   test('should must logout', () => {
     const state = authSlice.reducer(authenticatedState, onLogout())
-    // console.log(state)
     expect(state).toEqual({
       status: 'not-authenticated',
       user: {},
