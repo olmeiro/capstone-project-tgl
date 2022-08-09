@@ -26,7 +26,7 @@ export const OptionCount = () => {
 
   return (
     <div>
-      <React.Fragment>
+      <>
         <Modal
           show={modalInactive}
           size="md"
@@ -72,9 +72,9 @@ export const OptionCount = () => {
             </div>
           </Modal.Body>
         </Modal>
-      </React.Fragment>
+      </>
 
-      <React.Fragment>
+      <>
         <Modal
           show={modalDelete}
           size="md"
@@ -120,7 +120,7 @@ export const OptionCount = () => {
             </div>
           </Modal.Body>
         </Modal>
-      </React.Fragment>
+      </>
 
       <div className="w-full flex flex-row justify-center">
         <button

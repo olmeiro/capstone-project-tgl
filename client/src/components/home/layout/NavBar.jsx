@@ -1,11 +1,12 @@
-import { useSelector } from 'react-redux'
 import React, { Fragment, useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { UserIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Tooltip } from 'flowbite-react'
 
 import { useAuthStore } from '../../../hooks'
 import { useHomeStore } from '../../../hooks/useHomeStore'
+import imagePath from '../../../../assets/logo_Team_International.png'
 
 const userMock = {
   name: 'Tom Cook',
@@ -27,8 +28,6 @@ const userNavigation = [
 function classNames (...classes) {
   return classes.filter(Boolean).join(' ')
 }
-
-const imagePath = '/assets/logo_Team_International.png'
 
 export function NavBar () {
   const { startLogout } = useAuthStore()
