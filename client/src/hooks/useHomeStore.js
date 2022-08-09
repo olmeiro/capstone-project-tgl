@@ -1,3 +1,4 @@
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { socialApi } from '../api'
 import { checkFavorites, getFavorites, actionKeepLastUserVisitesOnRedux, getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference, setLastUserVisited, setInfoFromUserLoggedIn, setcheckInfoUser, setPostsFromUserLoggedIn } from '../store'
