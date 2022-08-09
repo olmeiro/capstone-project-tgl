@@ -48,7 +48,7 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
 
   return (
     <div>
-      <React.Fragment>
+      <>
         <Modal show={openModal} size="md" popup={true} onClose={() => setOpenModal(false)}>
           <Modal.Header />
           <Modal.Body>
@@ -79,7 +79,7 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
             </div>
           </Modal.Body>
         </Modal>
-      </React.Fragment>
+      </>
 
       <div className="bg-team-blue rounded-lg ">
         <div className='flex items-center rounded'>
