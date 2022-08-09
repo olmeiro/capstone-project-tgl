@@ -85,7 +85,7 @@ export const CardPhotos = () => {
 
   return (
     <div className="flex gap-4 mt-3 mb-3 justify-center flex-wrap ">
-      <React.Fragment>
+      <>
         <Modal
           show={openModalImg}
           size="md"
@@ -144,7 +144,7 @@ export const CardPhotos = () => {
             </form>
           </Modal.Body>
         </Modal>
-      </React.Fragment>
+      </>
 
       {
         userAlias

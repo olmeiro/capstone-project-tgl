@@ -48,7 +48,7 @@ export const Header = () => {
 
   return (
     <div>
-      <React.Fragment>
+      <>
         <Modal
           show={openModal}
           size="md"
@@ -60,8 +60,8 @@ export const Header = () => {
             <FormProfile close={setOpenModal} />
           </Modal.Body>
         </Modal>
-      </React.Fragment>
-      <React.Fragment>
+      </>
+      <>
         <Modal
           show={modalImg}
           size="md"
@@ -98,7 +98,7 @@ export const Header = () => {
             </div>
           </Modal.Body>
         </Modal>
-      </React.Fragment>
+      </>
 
       <div className="h-20 flex flex-row justify-around items-center bg-team-green ">
         <div className="flex flex-col mt-3">
