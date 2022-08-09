@@ -1,45 +1,44 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import { useHomeStore } from '../../../../hooks/useHomeStore'
 
 export const CardFavorites = () => {
+  const { deleteFavoriteHook, getFavoritesHook, checkFavoritesHook } = useHomeStore()
+  const { favorites, checkFavorites } = useSelector(state => state.home)
+  const [favoriteToRender, setFavoriteToRender] = useState()
 
-    const { deleteFavoriteHook, getFavoritesHook, checkFavoritesHook } = useHomeStore()
-    const { favorites, checkFavorites } = useSelector(state => state.home)
-    const [favoriteToRender, setFavoriteToRender] = useState()
+  const handleDeleteFavorite = async (postId) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(async result => {
+      if (result.isConfirmed) {
+        await deleteFavoriteHook(postId)
+        await getFavoritesHook()
+        checkFavoritesHook()
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    })
+  }
 
-    const handleDeleteFavorite = async (postId) => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then(async result => {
-            if (result.isConfirmed) {
-                await deleteFavoriteHook(postId)
-                await getFavoritesHook()
-                checkFavoritesHook()
-                Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                )
-            }
-        })
-    }
-
-    useEffect(() => {
-        setFavoriteToRender(favorites)
-    }, [favorites, checkFavorites])
-    return (
+  useEffect(() => {
+    setFavoriteToRender(favorites)
+  }, [favorites, checkFavorites])
+  return (
         <div className="flex  flex-wrap justify-center gap-6 m-1" >
             {
                 favoriteToRender && favoriteToRender.map(favorite => {
-                    return (
+                  return (
                         <div className=''>
                             <div key={favorite.id} className='rounded-lg'>
                                 <div className='bg h-72 w-72 rounded-md'>
@@ -75,9 +74,9 @@ export const CardFavorites = () => {
                                 </div>
                             </div>
                         </div>
-                    )
+                  )
                 })
             }
         </div>
-    )
+  )
 }
