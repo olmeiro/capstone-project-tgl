@@ -1,11 +1,11 @@
 import React from 'react'
 import { AppRouter } from './routes/AppRouter'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 
 export default function App () {
   return (
-     <BrowserRouter>
+     <HashRouter>
        <AppRouter />
-     </BrowserRouter>
+     </HashRouter>
   )
 }
