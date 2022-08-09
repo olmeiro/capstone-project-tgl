@@ -18,7 +18,6 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
   const { makeAComment, checkCommentsHook, addToFavorites } = useHomeStore()
   const [userOfPost, setUserOfPost] = useState()
   const { user } = useSelector(state => state.auth)
-  console.log("user", user)
 
   let entireUser = socialApi.get(`/user/byid/${userId}`).then(response => response.data.body)
   useEffect(() => {
