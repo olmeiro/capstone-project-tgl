@@ -86,22 +86,22 @@ export const useHomeStore = () => {
   }
   const setLastUserVisitedHook = async (userAlias, userId) => {
     const responseUser = await socialApi.get(`user/byalias/${userAlias}`)
-    const user = responseUser.data.body;
+    const user = responseUser.data.body
     const responsePosts = await socialApi.get(`/posts/byuser/${userId}`)
-    const posts = responsePosts.data.body;
-    user.posts = posts;
-    localStorage.setItem('lastUserVisited', JSON.stringify(user));
-    const lastUserVisited = JSON.parse(localStorage.getItem('lastUserVisited'));
-    dispatch(setLastUserVisited(lastUserVisited));
+    const posts = responsePosts.data.body
+    user.posts = posts
+    localStorage.setItem('lastUserVisited', JSON.stringify(user))
+    const lastUserVisited = JSON.parse(localStorage.getItem('lastUserVisited'))
+    dispatch(setLastUserVisited(lastUserVisited))
   }
   const keepLastUserVisitesOnRedux = async () => {
-    const lastUserVisited = JSON.parse(localStorage.getItem('lastUserVisited'));
-    dispatch(actionKeepLastUserVisitesOnRedux(lastUserVisited));
+    const lastUserVisited = JSON.parse(localStorage.getItem('lastUserVisited'))
+    dispatch(actionKeepLastUserVisitesOnRedux(lastUserVisited))
   }
   const getInfoFromTheUserLoggedIn = async () => {
     const user = await entire
     const responsePosts = await socialApi.get(`/posts/byuser/${userId}`)
-    const posts = responsePosts.data.body;
+    const posts = responsePosts.data.body
     const newUser = {
       ...user,
       posts
@@ -113,7 +113,7 @@ export const useHomeStore = () => {
   }
   const getPostsFromUserLoggedIn = async () => {
     const responsePosts = await socialApi.get(`/posts/byuser/${userId}`)
-    const posts = responsePosts.data.body;
+    const posts = responsePosts.data.body
     dispatch(setPostsFromUserLoggedIn(posts))
   }
   const addToFavorites = async (postFavoriteId, userLogeadoId) => {
@@ -121,16 +121,16 @@ export const useHomeStore = () => {
   }
   const getFavoritesHook = async () => {
     const response = await socialApi.get(`http://localhost:3000/favorites/${userId}`)
-    const favorites = response.data.body;
+    const favorites = response.data.body
     dispatch(getFavorites(favorites))
   }
-  const deleteFavoriteHook = async(postId)=>{
+  const deleteFavoriteHook = async (postId) => {
     await socialApi.delete(`http://localhost:3000/favorites?postId=${postId}&userId=${userId}`)
   }
-  const checkFavoritesHook = async()=>{
+  const checkFavoritesHook = async () => {
     dispatch(checkFavorites())
   }
-  
+
   return {
     getPostsToHomeHook,
     getFriendsFromFriendsHook,
