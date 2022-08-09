@@ -145,16 +145,15 @@ export const useProfileStore = () => {
   }
 
   const inactiveCount = (id) => {
-    // console.log('inactiveUser', id)
-    // change data api user id borrado logico
-    dispatch(inactivatingCount(id))
+    // TODO
+    // dispatch(inactivatingCount(id))
     // onLogout auth
   }
 
   const deleteCount = (id) => {
-    // console.log('deleteUser', id)
-    // change data api user id
-    dispatch(deletingCount(id))
+    // TODO
+
+    // dispatch(deletingCount(id))
     // onLogout auth
   }
 
