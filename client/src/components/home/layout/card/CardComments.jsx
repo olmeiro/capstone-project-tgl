@@ -24,7 +24,7 @@ export default function CardComments ({ postId }) {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Sí, eliminarlo!'
     }).then(result => {
       if (result.isConfirmed) {
         deleteComment(commentId)
