@@ -18,21 +18,21 @@ export default function CardComments ({ postId }) {
   }
   const handleDeleteComment = (commentId) => {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: '¿estas seguro de eliminar este comentario?',
+      text: "Esta acción no se puede revertir!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Sí, eliminarlo!'
     }).then(result => {
       if (result.isConfirmed) {
         deleteComment(commentId)
         checkCommentsHook()
         Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
+          'Eliminado!',
+          'El comentario ha sido eliminado.',
+          'Éxito'
         )
       }
     })
