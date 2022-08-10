@@ -85,27 +85,27 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
       <div className="bg-team-blue rounded-lg ">
         <div className='flex '>
           <div>
-            <img className="h-16 w-16 rounded-full" src={userOfPost && userOfPost.photoProfile} alt="" />
+            <img className="h-16 w-16 rounded-full m-4" src={userOfPost && userOfPost.photoProfile} alt="" />
           </div>
           <div>
-            <div className=" text-sm font-medium text-gray-900">{userOfPost && userOfPost.alias}</div>
+            <div className=" text-lg font-medium text-gray-900 mt-6">{userOfPost && userOfPost.alias}</div>
             <div className=" text-sm text-gray-500 inline-block">{date}</div>
           </div>
         </div>
-        <div>
+        <div className='ml-6 mb-3'>
           {description}
         </div>
         <div className=" box-content max-w-md mx-auto rounded-br-lg rounded-bl-lg bg-myColor shadow-md overflow-hidden md:max-w-2xl mt-2">
-          <div className=' flex justify-center'>
+          <div className=' flex justify-center '>
             <img
               className="h-20 w-full object-contain md:h-80 md:w-80 sm:h-80 sm:w-80 m-5 "
               src={photo}
               alt="Man looking at item at a store"
             />
           </div>
-          <header className="flex justify-around items-center p-4 bg-team-blue">
+          <header className="flex justify-around items-center p-3 bg-team-blue">
             <button
-              className="bg-team-dark text-team-green sm:text-sm sm:mr-2 rounded px-4 py-1"
+              className="bg-team-dark text-team-green sm:text-sm sm:mr-2 rounded px-4 py-1 hover:bg-black  hover:border-team-green "
               onClick={() => setIsOpen(true)}
             >
               Comentarios
@@ -116,27 +116,27 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
                   {likesRender}
                 </div>
               </Tooltip>
-              <Tooltip content="like" arrow={false}>
+              <Tooltip content="Me gusta" arrow={false}>
                 <button onClick={() => handleLike()}>
                   <ThumbUpIcon
-                    className="h-6 w-6 mb-3 relative top-1  rounded-md  hover:fill-black"
+                    className="h-6 w-6 mb-3 relative top-2  rounded-md  hover:fill-team-green  hover:text-black "
                     aria-hidden="true"
                   />
                 </button>
               </Tooltip>
-              <Tooltip content="guardar" arrow={false}>
+              <Tooltip content="Agregar a favoritos" arrow={false}>
                 <button onClick={() => handleAddFavorite()}>
                   <StarIcon
-                    className="h-6 w-6 mb-3 relative top-1  rounded-md hover:fill-black"
+                    className="h-6 w-6 mb-3 relative top-2  rounded-md hover:fill-team-green  hover:text-black "
                     aria-hidden="true"
                   />
                 </button>
               </Tooltip>
-              <Tooltip content="comentar" arrow={false}>
+              <Tooltip content="Comentar" arrow={false}>
                 <button>
                   <PlusCircleIcon
                     onClick={() => setOpenModal(true)}
-                    className="h-6 w-6 mb-3 relative top-1  rounded-md  hover:fill-black hover:text-white"
+                    className="h-6 w-6 mb-3 relative top-2  rounded-md  hover:fill-team-green  hover:text-black "
                     aria-hidden="true"
                   />
                 </button>
