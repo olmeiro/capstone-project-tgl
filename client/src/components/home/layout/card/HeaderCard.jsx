@@ -18,7 +18,6 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
   const { makeAComment, checkCommentsHook, addToFavorites } = useHomeStore()
   const [userOfPost, setUserOfPost] = useState()
   const { user } = useSelector(state => state.auth)
-  console.log("user", user)
 
   let entireUser = socialApi.get(`/user/byid/${userId}`).then(response => response.data.body)
   useEffect(() => {
@@ -49,7 +48,7 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
 
   return (
     <div>
-      <React.Fragment>
+      <>
         <Modal show={openModal} size="md" popup={true} onClose={() => setOpenModal(false)}>
           <Modal.Header />
           <Modal.Body>
@@ -80,37 +79,37 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
             </div>
           </Modal.Body>
         </Modal>
-      </React.Fragment>
+      </>
 
-      <div className="bg-team-blue rounded-lg ">
+      <div className="bg-team-dark rounded-lg ">
         <div className='flex '>
           <div>
             <img className="h-16 w-16 rounded-full m-4" src={userOfPost && userOfPost.photoProfile} alt="" />
           </div>
           <div>
-            <div className=" text-lg font-medium text-gray-900 mt-6">{userOfPost && userOfPost.alias}</div>
-            <div className=" text-sm text-gray-500 inline-block">{date}</div>
+            <div className=" text-lg font-medium text-white mt-6">{userOfPost && userOfPost.alias}</div>
+            <div className=" text-sm text-gray-400 inline-block">{date}</div>
           </div>
         </div>
-        <div className='ml-6 mb-3'>
+        <div className='ml-6 mb-3 text-sm text-white'>
           {description}
         </div>
         <div className=" box-content max-w-md mx-auto rounded-br-lg rounded-bl-lg bg-myColor shadow-md overflow-hidden md:max-w-2xl mt-2">
           <div className=' flex justify-center '>
             <img
-              className="h-20 w-full object-contain md:h-80 md:w-80 sm:h-80 sm:w-80 m-5 "
+              className="sm:h-48 sm:w-full object-cover md:h-80 md:w-full "
               src={photo}
               alt="Man looking at item at a store"
             />
           </div>
-          <header className="flex justify-around items-center p-3 bg-team-blue">
+          <header className="flex justify-around items-center p-3 bg-team-dark">
             <button
-              className="bg-team-dark text-team-green sm:text-sm sm:mr-2 rounded px-4 py-1 hover:bg-black  hover:border-team-green "
+              className="bg-black text-team-green sm:text-sm sm:mr-2 rounded px-4 py-1 hover:bg-black  hover:border-team-green "
               onClick={() => setIsOpen(true)}
             >
-              Comentarios
+              Ver comentarios
             </button>
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row w-2/3 justify-end items-center gap-4">
               <Tooltip content="likes" arrow={false}>
                 <div>
                   {likesRender}

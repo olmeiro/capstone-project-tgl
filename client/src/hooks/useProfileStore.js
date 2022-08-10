@@ -1,3 +1,4 @@
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import { socialApi } from '../api'
@@ -145,16 +146,14 @@ export const useProfileStore = () => {
   }
 
   const inactiveCount = (id) => {
-    // console.log('inactiveUser', id)
     // change data api user id borrado logico
-    dispatch(inactivatingCount())
+    dispatch(inactivatingCount(id))
     // onLogout auth
   }
 
   const deleteCount = (id) => {
-    // console.log('deleteUser', id)
     // change data api user id
-    dispatch(deletingCount())
+    dispatch(deletingCount(id))
     // onLogout auth
   }
 

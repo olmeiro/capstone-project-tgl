@@ -1,4 +1,5 @@
 import React from 'react'
+
 import cohete from '../../../../assets/cohete.jpeg'
 import photo1 from '../../../../assets/photo1-removebg-preview.png'
 import photo2 from '../../../../assets/photo2-removebg-preview.png'

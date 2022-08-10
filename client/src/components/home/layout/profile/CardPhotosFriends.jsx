@@ -84,13 +84,12 @@ export const CardPhotosFriends = () => {
   }
 
   useEffect(() => {
-    console.log('friends', friends)
     setIdUser(user.id)
   }, [])
 
   return (
     <div className="flex gap-4 mt-3 mb-3 justify-center flex-wrap ">
-      <React.Fragment>
+      <>
         <Modal
           show={openModal}
           size="md"
@@ -125,8 +124,8 @@ export const CardPhotosFriends = () => {
             </form>
           </Modal.Body>
         </Modal>
-      </React.Fragment>
-      <React.Fragment>
+      </>
+      <>
         <Modal
           show={openModalImg}
           size="md"
@@ -158,16 +157,7 @@ export const CardPhotosFriends = () => {
             </form>
           </Modal.Body>
         </Modal>
-      </React.Fragment>
-
-      {/* <div className='min-w-full'>
-      <button
-        type='submit'
-        onClick={() => setOpenModalImg(true)}
-        className='w-1/2 relative -top-2 bg-team-brown p-3 rounded-lg m-3 text-white hover:bg-team-dark hover:text-white'>
-          Agregar fotos
-      </button>
-   </div> */}
+      </>
 
       {friends.length === 0
         ? (

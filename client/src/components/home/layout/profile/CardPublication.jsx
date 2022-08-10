@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Card } from 'flowbite-react'
 import { AiOutlineArrowUp } from 'react-icons/ai'
