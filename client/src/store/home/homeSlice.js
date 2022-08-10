@@ -18,7 +18,8 @@ export const homeSlice = createSlice({
     },
     reducers: {
         getPostsToHome: (state, { payload }) => {
-            state.posts = payload
+            let postsToReverse = payload.reverse()
+            state.posts = postsToReverse
         },
         getFriendsFromFriends: (state, { payload }) => {
             state.suggestions = payload
