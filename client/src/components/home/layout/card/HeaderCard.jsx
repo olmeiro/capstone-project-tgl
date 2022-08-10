@@ -81,28 +81,30 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
         </Modal>
       </>
 
-      <div className="bg-team-blue rounded-lg ">
-        <div className='flex items-center rounded'>
-            <img className="h-16 w-16 p-1 rounded-full" src={userOfPost && userOfPost.photoProfile} alt="" />
-            <div>
-              <p className='underline leading-3 text-lg antialiased font-extrabold'>{userOfPost && userOfPost.alias.toUpperCase()}</p>
-              <p className='text-xs leading-5 italic mt-2'>{ date }</p>
-            </div>
+      <div className="bg-team-dark rounded-lg ">
+        <div className='flex '>
+          <div>
+            <img className="h-16 w-16 rounded-full m-4" src={userOfPost && userOfPost.photoProfile} alt="" />
+          </div>
+          <div>
+            <div className=" text-lg font-medium text-white mt-6">{userOfPost && userOfPost.alias}</div>
+            <div className=" text-sm text-gray-400 inline-block">{date}</div>
+          </div>
         </div>
-        <div className='text-left ml-16 italic text tracking-wide'>
+        <div className='ml-6 mb-3 text-sm text-white'>
           {description}
         </div>
-        <div className=" box-content max-w-md mx-auto rounded-br-lg rounded-bl-lg  shadow-md overflow-hidden md:max-w-2xl mt-2">
-          <div className=' flex justify-center'>
+        <div className=" box-content max-w-md mx-auto rounded-br-lg rounded-bl-lg bg-myColor shadow-md overflow-hidden md:max-w-2xl mt-2">
+          <div className=' flex justify-center '>
             <img
               className="sm:h-48 sm:w-full object-cover md:h-80 md:w-full "
               src={photo}
               alt="Man looking at item at a store"
             />
           </div>
-          <header className="flex items-center p-4">
+          <header className="flex justify-around items-center p-3 bg-team-dark">
             <button
-              className="bg-team-dark w-1/3 text-team-green sm:text-sm sm:mr-2 rounded px-4 py-2 hover:text-white"
+              className="bg-black text-team-green sm:text-sm sm:mr-2 rounded px-4 py-1 hover:bg-black  hover:border-team-green "
               onClick={() => setIsOpen(true)}
             >
               Ver comentarios
@@ -113,27 +115,27 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
                   {likesRender}
                 </div>
               </Tooltip>
-              <Tooltip content="like" arrow={false}>
+              <Tooltip content="Me gusta" arrow={false}>
                 <button onClick={() => handleLike()}>
                   <ThumbUpIcon
-                    className="h-6 w-6 mb-3 relative top-1  rounded-md  hover:fill-black"
+                    className="h-6 w-6 mb-3 relative top-2  rounded-md  hover:fill-team-green  hover:text-black "
                     aria-hidden="true"
                   />
                 </button>
               </Tooltip>
-              <Tooltip content="guardar" arrow={false}>
+              <Tooltip content="Agregar a favoritos" arrow={false}>
                 <button onClick={() => handleAddFavorite()}>
                   <StarIcon
-                    className="h-6 w-6 mb-3 relative top-1  rounded-md hover:fill-black"
+                    className="h-6 w-6 mb-3 relative top-2  rounded-md hover:fill-team-green  hover:text-black "
                     aria-hidden="true"
                   />
                 </button>
               </Tooltip>
-              <Tooltip content="comentar" arrow={false}>
+              <Tooltip content="Comentar" arrow={false}>
                 <button>
                   <PlusCircleIcon
                     onClick={() => setOpenModal(true)}
-                    className="h-6 w-6 mb-3 relative top-1  rounded-md  hover:fill-black hover:text-white"
+                    className="h-6 w-6 mb-3 relative top-2  rounded-md  hover:fill-team-green  hover:text-black "
                     aria-hidden="true"
                   />
                 </button>
