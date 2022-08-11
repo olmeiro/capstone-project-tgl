@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-
 import { useHomeStore } from '../../../../hooks/useHomeStore'
 import { useSelector } from 'react-redux'
 import photoDefault from '../../../../../assets/photoDefault.png'
