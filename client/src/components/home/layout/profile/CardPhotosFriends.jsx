@@ -47,17 +47,17 @@ export const CardPhotosFriends = () => {
 
   const handleDeleteFriend = (friendId) => {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: '¿Estas seguro de eliminar este amigo?',
+      text: "Esta acción no se puede revertir!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Sí, eliminarlo!'
     }).then((result) => {
       if (result.isConfirmed) {
         deleteFriendHook(friendId)
-        Swal.fire('Deleted!', 'Your file has been deleted.', 'success')
+        Swal.fire('Eliminado!', 'Amigo eliminado.', 'success')
       }
     })
   }
