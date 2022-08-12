@@ -34,7 +34,7 @@ class Post extends Model {
             sequelize,
             tableName: 'posts',
             modelName: 'Post',
-            timestamps: false
+            timestamps: true
         }
     }
 }
