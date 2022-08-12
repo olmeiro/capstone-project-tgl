@@ -12,6 +12,8 @@ const ConversationModel = {
         unique: true,
         type: DataTypes.ARRAY(DataTypes.INTEGER)
     }
+    // userId
+    // conversationId
 }
 
 class Conversation extends Model {
