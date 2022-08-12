@@ -1,5 +1,9 @@
 
 export const testUserCredentials = {
   alias: 'test',
-  password: '123456'
+  password: 'Test2021*'
+}
+export const testErrorUserCredentials = {
+  alias: 'test_1',
+  password: 'test2021*'
 }
