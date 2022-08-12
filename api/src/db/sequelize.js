@@ -40,7 +40,8 @@ Post.hasMany(Comment);
 Comment.belongsTo(Post);
 
 sequelize.sync({
-    force: false
+    force: false,
+    alter:true
 })
 
 module.exports = sequelize;
