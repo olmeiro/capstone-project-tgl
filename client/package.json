@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "jest --watchAll"
+    "test": "jest --coverage --watchAll"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.6",
