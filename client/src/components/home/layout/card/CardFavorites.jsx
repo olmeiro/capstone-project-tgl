@@ -52,21 +52,21 @@ export const CardFavorites = () => {
   console.log("comments   ", comments)
   const handleDeleteFavorite = async (postId) => {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: '¿Estas seguro de eliminar este favorito?',
+      text: "Esta acción no se puede revertir!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Sí, eliminarlo!'
     }).then(async result => {
       if (result.isConfirmed) {
         await deleteFavoriteHook(postId)
         await getFavoritesHook()
         checkFavoritesHook()
         Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
+          'Eliminado!',
+          'El favorito ha sido eliminado.',
           'success'
         )
       }
