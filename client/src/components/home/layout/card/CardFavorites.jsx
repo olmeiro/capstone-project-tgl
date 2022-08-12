@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import { useHomeStore } from '../../../../hooks/useHomeStore'
-import { Modal, Label, Tooltip, TextInput } from 'flowbite-react'
+import { Modal } from 'flowbite-react'
 import photoDefault from '../../../../../assets/photoDefault.png'
 
 export const CardFavorites = () => {
@@ -83,13 +83,13 @@ export const CardFavorites = () => {
         show={openModalImg}
         size="md"
         popup={true}
-        onClose={() => setOpenModalImg(false, photoFavorite)}
+        onClose={() => setOpenModalImg(false)}
       >
         <Modal.Header />
         <Modal.Body>
           <div className="">
             <div>
-              <img src={photoFavorite && photoFavorite} alt=""/>
+              <img src={photoFavorite && photoFavorite} alt="" />
             </div>
 
             {
@@ -145,12 +145,12 @@ export const CardFavorites = () => {
       </Modal>
       {
         favoriteToRender && favoriteToRender.map(favorite => {
-          let photoFavorite =favorite && favorite.photo
+          let photoFavorite = favorite && favorite.photo
           let idFavorite = favorite && favorite.id
 
           return (
             <div className=''>
-              <div key={ favorite && favorite.id} className='rounded-lg'>
+              <div key={favorite && favorite.id} className='rounded-lg'>
                 <div className='bg h-72 w-72 rounded-md'>
                   <img
                     className=" h-72 w-72 rounded-tr-lg rounded-tl-lg shadow-lg"
