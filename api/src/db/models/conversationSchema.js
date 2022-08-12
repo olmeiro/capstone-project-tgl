@@ -9,6 +9,7 @@ const ConversationModel = {
     },
     members: {
         allowNull: true,
+        unique: true,
         type: DataTypes.ARRAY(DataTypes.INTEGER)
     }
 }
