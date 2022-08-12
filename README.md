@@ -1,6 +1,32 @@
-# proyecto team international
+# Red Social TGL
 
-sketch base de datos ejemplo:
+The Red Social TGL is a social network exclusively for students and employees of teams international, in order to provide information of interest about the company, courses or purposes. 
+
+----------------------
+
+## Installation
+
+- You must install Node.js [Install Node.js from here](https://nodejs.org/es/download/)
+
+- You must install PostgreSQL [Install PostgreSQL from here](https://www.postgresql.org/download/)
+
+### Is necessary to install the libraries:
+
+- Tailwind CSS IntelliSense.
+- ES7+ React/Redux/React-Native snippets.
+
+### Is necessary to run the commands:
+
+-
+-
+-
+
+
+
+
+
+
+
 {
 id_: string,
 name: string,
