@@ -18,7 +18,8 @@ const navigation = [
   { name: 'Team', href: '/', current: false },
   { name: 'Perfil', href: '/profile', current: false },
   { name: 'Amigos', href: '/friends', current: false },
-  { name: 'Favoritos', href: '/favorites', current: false }
+  { name: 'Favoritos', href: '/favorites', current: false },
+  { name: 'Mensajes', href: '/messenger', current: false }
 ]
 const userNavigation = [
   // { name: 'Perfil', href: '/profile' },

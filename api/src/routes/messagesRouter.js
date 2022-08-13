@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-
 const {
-    
-} = require("../controllers/userController");
+    getMessagesByconversationId,
+    postOneMessage,
+} = require("../controllers/messagesController");
 
-router.get("/all");
 
-
+router.get("/:conversationId", getMessagesByconversationId);
+router.post("/", postOneMessage)
 
 module.exports = router

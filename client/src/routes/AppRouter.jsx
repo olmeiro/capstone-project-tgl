@@ -11,6 +11,7 @@ import { RegisterPage } from '../components/auth/pages/RegisterPage'
 
 import { ProfilePageOfOneUser } from '../components/home/pages/ProfilePageOfOneUser'
 import { Favorites } from '../components/home/pages/Favorites'
+import { Messenger } from '../components/home/pages/Messenger'
 
 export const AppRouter = () => {
   const { status, checkToken } = useAuthStore()
@@ -45,6 +46,7 @@ export const AppRouter = () => {
               <Route path='/friends' element={<Friends />} />
               <Route path='/profile/:userAlias' element={<ProfilePageOfOneUser />} />
               <Route path='/favorites' element={<Favorites />} />
+              <Route path='/messenger' element={<Messenger />} />
 
                 <Route path='/*' element={<Navigate to="/" />} />
               </>

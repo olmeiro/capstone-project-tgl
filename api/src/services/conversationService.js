@@ -7,15 +7,23 @@ class ConversationService {
 
     }
     static async getConversationsByUserId(userId) {
-        const conversationsAll = await Conversation.findAll();
-        const conversationsByUserId = conversationsAll.filter(conversation => {
-            return conversation.members.find(id => id == userId)
-        })
-        return conversationsByUserId;
+        try {
+            const conversationsAll = await Conversation.findAll();
+            const conversationsByUserId = conversationsAll.filter(conversation => {
+                return conversation.members.find(id => id == userId)
+            })
+            return conversationsByUserId;
+        } catch (error) {
+            throw boom.internal(error.message);
+        }
     }
     static async postConversation(members) {
-        const conversation = await Conversation.create({ members });
-        return conversation
+        try {
+            const conversation = await Conversation.create({ members });
+            return conversation
+        } catch (error) {
+            throw boom.internal(error.message);
+        }
     }
 }
 

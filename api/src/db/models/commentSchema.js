@@ -25,7 +25,7 @@ class Comment extends Model {
             sequelize,
             tableName: 'comments',
             modelName: 'Comment',
-            timestamps: true
+            timestamps: false
         }
     }
 }
