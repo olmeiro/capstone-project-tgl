@@ -20,28 +20,58 @@ export const Messenger = () => {
     const [conversations, setConversations] = useState([])
     const [currentChat, setCurrentChat] = useState(null)
     const [messages, setMessages] = useState([])
-    
+    const [newMessage, setNewMessage] = useState("")
 
     useEffect(() => {
         const getConversations = async () => {
             const res = await socialApi.get(`/conversations/${userId}`)
-            console.log(res.data.body)
             setConversations(res.data.body)
         }
         getConversations()
     }, [userId])
-    console.log("user", user)
-    console.log("conversations", conversations)
-    console.log("currentChat ", currentChat)
+
     useEffect(() => {
         const getMessages = async () => {
             const response = await socialApi.get(`/messages/${currentChat.id}`)
             const messages = response.data.body;
             setMessages(messages)
         }
-        getMessages()
+        currentChat ? getMessages() : null
     }, [currentChat])
-    console.log("current Messages => ", messages)
+
+    const handleTextArea = (message) => {
+        setNewMessage(message)
+    }
+    const handleSendMessage = async (e) => {
+        e.preventDefault()
+        const messageToSave = {
+            text: newMessage,
+            userId: userId,
+            conversationId: currentChat && currentChat.id
+        }
+        const response = await socialApi.post(`/messages`, messageToSave)
+        const messagePosted = response.data.body
+        const responseLastMessage = await socialApi.get(`/messages/particularone/${messagePosted.id}`)
+        const messagePostedWithUserId = responseLastMessage.data.body
+        setMessages(messages.concat(messagePostedWithUserId))
+        setNewMessage("")
+    }
+    const handleKeyDownTOSendMessage = async e => {
+        if (e.key == "Enter") {
+            const messageToSave = {
+                text: newMessage,
+                userId: userId,
+                conversationId: currentChat && currentChat.id
+            }
+            const response = await socialApi.post(`/messages`, messageToSave)
+            const messagePosted = response.data.body
+            const responseLastMessage = await socialApi.get(`/messages/particularone/${messagePosted.id}`)
+            const messagePostedWithUserId = responseLastMessage.data.body
+            setMessages(messages.concat(messagePostedWithUserId))
+            setNewMessage("")
+        }
+    }
+
     return (
         <HomeLayout >
 
@@ -50,7 +80,7 @@ export const Messenger = () => {
                     {
                         conversations && conversations.map(conversation => {
                             return (
-                                <div onClick={() => setCurrentChat(conversation)}>
+                                <div onClick={() => setCurrentChat(conversation)} key={conversation.id}>
                                     <Conversation conversation={conversation} currentUser={user} />
                                 </div>
                             )
@@ -62,14 +92,28 @@ export const Messenger = () => {
                         currentChat
                             ? <div>
                                 {
-                                    messages.map(message => {
-                                        return <Message message={message} own={message.UserId == userId} />
+                                    messages && messages.map((message, index) => {
+                                        return (
+                                            <div key={index}>
+                                                <Message message={message} own={message.UserId == userId} />
+                                            </div>
+                                        )
                                     })
                                 }
                             </div>
                             : <span>Abre una conversación para empezar un chat</span>
                     }
+                    <form onSubmit={e => handleSendMessage(e)}>
+                        <textarea name="" id="" cols="40" rows="5"
+                            onChange={(e) => handleTextArea(e.target.value)}
+                            value={newMessage}
+                            onKeyDown={(e) => handleKeyDownTOSendMessage(e)}
+                        ></textarea>
+                        <button>enviar</button>
+                    </form>
                 </div>
+
+
             </div>
 
         </HomeLayout>

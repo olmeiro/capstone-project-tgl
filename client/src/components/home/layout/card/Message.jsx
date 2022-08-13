@@ -1,4 +1,5 @@
 import { format } from "timeago.js"
+
 const Message = ({ message, own }) => {
     return (
         <div>

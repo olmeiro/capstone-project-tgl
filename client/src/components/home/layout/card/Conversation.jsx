@@ -14,7 +14,6 @@ const Conversation = ({ conversation, currentUser }) => {
             const res = await socialApi.get(`/user/byid/${friendId}`)
             const friend = res.data.body
             setFriend(friend)
-            console.log("friend ", friend)
         }
         getFriend()
     }, [currentUser, conversation])
