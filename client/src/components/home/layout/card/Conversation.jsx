@@ -21,7 +21,7 @@ const Conversation = ({ conversation, currentUser }) => {
 
     return (
         <div>
-            <img src={friend.photoProfile ? friend.photoProfile : photoDefault} alt="" />
+            <img src={friend && friend.photoProfile ? friend.photoProfile : photoDefault} alt="" />
             <span>{friend && friend.alias} </span>
         </div>
     )
