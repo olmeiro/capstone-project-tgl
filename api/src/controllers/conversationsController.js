@@ -1,5 +1,4 @@
 const ConversationService = require("../services/conversationService");
-
 const { successResponse, errorResponse } = require("../utils/responses/index");
 
 const getConversationsByUserId = async (req, res) => {
