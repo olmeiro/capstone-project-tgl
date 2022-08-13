@@ -9,8 +9,8 @@ class MessageService {
     static async getMessagesByconversationId(ConversationId) {
         try {
             const messages = await Message.findAll({
-                where:{
-                    ConversationId 
+                where: {
+                    ConversationId
                 }
             })
             return messages;
@@ -27,6 +27,15 @@ class MessageService {
             senderUser.addMessages(message)
             conversation.addMessages(message)
             return message;
+        } catch (error) {
+            throw boom.internal(error.message);
+        }
+    }
+
+    static async getOneParticularMessage(messageId) {
+        try {
+            const oneMessage = await Message.findByPk(messageId)
+            return oneMessage;
         } catch (error) {
             throw boom.internal(error.message);
         }
