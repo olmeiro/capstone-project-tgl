@@ -19,7 +19,7 @@ class ConversationService {
     }
     static async postConversation(members) {
         try {
-            const conversation = await Conversation.create({ members });
+            const conversation = await Conversation.findOrCreate({ where: { members } });
             return conversation
         } catch (error) {
             throw boom.internal(error.message);
