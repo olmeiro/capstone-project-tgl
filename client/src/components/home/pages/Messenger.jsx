@@ -185,24 +185,26 @@ export const Messenger = () => {
 
                                     {/*Friend chat image */}
                                     <div className='flex sm:items-center justify-between py-3 border-b border-gray-200 p-3'>
-                                        <div className='flex items-center space-x-4'>
-                                            <img
-                                                src={friend?.photoProfile}
-                                                className='w-10 sm:w-12 h-10 sm:h-12 rounded-full'
-                                            />
-                                            <div className='flex flex-col leading-tight'>
-                                                <div className='text-1x1 mt-1 flex items-center'>
-                                                    <span className='text-gray-700 mr-3'>Drake Bell</span>
-                                                    <span className='text-green-500'>
-                                                        <svg width={10} height={10}>
-                                                            <circle cx={5} cy={5} r={5} fill="currentColor" />
-                                                        </svg>
-                                                    </span>
+                                        {
+                                            friend
+                                                ? <div className='flex items-center space-x-4'>
+                                                    <img
+                                                        src={friend?.photoProfile}
+                                                        className='w-10 sm:w-12 h-10 sm:h-12 rounded-full'
+                                                    />
+                                                    <div className='flex flex-col leading-tight'>
+                                                        <div className='text-1x1 mt-1 flex items-center'>
+                                                            <span className='text-gray-700 mr-3'>{friend?.alias}</span>
+                                                            <span className='text-green-500'>
+                                                                <svg width={10} height={10}>
+                                                                    <circle cx={5} cy={5} r={5} fill="currentColor" />
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-
-
+                                                : null
+                                        }
                                     </div>
 
                                     {/* messages starts here*/}
@@ -220,36 +222,43 @@ export const Messenger = () => {
                                                         </div>
                                                     )
                                                 })
-                                                : <span>Abre una conversación para empezar un chat</span>
+                                                : <div className='hero container max-w-screen-lg mx-auto pb-10 flex justify-center'>
+                                                    <img className='' src="https://jamiemcgrath10.files.wordpress.com/2015/01/talk.png" alt="" />
+                                                </div>
                                         }
 
                                     </div>
                                     {/* messages ends here*/}
 
                                     {/*message input starts here */}
-                                    <div className='border-t-2 border-gray-200 px-4 pt-4 mb-2 mb-16'>
-                                        <div className='relative flex'>
-                                            <input
-                                                value={newMessage}
-                                                onChange={(e) => handleTextArea(e.target.value)}
-                                                onKeyDown={(e) => handleKeyDownTOSendMessage(e)}
-                                                type="text"
-                                                placeholder='Escribe algo'
-                                                className='focus:ring-team-dark focus:border-team-dark w-full focus:placeholder-gray-400 text-gray-600 placeholder-gray-300 pl-12 bg-gray-100 rounded-full py-3 border-gray-200'
-                                            />
-                                            <span className='absolute inset-y-0 flex items-center right-0'>
-                                                <button
-                                                    onClick={e => handleSendMessage(e)}
-                                                    className='inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300'
-                                                >
-                                                    <svg width="20px" height="20px" viewBox="0 0 24 24" class="crt8y2ji">
-                                                        <path className='' d="M16.6915026,12.4744748 L3.50612381,13.2599618 C3.19218622,13.2599618 3.03521743,13.4170592 3.03521743,13.5741566 L1.15159189,20.0151496 C0.8376543,20.8006365 0.99,21.89 1.77946707,22.52 C2.41,22.99 3.50612381,23.1 4.13399899,22.8429026 L21.714504,14.0454487 C22.6563168,13.5741566 23.1272231,12.6315722 22.9702544,11.6889879 C22.8132856,11.0605983 22.3423792,10.4322088 21.714504,10.118014 L4.13399899,1.16346272 C3.34915502,0.9 2.40734225,1.00636533 1.77946707,1.4776575 C0.994623095,2.10604706 0.8376543,3.0486314 1.15159189,3.99121575 L3.03521743,10.4322088 C3.03521743,10.5893061 3.34915502,10.7464035 3.50612381,10.7464035 L16.6915026,11.5318905 C16.6915026,11.5318905 17.1624089,11.5318905 17.1624089,12.0031827 C17.1624089,12.4744748 16.6915026,12.4744748 16.6915026,12.4744748 Z" fill="rgb(36 55 71)">
-                                                        </path>
-                                                    </svg>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
+                                    {
+                                        friend
+                                            ? <div className='border-t-2 border-gray-200 px-4 pt-4 mb-2 mb-16'>
+                                                <div className='relative flex'>
+                                                    <input
+                                                        value={newMessage}
+                                                        onChange={(e) => handleTextArea(e.target.value)}
+                                                        onKeyDown={(e) => handleKeyDownTOSendMessage(e)}
+                                                        type="text"
+                                                        placeholder='Escribe algo'
+                                                        className='focus:ring-team-dark focus:border-team-dark w-full focus:placeholder-gray-400 text-gray-600 placeholder-gray-300 pl-12 bg-gray-100 rounded-full py-3 border-gray-200'
+                                                    />
+                                                    <span className='absolute inset-y-0 flex items-center right-0'>
+                                                        <button
+                                                            onClick={e => handleSendMessage(e)}
+                                                            className='inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300'
+                                                        >
+                                                            <svg width="20px" height="20px" viewBox="0 0 24 24" class="crt8y2ji">
+                                                                <path className='' d="M16.6915026,12.4744748 L3.50612381,13.2599618 C3.19218622,13.2599618 3.03521743,13.4170592 3.03521743,13.5741566 L1.15159189,20.0151496 C0.8376543,20.8006365 0.99,21.89 1.77946707,22.52 C2.41,22.99 3.50612381,23.1 4.13399899,22.8429026 L21.714504,14.0454487 C22.6563168,13.5741566 23.1272231,12.6315722 22.9702544,11.6889879 C22.8132856,11.0605983 22.3423792,10.4322088 21.714504,10.118014 L4.13399899,1.16346272 C3.34915502,0.9 2.40734225,1.00636533 1.77946707,1.4776575 C0.994623095,2.10604706 0.8376543,3.0486314 1.15159189,3.99121575 L3.03521743,10.4322088 C3.03521743,10.5893061 3.34915502,10.7464035 3.50612381,10.7464035 L16.6915026,11.5318905 C16.6915026,11.5318905 17.1624089,11.5318905 17.1624089,12.0031827 C17.1624089,12.4744748 16.6915026,12.4744748 16.6915026,12.4744748 Z" fill="rgb(36 55 71)">
+                                                                </path>
+                                                            </svg>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            : <div className='border-t-2 border-gray-200 px-4 pt-4 mb-2 mb-16'>
+                                            </div>
+                                    }
 
                                 </div>
 
