@@ -13,29 +13,40 @@ import { socialApi } from '../../../api'
 import Conversation from '../layout/card/Conversation'
 import Message from '../layout/card/Message'
 import { useRef } from 'react'
+import FriendsToChatSearchResults from '../layout/FriendsToChatSearchResults'
 
 export const Messenger = () => {
 
     const { user } = useSelector(state => state.auth)
     const userId = user.id
     const [conversations, setConversations] = useState([])
-    const [currentChat, setCurrentChat] = useState(null)
     const [messages, setMessages] = useState([])
     const [newMessage, setNewMessage] = useState("")
     const [userLog, setUserLog] = useState();
     const [newMessageId, setNewMessageId] = useState()
     const scrollRef = useRef()
-
     const [friend, setFriend] = useState(null)
+    const [friendSearch, setFriendSearch] = useState("")
+    const [foundFriends, setFoundFriends] = useState()
+    const [allFriends, setAllFriends] = useState()
+    const [checkEmpyInput, setCheckEmpyInput] = useState(false)
+
+    const { setCurrentChatHook } = useHomeStore()
+    const { currentChatState, changeChat } = useSelector(state => state.home)
+
+    const handleCurrentChat = (conversation) => {
+        setCurrentChatHook(conversation)
+    }
+
     useEffect(() => {
-        const friendId = currentChat && currentChat.members.find(id => id != userId)
+        const friendId = currentChatState && currentChatState.members?.find(id => id != userId)
         const getFriend = async () => {
             const res = await socialApi.get(`/user/byid/${friendId}`)
             const friend = res.data.body
             setFriend(friend)
         }
-        currentChat ? getFriend() : null
-    }, [user, currentChat])
+        currentChatState && currentChatState.members && friendId ? getFriend() : null
+    }, [user, currentChatState])
 
     useEffect(() => {
         const getInfoUserLog = async () => {
@@ -52,16 +63,15 @@ export const Messenger = () => {
             setConversations(res.data.body)
         }
         getConversations()
-    }, [userId])
-
+    }, [userId, checkEmpyInput, changeChat])
     useEffect(() => {
         const getMessages = async () => {
-            const response = await socialApi.get(`/messages/${currentChat.id}`)
+            const response = await socialApi.get(`/messages/${currentChatState.id}`)
             const messages = response.data.body;
             setMessages(messages)
         }
-        currentChat ? getMessages() : null
-    }, [currentChat])
+        currentChatState?.id ? getMessages() : null
+    }, [currentChatState])
 
     const handleTextArea = (message) => {
         setNewMessage(message)
@@ -71,21 +81,18 @@ export const Messenger = () => {
         const messageToSave = {
             text: newMessage,
             userId: userId,
-            conversationId: currentChat && currentChat.id
+            conversationId: currentChatState.id
         }
         const response = await socialApi.post(`/messages`, messageToSave)
         const messagePosted = response.data.body
-        const responseLastMessage = await socialApi.get(`/messages/particularone/${messagePosted.id}`)
-        const messagePostedWithUserId = responseLastMessage.data.body
-        setMessages(messages.concat(messagePostedWithUserId))
-        setNewMessage("")
+        setNewMessageId(messagePosted.id)
     }
     const handleKeyDownTOSendMessage = async e => {
         if (e.key == "Enter") {
             const messageToSave = {
                 text: newMessage,
                 userId: userId,
-                conversationId: currentChat.id
+                conversationId: currentChatState.id
             }
             const response = await socialApi.post(`/messages`, messageToSave)
             const messagePosted = response.data.body
@@ -112,6 +119,29 @@ export const Messenger = () => {
     useEffect(() => {
         scrollRef.current && scrollRef.current.scrollIntoView({ behavior: "smooth" })
     }, [messages])
+
+    const handleSearchFriend = (friendToSearch) => {
+        setFriendSearch(friendToSearch)
+    }
+    useEffect(() => {
+        const searchedFriends = allFriends?.filter(friend => friend.alias.includes(friendSearch))
+        setFoundFriends(searchedFriends)
+    }, [allFriends, friendSearch])
+
+    useEffect(() => {
+        const getAllFriends = async () => {
+            const response = await socialApi.get(`/friends/${userId}`)
+            const allFriends = response.data.body
+            setAllFriends(allFriends)
+        }
+        getAllFriends()
+    }, [userId])
+
+    const handleClearInput = () => {
+        setFriendSearch("")
+        setCheckEmpyInput(!checkEmpyInput)
+    }
+
 
     return (
         <HomeLayout >
@@ -151,6 +181,8 @@ export const Messenger = () => {
                                                         </svg>
                                                     </div>
                                                     <input
+                                                        value={friendSearch}
+                                                        onChange={(e) => handleSearchFriend(e.target.value)}
                                                         name="search"
                                                         className='focus:ring-team-dark focus:border-team-dark block w-full pl-10 sm:text-sm border-gray-100 rounded-full p-2 border'
                                                     />
@@ -159,19 +191,31 @@ export const Messenger = () => {
                                             {/*Search box end*/}
 
                                             {/*Starts conversations */}
-                                            {
-                                                conversations && conversations.map(conversation => {
-                                                    return (
-                                                        <div onClick={() => setCurrentChat(conversation)}>
-                                                            <Conversation
-                                                                key={conversation.id}
-                                                                conversation={conversation}
-                                                                currentUser={user}
-                                                            />
-                                                        </div>
-                                                    )
-                                                })
-                                            }
+                                            <div>
+                                                {
+                                                    friendSearch && friendSearch.trim() != ""
+                                                        ? <FriendsToChatSearchResults
+                                                            foundFriends={foundFriends}
+                                                            userId={userId}
+                                                            handleClearInput={() => handleClearInput()}
+                                                        />
+                                                        : <>
+                                                            {
+                                                                conversations && conversations.map(conversation => {
+                                                                    return (
+                                                                        <div onClick={() => handleCurrentChat(conversation)}>
+                                                                            <Conversation
+                                                                                key={conversation.id}
+                                                                                conversation={conversation}
+                                                                                currentUser={user}
+                                                                            />
+                                                                        </div>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </>
+                                                }
+                                            </div>
                                             {/*Ends conversations */}
 
                                         </div>
@@ -214,12 +258,10 @@ export const Messenger = () => {
                                     >
 
                                         {
-                                            currentChat
+                                            friend
                                                 ? messages && messages.map((message, index) => {
                                                     return (
-                                                        <div ref={scrollRef}>
-                                                            <Message key={index} message={message} own={message.UserId == userId} />
-                                                        </div>
+                                                        <Message scrollRef={scrollRef} key={index} message={message} own={message.UserId == userId} />
                                                     )
                                                 })
                                                 : <div className='hero container max-w-screen-lg mx-auto pb-10 flex justify-center'>

@@ -1,9 +1,9 @@
 import { format } from "timeago.js"
 
-const Message = ({ message, own }) => {
+const Message = ({ message, own, scrollRef }) => {
     return (
 
-        <div className='chat-message'>
+        <div className='chat-message' ref={scrollRef}>
             {
                 own
                     ? <div className='flex items-end justify-end'>
