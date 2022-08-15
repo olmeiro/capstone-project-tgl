@@ -21,8 +21,19 @@ const postOneMessage = async (req, res) => {
     }
 }
 
+const getOneParticularMessage = async (req, res) => {
+    const { messageId } = req.params
+    try {
+        const oneMessage = await MessageService.getOneParticularMessage(messageId)
+        successResponse(req, res, oneMessage)
+    } catch (error) {
+        errorResponse(req, res, error)
+    }
+}
+
 
 module.exports = {
     getMessagesByconversationId,
-    postOneMessage
+    postOneMessage,
+    getOneParticularMessage
 }
