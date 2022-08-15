@@ -26,6 +26,17 @@ export const Messenger = () => {
     const [newMessageId, setNewMessageId] = useState()
     const scrollRef = useRef()
 
+    const [friend, setFriend] = useState(null)
+    useEffect(() => {
+        const friendId = currentChat && currentChat.members.find(id => id != userId)
+        const getFriend = async () => {
+            const res = await socialApi.get(`/user/byid/${friendId}`)
+            const friend = res.data.body
+            setFriend(friend)
+        }
+        currentChat ? getFriend() : null
+    }, [user, currentChat])
+
     useEffect(() => {
         const getInfoUserLog = async () => {
             const response = await socialApi.get(`/user/byid/${userId}`)
@@ -176,7 +187,7 @@ export const Messenger = () => {
                                     <div className='flex sm:items-center justify-between py-3 border-b border-gray-200 p-3'>
                                         <div className='flex items-center space-x-4'>
                                             <img
-                                                src="https://images.unsplash.com/photo-1583864697784-a0efc8379f70?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80"
+                                                src={friend?.photoProfile}
                                                 className='w-10 sm:w-12 h-10 sm:h-12 rounded-full'
                                             />
                                             <div className='flex flex-col leading-tight'>
