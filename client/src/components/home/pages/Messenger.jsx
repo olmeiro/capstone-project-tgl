@@ -15,8 +15,12 @@ import Message from '../layout/card/Message'
 import { useRef } from 'react'
 import FriendsToChatSearchResults from '../layout/FriendsToChatSearchResults'
 
+import io from "socket.io-client"
+
 export const Messenger = () => {
 
+    // const socket = io("http://localhost:3000")
+    const socket = useRef(io("ws://localhost:3000"))
     const { user } = useSelector(state => state.auth)
     const userId = user.id
     const [conversations, setConversations] = useState([])
@@ -30,13 +34,25 @@ export const Messenger = () => {
     const [foundFriends, setFoundFriends] = useState()
     const [allFriends, setAllFriends] = useState()
     const [checkEmpyInput, setCheckEmpyInput] = useState(false)
+    const [arrivalMessage, setArrivalMessage] = useState()
 
     const { setCurrentChatHook } = useHomeStore()
     const { currentChatState, changeChat } = useSelector(state => state.home)
-
     const handleCurrentChat = (conversation) => {
         setCurrentChatHook(conversation)
     }
+
+    useEffect(() => {
+        socket.current = io("ws://localhost:3000")
+    }, [])
+
+    useEffect(() => {
+        socket.current.emit("addUser", userId)
+        socket.current.on("getUsers", users => {
+            console.log("usuarios: ", users)
+        })
+    }, [user])
+
 
     useEffect(() => {
         const friendId = currentChatState && currentChatState.members?.find(id => id != userId)
@@ -89,6 +105,15 @@ export const Messenger = () => {
     }
     const handleKeyDownTOSendMessage = async e => {
         if (e.key == "Enter") {
+
+            const receiverId = currentChatState.members.find(memberId => memberId != userId)
+
+            socket.current.emit("sendMessage", {
+                senderId: userId,
+                receiverId,
+                text: newMessage
+            })
+
             const messageToSave = {
                 text: newMessage,
                 userId: userId,
@@ -142,6 +167,21 @@ export const Messenger = () => {
         setCheckEmpyInput(!checkEmpyInput)
     }
 
+    useEffect(() => {
+        socket.current.on("getMessage", data => {
+            setArrivalMessage({
+                UserId: data.senderId,
+                text: data.text,
+                createdAt: Date.now()
+            })
+        })
+    }, [])
+
+    useEffect(() => {
+        arrivalMessage &&
+            currentChatState?.members.includes(arrivalMessage.UserId) &&
+            setMessages(prev => prev.concat(arrivalMessage))
+    }, [arrivalMessage, currentChatState])
 
     return (
         <HomeLayout >
@@ -231,7 +271,8 @@ export const Messenger = () => {
                                     <div className='flex sm:items-center justify-between py-3 border-b border-gray-200 p-3'>
                                         {
                                             friend
-                                                ? <div className='flex items-center space-x-4'>
+                                                ?
+                                                <div className='flex items-center space-x-4'>
                                                     <img
                                                         src={friend?.photoProfile}
                                                         className='w-10 sm:w-12 h-10 sm:h-12 rounded-full'
@@ -247,6 +288,7 @@ export const Messenger = () => {
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 : null
                                         }
                                     </div>
