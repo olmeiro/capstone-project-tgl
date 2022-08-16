@@ -8,17 +8,20 @@ const Message = ({ message, own, scrollRef, imageFriend, imageOwn }) => {
                 own
                     ? <div className='flex items-end justify-end'>
                         <div className='flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-end'>
-                            <div>
+                            <div >
                                 <span className='px-4 py-2 rounded-lg inline-block rounded-bl-none bg-team-dark text-white'>
                                     {message.text}
                                 </span>
+                                <div >
+                                    {format(message.createdAt)}
+                                </div>
                             </div>
                         </div>
                         <img
                             src={imageOwn}
                             className='w-6 h-6 rounded-full order-1'
                         />
-                        <div>{format(message.createdAt)}</div>
+
                     </div>
                     : <div className='flex items-end'>
                         <div className='flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start'>
@@ -26,13 +29,15 @@ const Message = ({ message, own, scrollRef, imageFriend, imageOwn }) => {
                                 <span className='px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-200 text-gray-600'>
                                     {message.text}
                                 </span>
+                                <div>
+                                    {format(message.createdAt)}
+                                </div>
                             </div>
                         </div>
                         <img
                             src={imageFriend}
                             className='w-6 h-6 rounded-full order-1'
                         />
-                        <div>{format(message.createdAt)}</div>
                     </div>
             }
         </div>

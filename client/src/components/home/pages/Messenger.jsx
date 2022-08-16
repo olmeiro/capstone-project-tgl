@@ -15,7 +15,7 @@ import io from "socket.io-client"
 export const Messenger = () => {
 
 
-    const socket = useRef(io("ws://localhost:3000"))
+    const socket = useRef(io("https://socialnetworktgl.herokuapp.com"))
     const location = useLocation()
     const { user } = useSelector(state => state.auth)
     const userId = user.id
@@ -44,7 +44,7 @@ export const Messenger = () => {
     }, [location])
 
     useEffect(() => {
-        socket.current = io("ws://localhost:3000")
+        socket.current = io("https://socialnetworktgl.herokuapp.com")
     }, [])
 
     useEffect(() => {
