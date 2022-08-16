@@ -14,7 +14,7 @@ import io from "socket.io-client"
 
 export const Messenger = () => {
 
-    // const socket = io("http://localhost:3000")
+
     const socket = useRef(io("ws://localhost:3000"))
     const location = useLocation()
     const { user } = useSelector(state => state.auth)
@@ -34,13 +34,14 @@ export const Messenger = () => {
 
     const { setCurrentChatHook, sendPathHook } = useHomeStore()
     const { currentChatState, changeChat } = useSelector(state => state.home)
+
     const handleCurrentChat = (conversation) => {
         setCurrentChatHook(conversation)
     }
 
     useEffect(() => {
         sendPathHook(location.pathname)
-      }, [location])
+    }, [location])
 
     useEffect(() => {
         socket.current = io("ws://localhost:3000")
@@ -298,14 +299,13 @@ export const Messenger = () => {
                                         id='messages'
                                         className='flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch'
                                     >
-
                                         {
                                             friend
                                                 ? messages && messages.map((message, index) => {
                                                     return (
                                                         <Message
                                                             imageFriend={friend.photoProfile}
-                                                            imageOwn = {userLog.photoProfile}
+                                                            imageOwn={userLog.photoProfile}
                                                             scrollRef={scrollRef}
                                                             key={index}
                                                             message={message}
