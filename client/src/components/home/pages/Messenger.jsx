@@ -303,7 +303,14 @@ export const Messenger = () => {
                                             friend
                                                 ? messages && messages.map((message, index) => {
                                                     return (
-                                                        <Message scrollRef={scrollRef} key={index} message={message} own={message.UserId == userId} />
+                                                        <Message
+                                                            imageFriend={friend.photoProfile}
+                                                            imageOwn = {userLog.photoProfile}
+                                                            scrollRef={scrollRef}
+                                                            key={index}
+                                                            message={message}
+                                                            own={message.UserId == userId}
+                                                        />
                                                     )
                                                 })
                                                 : <div className='hero container max-w-screen-lg mx-auto pb-10 flex justify-center'>

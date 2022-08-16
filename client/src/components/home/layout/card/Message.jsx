@@ -1,6 +1,6 @@
 import { format } from "timeago.js"
 
-const Message = ({ message, own, scrollRef }) => {
+const Message = ({ message, own, scrollRef, imageFriend, imageOwn }) => {
     return (
 
         <div className='chat-message' ref={scrollRef}>
@@ -15,7 +15,7 @@ const Message = ({ message, own, scrollRef }) => {
                             </div>
                         </div>
                         <img
-                            src='https://images.unsplash.com/photo-1480429370139-e0132c086e2a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80'
+                            src={imageOwn}
                             className='w-6 h-6 rounded-full order-1'
                         />
                         <div>{format(message.createdAt)}</div>
@@ -29,7 +29,7 @@ const Message = ({ message, own, scrollRef }) => {
                             </div>
                         </div>
                         <img
-                            src="https://images.unsplash.com/photo-1583864697784-a0efc8379f70?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80"
+                            src={imageFriend}
                             className='w-6 h-6 rounded-full order-1'
                         />
                         <div>{format(message.createdAt)}</div>
