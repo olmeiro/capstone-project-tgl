@@ -35,6 +35,7 @@ const getUserById = async (req, res) => {
     const user = await UserService.getUserById(id);
     successResponse(req, res, user);
   } catch (error) {
+    console.log("sdaaaaaaaaaaaaaaaaaaa ", error)
     errorResponse(req, res, error);
   }
 };
