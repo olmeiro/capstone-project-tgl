@@ -1,13 +1,8 @@
 import React, { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-
-import { CarouselProfile } from '../layout/profile/CarouselProfile'
 import { useHomeStore } from '../../../hooks/useHomeStore'
-
 import { useSelector } from 'react-redux'
 import { HomeLayout } from '../layout/HomeLayout'
-import { Header } from '../layout/profile/Header'
-import { CardPhotos } from '../layout/profile/CardPhotos'
 import { useState } from 'react'
 import { socialApi } from '../../../api'
 import Conversation from '../layout/card/Conversation'
@@ -21,6 +16,7 @@ export const Messenger = () => {
 
     // const socket = io("http://localhost:3000")
     const socket = useRef(io("ws://localhost:3000"))
+    const location = useLocation()
     const { user } = useSelector(state => state.auth)
     const userId = user.id
     const [conversations, setConversations] = useState([])
@@ -36,11 +32,15 @@ export const Messenger = () => {
     const [checkEmpyInput, setCheckEmpyInput] = useState(false)
     const [arrivalMessage, setArrivalMessage] = useState()
 
-    const { setCurrentChatHook } = useHomeStore()
+    const { setCurrentChatHook, sendPathHook } = useHomeStore()
     const { currentChatState, changeChat } = useSelector(state => state.home)
     const handleCurrentChat = (conversation) => {
         setCurrentChatHook(conversation)
     }
+
+    useEffect(() => {
+        sendPathHook(location.pathname)
+      }, [location])
 
     useEffect(() => {
         socket.current = io("ws://localhost:3000")
