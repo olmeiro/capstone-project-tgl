@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
+
 import CarDrawer from './CardDrawer'
 import CardComments from './CardComments'
 import HeaderCard from './HeaderCard'
@@ -14,4 +16,14 @@ export const Card = ({ photo, description, likes, date, postId, likeAPost, userI
       </CarDrawer>
     </div>
   )
+}
+
+Card.propTypes = {
+  photo: PropTypes.string,
+  description: PropTypes.string,
+  likes: PropTypes.number,
+  date: PropTypes.string,
+  postId: PropTypes.number,
+  likeAPost: PropTypes.func,
+  userId: PropTypes.number
 }

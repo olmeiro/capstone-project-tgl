@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 import {
   StarIcon,
   HeartIcon,
@@ -11,7 +12,7 @@ import Swal from 'sweetalert2'
 import { socialApi } from '../../../../api'
 import { useSelector } from 'react-redux'
 
-export default function HeaderCard({ setIsOpen, photo, description, likes, date, likeAPost, postId, userId }) {
+export default function HeaderCard ({ setIsOpen, photo, description, likes, date, likeAPost, postId, userId }) {
   const [openModal, setOpenModal] = useState(false)
   const [likesRender, setLikesRender] = useState(likes)
   const [comment, setComment] = useState('')
@@ -146,4 +147,15 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
       </div>
     </div>
   )
+}
+
+HeaderCard.propTypes = {
+  setIsOpen: PropTypes.func,
+  photo: PropTypes.string,
+  description: PropTypes.string,
+  likes: PropTypes.number,
+  date: PropTypes.string,
+  likeAPost: PropTypes.func,
+  postId: PropTypes.number,
+  userId: PropTypes.number
 }

@@ -12,6 +12,7 @@ exports[`test on <LoginPage /> should match to Snapshot 1`] = `
         class="mt-2"
       >
         <img
+          alt="logo team"
           class="w-24"
           src=""
         />
@@ -29,6 +30,7 @@ exports[`test on <LoginPage /> should match to Snapshot 1`] = `
           Red Social TGL
         </h1>
         <img
+          alt="logo team"
           class="bg w-56 rounded-lg p-9 mt-9 mb-9"
           src=""
         />
