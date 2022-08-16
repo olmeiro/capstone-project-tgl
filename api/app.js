@@ -9,7 +9,7 @@ const app = express()
 const serverHttp = http.createServer(app)
 const io = new Server(serverHttp, {
     cors: {
-        origin: "http://localhost:5173"// url del frontend 
+        origin: "https://capstone-project-tgl.vercel.app"// url del frontend 
     }
 })
 
