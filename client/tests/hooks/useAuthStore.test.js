@@ -49,23 +49,23 @@ describe('tests useAuthStore', () => {
     })
 
     await act(async () => {
-      await result.current.startLogin(testUserCredentials)
+      await result.current.startLogin({
+        alias: 'test',
+        password: 'Test2021*'
+      })
     })
 
     const { errorMessage, status, user } = result.current
+    // console.log('login:', { errorMessage, status, user })
     expect({ errorMessage, status, user }).toEqual({
       errorMessage: undefined,
       status: 'authenticated',
       user: {
         id: 2,
+        alias: 'test',
         name: 'test prueba',
         photoProfile: null,
-        friends: [],
-        aliasUser: 'test',
-        bio: null,
-        email: 'test@gmail.com',
-        favorites: [],
-        phone: '123456789'
+        friends: []
       }
     })
 
@@ -224,7 +224,7 @@ describe('tests useAuthStore', () => {
     })
 
     const { errorMessage, status, user } = result.current
-    console.log({ errorMessage, status, user })
+    // console.log({ errorMessage, status, user })
 
     expect({ errorMessage, status, user }).toEqual({
       errorMessage: undefined, status: 'not-authenticated', user: {}

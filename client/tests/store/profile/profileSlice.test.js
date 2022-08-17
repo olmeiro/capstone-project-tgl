@@ -44,7 +44,7 @@ describe('test profileSlice', () => {
     console.log(state)
 
     expect(state).toEqual({
-      id: '',
+      id: 1,
       alias: 'Doe',
       name: 'John Doe Smith',
       bio: 'this is my best profile',
