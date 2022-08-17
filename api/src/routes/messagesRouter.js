@@ -2,13 +2,13 @@ const express = require("express");
 const router = express.Router();
 
 const {
-    getMessagesByconversationId,
-    postOneMessage,
-    getOneParticularMessage
+  getMessagesByconversationId,
+  postOneMessage,
+  getOneParticularMessage,
 } = require("../controllers/messagesController");
 
-router.get("/particularone/:messageId", getOneParticularMessage)
+router.get("/particularone/:messageId", getOneParticularMessage);
 router.get("/:conversationId", getMessagesByconversationId);
-router.post("/", postOneMessage)
+router.post("/", postOneMessage);
 
-module.exports = router
+module.exports = router;
