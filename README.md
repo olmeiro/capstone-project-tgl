@@ -1,51 +1,37 @@
 # Red Social TGL
 
-The Red Social TGL is a social network exclusively for students and employees of teams international, in order to provide information of interest about the company, courses or purposes. 
+Red Social TGL is a social network exclusively for students and employees of TEAM International, in order to provide information of interest about the company, courses or purposes. 
 
 ----------------------
 
-## Installation
+## This project is made with:
 
-- You must install Node.js [Install Node.js from here](https://nodejs.org/es/download/)
+  - React - Tailwind CSS - Vite.
+  - Node  - Express - Sockets.
+  - Heroku -> api.
+  - Vercel -> client.
 
-- You must install PostgreSQL [Install PostgreSQL from here](https://www.postgresql.org/download/)
+## Local Installation:
 
-### Is necessary to install the libraries:
+1. Clone repo.
+2. Install dependencies inside each part of the project: api and client:
+   Run command: ```npm install```
+3. Configure your database postgres according to env file.
+4. You could run your database with docker: run commands lines 22 and 25 docker-compose.yml file.
+4. Open terminal api folder and run command ```npm start```
+5. Open terminal client folder and run command ```npm run dev```
 
-- Tailwind CSS IntelliSense.
-- ES7+ React/Redux/React-Native snippets.
+### Visit our site:
+  https://capstone-project-tgl.vercel.app/auth/login
 
-### Is necessary to run the commands:
+### If you want to contribute to the project
 
--
--
--
+  - Clone repo.
+  - Pull Request.
 
+#### This project was made by:
 
-
-
-
-
-
-{
-id_: string,
-name: string,
-last_name: string,
-username: string,
-email: string,
-password: string,
-createDate: Date,
-likes: [array],
-friends: [array],
-comments: [array],
-images: [array],
-}
-
-## contraseñas
-<username>:<password>
-Alberto_user:alberto1234
-Naty_user:naty1234
-Olme_user:olme1234
-
-
+ - Natalia Cano: https://github.com/canonatalia
+ - Albert Smith: https://github.com/Albert-25
+ - Olmeiro Orozco: https://github.com/olmeiro
 ----------------------
