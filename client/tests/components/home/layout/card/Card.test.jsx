@@ -1,15 +1,8 @@
-import { Card } from '../../../../../src/components/home/layout/card/Card'
 import { render, screen } from '@testing-library/react'
-import { configureStore } from '@reduxjs/toolkit'
-import { Provider, useSelector } from 'react-redux'
-import { homeSlice } from '../../../../../src/store'
-import { useHomeStore } from '../../../../../src/hooks/useHomeStore'
+import { useSelector } from 'react-redux'
 
-const store = configureStore({
-  reducer: {
-    home: homeSlice.reducer
-  }
-})
+import { Card } from '../../../../../src/components/home/layout/card/Card'
+import { useHomeStore } from '../../../../../src/hooks/useHomeStore'
 
 jest.mock('../../../../../src/hooks/useHomeStore')
 jest.mock('../../../../../src/components/home/layout/card/Card')
@@ -26,11 +19,9 @@ describe('tests component <Card />', () => {
     })
 
     const { container } = render(
-      // <Provider store={store}>
         <Card />
-      // </Provider>
     )
-    screen.debug()
+    // screen.debug()
     expect(container).toMatchSnapshot()
   })
 })

@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import Swal from 'sweetalert2'
 import { Card, Modal, Label, TextInput } from 'flowbite-react'
 import { AiOutlineCloudUpload } from 'react-icons/ai'
-import { Link } from 'react-router-dom'
 
 import { useAuthStore, useForm } from '../../../../hooks'
-import { useProfileStore } from '../../../../hooks/useProfileStore'
-import { useSelector } from 'react-redux'
-import photoDefault from '../../../../../assets/photoDefault.png'
-import { useFriendStore } from '../../../../hooks/useFriendStore'
-import Swal from 'sweetalert2'
 import { useHomeStore } from '../../../../hooks/useHomeStore'
+import { useProfileStore } from '../../../../hooks/useProfileStore'
+import { useFriendStore } from '../../../../hooks/useFriendStore'
+import photoDefault from '../../../../../assets/photoDefault.png'
 
 const formData = {
   comment: ''
@@ -48,7 +48,7 @@ export const CardPhotosFriends = () => {
   const handleDeleteFriend = (friendId) => {
     Swal.fire({
       title: '¿Estas seguro de eliminar este amigo?',
-      text: "Esta acción no se puede revertir!",
+      text: 'Esta acción no se puede revertir!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

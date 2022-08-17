@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
+
 import { AuthLayout } from '../layout/AuthLayout'
 import { useForm, useAuthStore } from '../../../hooks'
 
@@ -69,7 +70,6 @@ export const RegisterPage = () => {
 
   const handleClick = () => {
     navigate('LoginPage')
-    // history.push("/LoginPage");
   }
 
   return (

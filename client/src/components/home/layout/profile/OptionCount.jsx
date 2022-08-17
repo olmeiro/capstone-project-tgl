@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Modal } from 'flowbite-react'
+
 import { useProfileStore } from '../../../../hooks/useProfileStore'
 import { useAuthStore } from '../../../../hooks'
 
@@ -13,11 +14,9 @@ export const OptionCount = () => {
 
   const inactiveCountUser = () => {
     inactiveCount(idUser)
-    // onLogout
   }
   const deleteCountUser = (id) => {
     deleteCount(idUser)
-    // onLogout
   }
 
   useEffect(() => {

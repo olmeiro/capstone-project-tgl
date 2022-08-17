@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import imagePath from '../../../../assets/logo_Team_International.png'
 
 export const AuthLayout = ({ children, title = '' }) => {

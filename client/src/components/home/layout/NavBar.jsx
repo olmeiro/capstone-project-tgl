@@ -22,7 +22,6 @@ const navigation = [
   { name: 'Mensajes', href: '/messenger', current: false }
 ]
 const userNavigation = [
-  // { name: 'Perfil', href: '/profile' },
   { name: 'Salir', href: '#' }
 ]
 
@@ -35,8 +34,8 @@ export function NavBar () {
   const [search, setSearch] = useState('')
 
   const { searchUserByAlias, checkEmptySearchBarHook } = useHomeStore()
-  const { pathReference } = useSelector(state => state.home)
-  const { alias, photoProfile, email } = useSelector(state => state.profile)
+  const { pathReference } = useSelector((state) => state.home)
+  const { alias, photoProfile, email } = useSelector((state) => state.profile)
 
   const handleSearch = (e) => {
     setSearch(e.target.value)
@@ -89,39 +88,68 @@ export function NavBar () {
                 </div>
 
                 {/* search bar */}
-                {
-                  pathReference === '/'
-                    ? <div>
-                      <div className="p-3">
-                        <div className="relative">
-                          <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                            <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
-                          </div>
-                          <input value={search} onChange={(e) => handleSearch(e)} type="text" id="input-group-search" className="block p-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mr-14" placeholder="Buscar usuario" />
-                          <div className="flex absolute inset-y-0 right-0 items-center pl-3">
-                            <button onClick={() => handleClearSearchBar()}>
-                              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-gray-500 dark:text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" >
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
-                            </button>
-                          </div>
+                {pathReference === '/'
+                  ? (
+                  <div>
+                    <div className="p-3">
+                      <div className="relative">
+                        <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                          <svg
+                            className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                            aria-hidden="true"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                              clipRule="evenodd"
+                            ></path>
+                          </svg>
+                        </div>
+                        <input
+                          value={search}
+                          onChange={(e) => handleSearch(e)}
+                          type="text"
+                          id="input-group-search"
+                          className="block p-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mr-14"
+                          placeholder="Buscar usuario"
+                        />
+                        <div className="flex absolute inset-y-0 right-0 items-center pl-3">
+                          <button onClick={() => handleClearSearchBar()}>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="w-5 h-5 text-gray-500 dark:text-gray-400 mr-2"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
+                            </svg>
+                          </button>
                         </div>
                       </div>
                     </div>
-                    : null
-                }
+                  </div>
+                    )
+                  : null}
 
                 <div className="hidden md:block">
                   <div className="ml-4 flex items-center md:ml-6">
-                    <Tooltip
-                    content={email}
-                    >
-                      <div
-                        className="flex bg-gray-800 p-1 rounded-full text-team-green hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                      >
+                    <Tooltip content={email}>
+                      <div className="flex bg-gray-800 p-1 rounded-full text-team-green hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                         <span className="sr-only">View notifications</span>
                         <p className="ml-3">Bienvenido {alias}</p>
-                        <UserIcon className="h-6 w-6 ml-1 mr-3 rounded-md" aria-hidden="true" />
+                        <UserIcon
+                          className="h-6 w-6 ml-1 mr-3 rounded-md"
+                          aria-hidden="true"
+                        />
                       </div>
                     </Tooltip>
 
@@ -130,7 +158,15 @@ export function NavBar () {
                       <div>
                         <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                           <span className="sr-only">Open user menu</span>
-                          <img className="h-8 w-8 rounded-full" src={photoProfile !== '' ? photoProfile : userMock.imageUrl} alt="" />
+                          <img
+                            className="h-8 w-8 rounded-full"
+                            src={
+                              photoProfile !== ''
+                                ? photoProfile
+                                : userMock.imageUrl
+                            }
+                            alt=""
+                          />
                         </Menu.Button>
                       </div>
                       <Transition
@@ -170,10 +206,10 @@ export function NavBar () {
                     <span className="sr-only">Open main menu</span>
                     {open
                       ? (
-                        <XIcon className="block h-6 w-6" aria-hidden="true" />
+                      <XIcon className="block h-6 w-6" aria-hidden="true" />
                         )
                       : (
-                        <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+                      <MenuIcon className="block h-6 w-6" aria-hidden="true" />
                         )}
                   </Disclosure.Button>
                 </div>
@@ -188,7 +224,9 @@ export function NavBar () {
                     as="a"
                     href={item.href}
                     className={classNames(
-                      item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                      item.current
+                        ? 'bg-gray-900 text-white'
+                        : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                       'block px-3 py-2 rounded-md text-base font-medium'
                     )}
                     aria-current={item.current ? 'page' : undefined}
@@ -200,23 +238,32 @@ export function NavBar () {
               <div className="pt-4 pb-3 border-t border-gray-700">
                 <div className="flex items-center px-5">
                   <div className="flex-shrink-0">
-                    <img className="h-10 w-10 rounded-full" src={photoProfile !== '' ? photoProfile : userMock.imageUrl} alt="" />
+                    <img
+                      className="h-10 w-10 rounded-full"
+                      src={
+                        photoProfile !== '' ? photoProfile : userMock.imageUrl
+                      }
+                      alt=""
+                    />
                   </div>
                   <div className="ml-3">
-                    <div className="text-base font-medium leading-none text-white">{userMock.user}</div>
-                    <div className="text-sm font-medium leading-none text-gray-400">{email !== '' ? email : userMock.email}</div>
+                    <div className="text-base font-medium leading-none text-white">
+                      {userMock.user}
+                    </div>
+                    <div className="text-sm font-medium leading-none text-gray-400">
+                      {email !== '' ? email : userMock.email}
+                    </div>
                   </div>
-                  <Tooltip
-                    content={email}
-                    >
-                      <div
-                        className="flex bg-gray-800 p-1 rounded-full text-team-green hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white sm:invisible"
-                      >
-                        <span className="sr-only">View notifications</span>
-                        <p>Bienvenido {alias}</p>
-                        <UserIcon className="h-6 w-6  rounded-md" aria-hidden="true" />
-                      </div>
-                    </Tooltip>
+                  <Tooltip content={email}>
+                    <div className="flex bg-gray-800 p-1 rounded-full text-team-green hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white sm:invisible">
+                      <span className="sr-only">View notifications</span>
+                      <p>Bienvenido {alias}</p>
+                      <UserIcon
+                        className="h-6 w-6  rounded-md"
+                        aria-hidden="true"
+                      />
+                    </div>
+                  </Tooltip>
                 </div>
                 <div className="mt-3 px-2 space-y-1">
                   {userNavigation.map((item) => (

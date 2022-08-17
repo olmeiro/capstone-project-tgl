@@ -1,12 +1,24 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
+
 import { socialApi } from '../api'
-import { onLoadDataProfile, onChangeDataProfile, onLoadCommentPhoto, inactivatingCount, deletingCount, onLoadFriendsUser, onLoadPublication, onSendPublication, onLoadPhotoProfile, onChanging } from '../store'
+import {
+  onLoadDataProfile,
+  onChangeDataProfile,
+  onLoadCommentPhoto,
+  inactivatingCount,
+  deletingCount,
+  onLoadFriendsUser,
+  onLoadPublication,
+  onSendPublication,
+  onLoadPhotoProfile,
+  onChanging
+} from '../store'
 import { useHomeStore } from './useHomeStore'
 
 export const useProfileStore = () => {
-  const profile = useSelector(state => state.profile)
+  const profile = useSelector((state) => state.profile)
   const dispatch = useDispatch()
   const { getPostsFromUserLoggedIn } = useHomeStore()
   const loadingDataProfile = async (id) => {
@@ -94,7 +106,14 @@ export const useProfileStore = () => {
     }
   }
 
-  const changeDataProfile = async ({ idUser, alias, name, bio, email, phone }) => {
+  const changeDataProfile = async ({
+    idUser,
+    alias,
+    name,
+    bio,
+    email,
+    phone
+  }) => {
     try {
       await socialApi.put('/user/', { idUser, alias, name, bio, email, phone })
       dispatch(onChangeDataProfile({ alias, name, bio, email, phone }))
@@ -111,7 +130,7 @@ export const useProfileStore = () => {
   }
 
   const uploadCommentPhoto = (comment, id) => {
-    // hacer put comment en photo cover de user id
+    // TODO: hacer put comment en photo cover de user id
     dispatch(onLoadCommentPhoto(comment))
   }
 
@@ -131,7 +150,11 @@ export const useProfileStore = () => {
             await socialApi.delete(`/posts/${postId}`)
             getPostsFromUserLoggedIn()
             loadingPublicationUser(userId)
-            Swal.fire('Borrado!', 'La publicación ha sido eliminada.', 'success')
+            Swal.fire(
+              'Borrado!',
+              'La publicación ha sido eliminada.',
+              'success'
+            )
           } catch (error) {
             Swal.fire('No se pudo eliminar la publicación.')
           }
@@ -146,15 +169,14 @@ export const useProfileStore = () => {
   }
 
   const inactiveCount = (id) => {
-    // change data api user id borrado logico
+    // TODO: change data api user id borrado logico
     dispatch(inactivatingCount(id))
     // onLogout auth
   }
 
   const deleteCount = (id) => {
-    // change data api user id
+    // TODO: change data api user id
     dispatch(deletingCount(id))
-    // onLogout auth
   }
 
   const onLoadChanging = () => {

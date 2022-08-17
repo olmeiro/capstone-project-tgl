@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+
 import { NavBar } from '../../../../src/components/home/layout/NavBar'
 
 jest.mock('../../../../src/components/home/layout/NavBar', () => ({

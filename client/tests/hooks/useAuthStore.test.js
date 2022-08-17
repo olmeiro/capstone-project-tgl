@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { Provider } from 'react-redux'
+
 import { socialApi } from '../../src/api'
 import { useAuthStore } from '../../src/hooks/useAuthStore'
 import { authSlice } from '../../src/store/auth/authSlice'
@@ -28,7 +29,6 @@ describe('tests useAuthStore', () => {
       wrapper: ({ children }) => <Provider store={mockStore}>{ children }</Provider>
     })
 
-    // console.log(result.current)
     expect(result.current).toEqual({
       errorMessage: undefined,
       status: 'checking',
@@ -70,7 +70,6 @@ describe('tests useAuthStore', () => {
     })
 
     expect(localStorage.getItem('token')).toEqual(expect.any(String))
-
     // console.log(result.current)
   })
 
