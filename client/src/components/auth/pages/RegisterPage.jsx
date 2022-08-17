@@ -130,7 +130,7 @@ export const RegisterPage = () => {
         <label htmlFor="">Contraseña</label>
         <input
           className="form-input px-4 py-3 rounded-full"
-          type="text"
+          type="password"
           placeholder="password"
           id="password"
           name="password"
@@ -142,7 +142,7 @@ export const RegisterPage = () => {
         <label htmlFor="">Confirmar contraseña</label>
         <input
           className="form-input px-4 py-3 rounded-full"
-          type="text"
+          type="password"
           placeholder="password"
           id="password1"
           name="password1"

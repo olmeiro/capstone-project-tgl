@@ -7,7 +7,6 @@ const getFavoritesByUserId = async (req, res) => {
         const favorites = await FavoriteService.getFavoritesByUserId(userId);
         successResponse(req, res, favorites);
     } catch (error) {
-        console.log("errorrrrrrrrrrrr", error)
         errorResponse(req, res, error);
     }
 }
