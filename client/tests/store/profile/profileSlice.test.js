@@ -41,7 +41,7 @@ describe('test profileSlice', () => {
 
   test('should change data bio profile', () => {
     const state = profileSlice.reducer(loadDataProfile, onChangeDataProfile(changeData))
-    console.log(state)
+    // console.log(state)
 
     expect(state).toEqual({
       id: 1,

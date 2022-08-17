@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
+
 import { LoginPage } from '../../../../src/components/auth/pages/LoginPage'
 import { useAuthStore } from '../../../../src/hooks/useAuthStore'
 import { authSlice } from '../../../../src/store'
@@ -16,8 +17,7 @@ const store = configureStore({
   preloadedState: {
     auth: notauthenticatedState
   }
-}
-)
+})
 
 jest.mock('../../../../src/hooks/useAuthStore')
 

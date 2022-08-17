@@ -34,7 +34,7 @@ describe('test component <Histories />', () => {
         </MemoryRouter>
       </Provider>
     )
-    screen.debug()
+    // screen.debug()
     expect(container).toMatchSnapshot()
   })
 })

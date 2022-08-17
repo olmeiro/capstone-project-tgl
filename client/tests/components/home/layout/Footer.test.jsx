@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+
 import { FooterPage } from '../../../../src/components/home/layout/Footer'
 
 describe('test component <FooterPage /> HomeLayour', () => {

@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
 export const CarouselProfile = () => {
-  const { lastUserVisited, postsFromUserLoggedIn } = useSelector(state => state.home)
+  const { lastUserVisited, postsFromUserLoggedIn } = useSelector((state) => state.home)
   const { userAlias } = useParams()
-  const [publications, setPublications] = useState() // publicaciones del usuario logeado
+  const [publications, setPublications] = useState()
 
   useEffect(() => {
     setPublications(postsFromUserLoggedIn)
@@ -14,73 +14,54 @@ export const CarouselProfile = () => {
 
   return (
     <>
-      {
-        userAlias
-          ? lastUserVisited && lastUserVisited.posts.length == 0 ? null // esto es para que no se muestre nada cuando el usuario visitado no tiene posts
-            : <div className="bg-team-blue h-56 sm:h-64 xl:h-80 2xl:h-96">
-          {
-            !lastUserVisited
+      {userAlias
+        ? (
+            lastUserVisited && lastUserVisited.posts.length === 0
               ? null
-              : <Carousel slideInterval={5000}>
-                {
-
-                  lastUserVisited && lastUserVisited.posts.map(post => (
-                    <img
-                      key={post.idUser}
-                      src={post.photo}
-                      alt="..."
-                    />
-                  ))
-                }
+              : (
+          <div className="bg-team-blue h-56 sm:h-64 xl:h-80 2xl:h-96">
+            {!lastUserVisited
+              ? null
+              : (
+              <Carousel slideInterval={5000}>
+                {lastUserVisited &&
+                  lastUserVisited.posts.map((post) => (
+                    <img key={post.idUser} src={post.photo} alt="..." />
+                  ))}
               </Carousel>
-          }
+                )}
+          </div>
+                )
+          )
+        : publications && publications.length === 0
+          ? (
+        <div
+          className="bg-team-blue h-56 sm:h-64 xl:h-80 2xl:h-96"
+          key={publications.idUser}
+        >
+          <Carousel slideInterval={5000}>
+            <img src="../../../../assets/logo.png" alt="photo carousel" />
+            <img src="/assets/carousel-2.svg" alt="photo carousel" />
+            <img src="/assets/carousel-3.svg" alt="photo carousel" />
+            <img src="/assets/carousel-4.svg" alt="photo carousel" />
+            <img src="/assets/carousel-5.svg" alt="photo carousel" />
+          </Carousel>
         </div>
-          : publications && publications.length === 0
-            ? (
-            <div className="bg-team-blue h-56 sm:h-64 xl:h-80 2xl:h-96" key={publications.idUser}>
-              <Carousel slideInterval={5000} >
-                <img
-                  src="../../../../assets/logo.png"
-                  alt="..."
-                />
-                <img
-                  src="/assets/carousel-2.svg"
-                  alt="..."
-                />
-                <img
-                  src="/assets/carousel-3.svg"
-                  alt="..."
-                />
-                <img
-                  src="/assets/carousel-4.svg"
-                  alt="..."
-                />
-                <img
-                  src="/assets/carousel-5.svg"
-                  alt="..."
-                />
-              </Carousel>
-            </div>
-              )
-            : <div className="bg-team-blue h-56 sm:h-64 xl:h-80 2xl:h-96">
-              {
-                !publications
-                  ? null
-                  : <Carousel slideInterval={5000}>
-                    {
-                      publications && publications.map(publication => (
-                        <img
-                          key={publication.id}
-                          src={publication.photo}
-                          alt="..."
-                        />
-                      ))
-                    }
-                  </Carousel>
-              }
-
-            </div>
-      }
+            )
+          : (
+        <div className="bg-team-blue h-56 sm:h-64 xl:h-80 2xl:h-96">
+          {!publications
+            ? null
+            : (
+            <Carousel slideInterval={5000}>
+              {publications &&
+                publications.map((publication) => (
+                  <img key={publication.id} src={publication.photo} alt="..." />
+                ))}
+            </Carousel>
+              )}
+        </div>
+            )}
     </>
   )
 }

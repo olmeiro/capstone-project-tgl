@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export default function CarDrawer({ children, isOpen, setIsOpen }) {
+export default function CarDrawer ({ children, isOpen, setIsOpen }) {
   return (
     <main
       className={
@@ -22,7 +22,8 @@ export default function CarDrawer({ children, isOpen, setIsOpen }) {
             Comentarios
             <button
               className="bg text-white rounded px-4 py-1 hover:bg-team-blue"
-              onClick={() => setIsOpen(false)}>
+              onClick={() => setIsOpen(false)}
+            >
               X
             </button>
           </header>

@@ -53,62 +53,6 @@ exports[`test component <HeaderCard /> should render component 1`] = `
               class="w-fit"
               data-testid="tooltip-target"
             >
-              <div />
-            </div>
-            <div
-              class="absolute inline-block rounded-lg py-2 px-3 text-sm font-medium shadow-sm transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700"
-              data-testid="tooltip"
-              id=":r0:"
-              role="tooltip"
-              style="position: absolute;"
-              tabindex="-1"
-            >
-              <div
-                class="relative z-20"
-              >
-                likes
-              </div>
-            </div>
-            <div
-              class="w-fit"
-              data-testid="tooltip-target"
-            >
-              <button>
-                <svg
-                  aria-hidden="true"
-                  class="h-6 w-6 mb-3 relative top-2  rounded-md  hover:fill-team-green  hover:text-black "
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div
-              class="absolute inline-block rounded-lg py-2 px-3 text-sm font-medium shadow-sm transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700"
-              data-testid="tooltip"
-              id=":r2:"
-              role="tooltip"
-              style="position: absolute;"
-              tabindex="-1"
-            >
-              <div
-                class="relative z-20"
-              >
-                Me gusta
-              </div>
-            </div>
-            <div
-              class="w-fit"
-              data-testid="tooltip-target"
-            >
               <button>
                 <svg
                   aria-hidden="true"
@@ -130,7 +74,7 @@ exports[`test component <HeaderCard /> should render component 1`] = `
             <div
               class="absolute inline-block rounded-lg py-2 px-3 text-sm font-medium shadow-sm transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700"
               data-testid="tooltip"
-              id=":r4:"
+              id=":r0:"
               role="tooltip"
               style="position: absolute;"
               tabindex="-1"
@@ -166,7 +110,7 @@ exports[`test component <HeaderCard /> should render component 1`] = `
             <div
               class="absolute inline-block rounded-lg py-2 px-3 text-sm font-medium shadow-sm transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700"
               data-testid="tooltip"
-              id=":r6:"
+              id=":r2:"
               role="tooltip"
               style="position: absolute;"
               tabindex="-1"

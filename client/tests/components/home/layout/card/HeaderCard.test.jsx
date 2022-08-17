@@ -1,7 +1,8 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import { useSelector } from 'react-redux'
+
 import HeaderCard from '../../../../../src/components/home/layout/card/HeaderCard'
 import { useHomeStore } from '../../../../../src/hooks/useHomeStore'
-import { useSelector } from 'react-redux'
 
 jest.mock('../../../../../src/hooks/useHomeStore')
 
