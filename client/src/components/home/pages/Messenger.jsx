@@ -1,13 +1,8 @@
 import React, { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-
-import { CarouselProfile } from '../layout/profile/CarouselProfile'
 import { useHomeStore } from '../../../hooks/useHomeStore'
-
 import { useSelector } from 'react-redux'
 import { HomeLayout } from '../layout/HomeLayout'
-import { Header } from '../layout/profile/Header'
-import { CardPhotos } from '../layout/profile/CardPhotos'
 import { useState } from 'react'
 import { socialApi } from '../../../api'
 import Conversation from '../layout/card/Conversation'
@@ -15,8 +10,13 @@ import Message from '../layout/card/Message'
 import { useRef } from 'react'
 import FriendsToChatSearchResults from '../layout/FriendsToChatSearchResults'
 
+import io from "socket.io-client"
+
 export const Messenger = () => {
 
+
+    const socket = useRef(io("https://socialnetworktgl.herokuapp.com"))
+    const location = useLocation()
     const { user } = useSelector(state => state.auth)
     const userId = user.id
     const [conversations, setConversations] = useState([])
@@ -30,13 +30,30 @@ export const Messenger = () => {
     const [foundFriends, setFoundFriends] = useState()
     const [allFriends, setAllFriends] = useState()
     const [checkEmpyInput, setCheckEmpyInput] = useState(false)
+    const [arrivalMessage, setArrivalMessage] = useState()
 
-    const { setCurrentChatHook } = useHomeStore()
+    const { setCurrentChatHook, sendPathHook } = useHomeStore()
     const { currentChatState, changeChat } = useSelector(state => state.home)
 
     const handleCurrentChat = (conversation) => {
         setCurrentChatHook(conversation)
     }
+
+    useEffect(() => {
+        sendPathHook(location.pathname)
+    }, [location])
+
+    useEffect(() => {
+        socket.current = io("https://socialnetworktgl.herokuapp.com")
+    }, [])
+
+    useEffect(() => {
+        socket.current.emit("addUser", userId)
+        socket.current.on("getUsers", users => {
+            console.log("usuarios: ", users)
+        })
+    }, [user])
+
 
     useEffect(() => {
         const friendId = currentChatState && currentChatState.members?.find(id => id != userId)
@@ -89,6 +106,15 @@ export const Messenger = () => {
     }
     const handleKeyDownTOSendMessage = async e => {
         if (e.key == "Enter") {
+
+            const receiverId = currentChatState.members.find(memberId => memberId != userId)
+
+            socket.current.emit("sendMessage", {
+                senderId: userId,
+                receiverId,
+                text: newMessage
+            })
+
             const messageToSave = {
                 text: newMessage,
                 userId: userId,
@@ -142,6 +168,21 @@ export const Messenger = () => {
         setCheckEmpyInput(!checkEmpyInput)
     }
 
+    useEffect(() => {
+        socket.current.on("getMessage", data => {
+            setArrivalMessage({
+                UserId: data.senderId,
+                text: data.text,
+                createdAt: Date.now()
+            })
+        })
+    }, [])
+
+    useEffect(() => {
+        arrivalMessage &&
+            currentChatState?.members.includes(arrivalMessage.UserId) &&
+            setMessages(prev => prev.concat(arrivalMessage))
+    }, [arrivalMessage, currentChatState])
 
     return (
         <HomeLayout >
@@ -231,7 +272,8 @@ export const Messenger = () => {
                                     <div className='flex sm:items-center justify-between py-3 border-b border-gray-200 p-3'>
                                         {
                                             friend
-                                                ? <div className='flex items-center space-x-4'>
+                                                ?
+                                                <div className='flex items-center space-x-4'>
                                                     <img
                                                         src={friend?.photoProfile}
                                                         className='w-10 sm:w-12 h-10 sm:h-12 rounded-full'
@@ -247,6 +289,7 @@ export const Messenger = () => {
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 : null
                                         }
                                     </div>
@@ -256,12 +299,18 @@ export const Messenger = () => {
                                         id='messages'
                                         className='flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch'
                                     >
-
                                         {
                                             friend
                                                 ? messages && messages.map((message, index) => {
                                                     return (
-                                                        <Message scrollRef={scrollRef} key={index} message={message} own={message.UserId == userId} />
+                                                        <Message
+                                                            imageFriend={friend.photoProfile}
+                                                            imageOwn={userLog.photoProfile}
+                                                            scrollRef={scrollRef}
+                                                            key={index}
+                                                            message={message}
+                                                            own={message.UserId == userId}
+                                                        />
                                                     )
                                                 })
                                                 : <div className='hero container max-w-screen-lg mx-auto pb-10 flex justify-center'>

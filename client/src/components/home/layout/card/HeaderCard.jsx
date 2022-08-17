@@ -110,19 +110,19 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
               Ver comentarios
             </button>
             <div className="flex flex-row w-2/3 justify-end items-center gap-4">
-              <Tooltip content="likes" arrow={false}>
+              {/* <Tooltip content="likes" arrow={false}>
                 <div>
                   {likesRender}
                 </div>
-              </Tooltip>
-              <Tooltip content="Me gusta" arrow={false}>
+              </Tooltip> */}
+              {/* <Tooltip content="Me gusta" arrow={false}>  
                 <button onClick={() => handleLike()}>
                   <ThumbUpIcon
                     className="h-6 w-6 mb-3 relative top-2  rounded-md  hover:fill-team-green  hover:text-black "
                     aria-hidden="true"
                   />
                 </button>
-              </Tooltip>
+              </Tooltip> */}
               <Tooltip content="Agregar a favoritos" arrow={false}>
                 <button onClick={() => handleAddFavorite()}>
                   <StarIcon

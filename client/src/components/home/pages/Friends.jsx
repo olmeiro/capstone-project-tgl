@@ -19,7 +19,7 @@ export const Friends = () => {
 
   useEffect(() => {
     sendPathHook(location.pathname)
-  }, [])
+  }, [location])
 
   return (
     <HomeLayout >
