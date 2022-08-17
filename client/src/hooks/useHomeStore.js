@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { socialApi } from '../api'
-import { checkFavorites, getFavorites, actionKeepLastUserVisitesOnRedux, getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference, setLastUserVisited, setInfoFromUserLoggedIn, setcheckInfoUser, setPostsFromUserLoggedIn } from '../store'
+import { chekChangeChat, setCurrentChat, checkFavorites, getFavorites, actionKeepLastUserVisitesOnRedux, getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference, setLastUserVisited, setInfoFromUserLoggedIn, setcheckInfoUser, setPostsFromUserLoggedIn, setCurrentMembers } from '../store'
 
 export const useHomeStore = () => {
   const dispatch = useDispatch()
@@ -131,6 +131,12 @@ export const useHomeStore = () => {
   const checkFavoritesHook = async () => {
     dispatch(checkFavorites())
   }
+  const setCurrentChatHook = (currentChat) => {
+    dispatch(setCurrentChat(currentChat))
+  }
+  const chekChangeChatHook = ()=>{
+    dispatch(chekChangeChat())
+  }
 
   return {
     getPostsToHomeHook,
@@ -152,6 +158,8 @@ export const useHomeStore = () => {
     addToFavorites,
     getFavoritesHook,
     deleteFavoriteHook,
-    checkFavoritesHook
+    checkFavoritesHook,
+    setCurrentChatHook,
+    chekChangeChatHook,
   }
 }

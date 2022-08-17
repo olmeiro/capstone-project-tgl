@@ -42,12 +42,14 @@ const getUserById = async (req, res) => {
 const postUser = async (req, res) => {
   const { alias, name, email, phone, password } = req.body;
   try {
+    const photoProfile = "https://i.ibb.co/7CfHmMQ/142320.png"
     const user = await UserService.postUser({
       alias,
       name,
       email,
       phone,
       password,
+      photoProfile
     });
     const token = await generateJWT(user.id, user.alias, user.name);
     successResponse(req, res, { user, token });

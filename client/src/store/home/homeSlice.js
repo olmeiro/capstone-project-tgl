@@ -14,7 +14,9 @@ export const homeSlice = createSlice({
         checkInfoUser: false,
         postsFromUserLoggedIn: [],
         favorites: [],
-        checkFavorites: false
+        checkFavorites: false,
+        currentChatState:null,
+        changeChat:false,
     },
     reducers: {
         getPostsToHome: (state, { payload }) => {
@@ -61,8 +63,14 @@ export const homeSlice = createSlice({
         },
         checkFavorites: (state, { payload }) => {
             state.checkFavorites = !state.checkFavorites
-        }
+        },
+        setCurrentChat: (state, { payload }) => {
+            state.currentChatState = payload
+        },
+        chekChangeChat: (state, { payload }) => {
+            state.changeChat = !state.changeChat
+        },
     }
 })
 
-export const { checkFavorites, getFavorites, actionKeepLastUserVisitesOnRedux, setPostsFromUserLoggedIn, setcheckInfoUser, setInfoFromUserLoggedIn, getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference, setLastUserVisited, getPostsOfLastUserVisited } = homeSlice.actions
+export const { setCurrentMembers, chekChangeChat, setCurrentChat, checkFavorites, getFavorites, actionKeepLastUserVisitesOnRedux, setPostsFromUserLoggedIn, setcheckInfoUser, setInfoFromUserLoggedIn, getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference, setLastUserVisited, getPostsOfLastUserVisited } = homeSlice.actions

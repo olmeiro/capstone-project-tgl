@@ -9,7 +9,7 @@ const UserModel = {
     },
     alias: {
         allowNull: true,
-        // unique: true,
+        unique: true,
         type: DataTypes.STRING
     },
     name: {

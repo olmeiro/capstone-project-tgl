@@ -1,6 +1,6 @@
-app = require("./app");
+serverHttp = require("./app");
 const { PORT } = require("./src/config/index");
 
-app.listen(PORT, () => {
+serverHttp.listen(PORT, () => {
   console.log(`listening on port ${PORT}`)
 })
