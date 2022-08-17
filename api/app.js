@@ -6,10 +6,14 @@ const { Server } = require("socket.io");
 const router = require("./src/routes/index");
 const app = express();
 
+app.use(cors());
+app.use(express.json());
+app.use(router);
+
 const serverHttp = http.createServer(app);
 const io = new Server(serverHttp, {
   cors: {
-    origin: "https://capstone-project-tgl.vercel.app", // url del frontend
+    origin: 'https://capstone-project-fefcmh83p-social-tgl.vercel.app', // url del frontend
   },
 });
 
@@ -49,9 +53,5 @@ io.on("connection", (socket) => {
     io.emit("getUsers", users);
   });
 });
-
-app.use(cors());
-app.use(express.json());
-app.use(router);
 
 module.exports = serverHttp;
