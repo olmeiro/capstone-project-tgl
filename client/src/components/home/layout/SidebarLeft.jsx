@@ -33,16 +33,18 @@ export const SidebarLeft = () => {
         {suggestions.map((user) => (
           <li key={user.id} className="py-4 flex justify-around">
             <Link
+            className='basis-1/6'
               to={`/profile/${user.alias}`}
               onClick={() => handleLastUserVisited(user.alias, user.id)}
             >
               <img
                 className="h-10 w-10 rounded-full"
                 src={user.photoProfile ? user.photoProfile : photoDefault}
-                alt=""
+                alt="image friends suggestion"
               />
             </Link>
             <Link
+              className='basis-4/6 mr-2'
               to={`/profile/${user.alias}`}
               onClick={() => handleLastUserVisited(user.alias, user.id)}
             >
@@ -55,7 +57,7 @@ export const SidebarLeft = () => {
                 </p>
               </div>
             </Link>
-            <div className="w-8">
+            <div className="className='basis-1/6' flex items-center">
               <Tooltip content="Agregar amistad" arrow={false}>
                 <button onClick={() => handleAddFriend(user.id)}>
                   <PlusIcon
