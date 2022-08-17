@@ -15,10 +15,10 @@ export const SidebarRight = () => {
           src={cohete} alt="team international photo"
         />
       </a>
-      <img className='bg-team-blue rounded-md mt-1 w-[280px] h-[213px]' src={photo2} alt="" />
-      <img className='bg-team-blue rounded-md mt-1 w-[280px] h-[213px]' src={photo3} alt="" />
-      <img className='bg-team-blue rounded-md mt-1 w-[280px] h-[213px]' src={photo1} alt="" />
-      <img className='rounded-md bg-team-green mt-1 w-[280px] h-[213px]' src={tula} alt="" />
+      <img className='bg-team-blue rounded-md mt-1 w-[280px] h-[213px]' src={photo2} alt="sidebar image" />
+      <img className='bg-team-blue rounded-md mt-1 w-[280px] h-[213px]' src={photo3} alt="sidebar image" />
+      <img className='bg-team-blue rounded-md mt-1 w-[280px] h-[213px]' src={photo1} alt="sidebar image" />
+      <img className='rounded-md bg-team-green mt-1 w-[280px] h-[213px]' src={tula} alt="sidebar image" />
     </div>
   )
 }

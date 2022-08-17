@@ -1,28 +1,51 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { socialApi } from '../api'
-import { chekChangeChat, setCurrentChat, checkFavorites, getFavorites, actionKeepLastUserVisitesOnRedux, getPostsToHome, getFriendsFromFriends, checkComments, getUserSearched, checkEmptySearchBar, setPathReference, setLastUserVisited, setInfoFromUserLoggedIn, setcheckInfoUser, setPostsFromUserLoggedIn, setCurrentMembers } from '../store'
+import {
+  chekChangeChat,
+  setCurrentChat,
+  checkFavorites,
+  getFavorites,
+  actionKeepLastUserVisitesOnRedux,
+  getPostsToHome,
+  getFriendsFromFriends,
+  checkComments,
+  getUserSearched,
+  checkEmptySearchBar,
+  setPathReference,
+  setLastUserVisited,
+  setInfoFromUserLoggedIn,
+  setcheckInfoUser,
+  setPostsFromUserLoggedIn
+} from '../store'
 
 export const useHomeStore = () => {
   const dispatch = useDispatch()
-  const { user } = useSelector(state => state.auth)
+  const { user } = useSelector((state) => state.auth)
   const userId = user.id
 
-  const entire = socialApi.get(`/user/byid/${userId}`).then(response => response.data.body)
-  let friends = entire.then(user => user.friends)
+  const entire = socialApi
+    .get(`/user/byid/${userId}`)
+    .then((response) => response.data.body)
+  let friends = entire.then((user) => user.friends)
 
   const getPostsToHomeHook = async () => {
     friends = await friends
-    let postsTotalFromFriends = friends.map(async friendId => await socialApi.get(`/posts/byuser/${friendId}`))
+    let postsTotalFromFriends = friends.map(
+      async (friendId) => await socialApi.get(`/posts/byuser/${friendId}`)
+    )
     postsTotalFromFriends = Promise.all(postsTotalFromFriends)
     postsTotalFromFriends = await postsTotalFromFriends
-    postsTotalFromFriends = postsTotalFromFriends.map(posts => posts.data.body).flat()
+    postsTotalFromFriends = postsTotalFromFriends
+      .map((posts) => posts.data.body)
+      .flat()
     dispatch(getPostsToHome(postsTotalFromFriends))
   }
   const getFriendsFromFriendsHook = async () => {
     const wholeUser = await socialApi.get(`/user/byid/${userId}`)
     const friendsId = wholeUser.data.body.friends
-    let suggestion = friendsId.map(async id => {
+    let suggestion = friendsId.map(async (id) => {
       const response = await socialApi.get(`/user/byid/${id}`)
       const data = response.data
       const suggestion = data.body.friends
@@ -31,8 +54,10 @@ export const useHomeStore = () => {
     suggestion = Promise.all(suggestion)
     suggestion = await suggestion
     suggestion = suggestion.flat()
-    suggestion = suggestion.filter((friendid, index) => suggestion.indexOf(friendid) == index)
-    suggestion = suggestion.map(async id => {
+    suggestion = suggestion.filter(
+      (friendid, index) => suggestion.indexOf(friendid) === index
+    )
+    suggestion = suggestion.map(async (id) => {
       const response = await socialApi.get(`/user/byid/${id}`)
       const data = response.data
       const suggestion = data.body
@@ -54,7 +79,7 @@ export const useHomeStore = () => {
   const getCommentsByPost = async (postid) => {
     let comments = await socialApi.get(`/comments/bypost/${postid}`)
     comments = comments.data.body
-    comments = comments.map(async comment => {
+    comments = comments.map(async (comment) => {
       const userId = comment.UserId
       let user = await socialApi.get(`/user/byid/${userId}`)
       user = user.data.body
@@ -72,10 +97,14 @@ export const useHomeStore = () => {
   }
   const searchUserByAlias = async (aliasFromBody) => {
     let foundUsers = null
-    if (aliasFromBody.trim() != '') {
+    if (aliasFromBody.trim() !== '') {
       const response = await socialApi.get('/user/all')
       const users = response.data.body
-      foundUsers = users.filter(user => user.alias.toLowerCase().includes(aliasFromBody && aliasFromBody.toLowerCase()))
+      foundUsers = users.filter((user) =>
+        user.alias
+          .toLowerCase()
+          .includes(aliasFromBody && aliasFromBody.toLowerCase())
+      )
     }
     dispatch(getUserSearched(foundUsers))
   }
@@ -118,7 +147,9 @@ export const useHomeStore = () => {
     dispatch(setPostsFromUserLoggedIn(posts))
   }
   const addToFavorites = async (postFavoriteId, userLogeadoId) => {
-    await socialApi.post(`/favorites?postId=${postFavoriteId}&userId=${userLogeadoId}`)
+    await socialApi.post(
+      `/favorites?postId=${postFavoriteId}&userId=${userLogeadoId}`
+    )
   }
   const getFavoritesHook = async () => {
     const response = await socialApi.get(`/favorites/${userId}`)
@@ -134,7 +165,7 @@ export const useHomeStore = () => {
   const setCurrentChatHook = (currentChat) => {
     dispatch(setCurrentChat(currentChat))
   }
-  const chekChangeChatHook = ()=>{
+  const chekChangeChatHook = () => {
     dispatch(chekChangeChat())
   }
 
@@ -160,6 +191,6 @@ export const useHomeStore = () => {
     deleteFavoriteHook,
     checkFavoritesHook,
     setCurrentChatHook,
-    chekChangeChatHook,
+    chekChangeChatHook
   }
 }

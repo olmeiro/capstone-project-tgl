@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test component <AuthLayout /> should render and match to Snapshot 1`] = `
+<div>
+  <section
+    class="w-full  flex flex-row sm:flex-col min-h-screen"
+  >
+    <header
+      class="w-full min-h-full flex flex-row sm:flex-col md:flex-row justify-between p-6 items-center h-28 bg text-team-green"
+    >
+      <div
+        class="mt-2"
+      >
+        <img
+          alt="logo team"
+          class="w-24"
+          src=""
+        />
+      </div>
+    </header>
+    <main
+      class="flex flex-row min-h-[74.2vh] sm:flex-col md:flex-row"
+    >
+      <section
+        class="w-1/2 sm:w-full flex flex-col justify-center p-10 place-items-center"
+      >
+        <h1
+          class="text-7xl sm:text-xl p-6"
+        >
+          Red Social TGL
+        </h1>
+        <img
+          alt="logo team"
+          class="bg w-56 rounded-lg p-9 mt-9 mb-9"
+          src=""
+        />
+        <footer>
+          <p
+            class="text-sm text-clip whitespace-normal"
+          >
+            Red social Top Gun Lab. Realiza tus proyectos en compañia de los mejores.
+          </p>
+        </footer>
+      </section>
+      <section
+        class="w-1/2 sm:w-full flex flex-col justify-center border-b-team-green"
+      >
+        <h4
+          class="text-center text-5xl p-3 text-team-blue  "
+        />
+      </section>
+    </main>
+    <footer
+      class="max-w-full mt-[10] bg-team-blue h-20 text-lg font-medium text-slate-200 flex text-center justify-center items-center"
+    >
+      <p>
+        ©2022 tgl_group. All Rights Reserved.
+      </p>
+    </footer>
+  </section>
+</div>
+`;

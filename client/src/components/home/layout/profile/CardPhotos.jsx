@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Modal, Label, Tooltip, TextInput, Spinner } from 'flowbite-react'
+import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import Swal from 'sweetalert2'
 import { AiOutlineCloudUpload, AiFillPlusCircle } from 'react-icons/ai'
+import { Modal, Label, Tooltip, TextInput, Spinner } from 'flowbite-react'
 
 import { useAuthStore, useForm } from '../../../../hooks'
 import { useProfileStore } from '../../../../hooks/useProfileStore'
 import { CardPublication } from './CardPublication'
-import Swal from 'sweetalert2'
-import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-// esta es la rama Alberto  new alberto2
+
 const formData = {
   comment: ''
 }
@@ -31,14 +31,16 @@ export const CardPhotos = () => {
   const { user } = useAuthStore()
   const inputRef = useRef()
 
-  const { comment, commentValid, onInputChange, onResetForm } = useForm(formData, formValidations)
+  const { comment, commentValid, onInputChange, onResetForm } = useForm(
+    formData,
+    formValidations
+  )
   const { userAlias } = useParams()
-  const {  sendPublicationUser } = useProfileStore()
+  const { sendPublicationUser } = useProfileStore()
 
   const [formSubmitted, setFormSubmitted] = useState(false)
 
-  const { lastUserVisited } = useSelector((state) => state.home)
-  const { changing } = useSelector(state => state.profile)
+  const { changing } = useSelector((state) => state.profile)
 
   const handleFileChange = (e) => {
     const img = {
@@ -75,9 +77,7 @@ export const CardPhotos = () => {
     return (
       <div className="flex justify-center sm:h-[49vh] h-[40vh] items-center bg-team-blue">
         <div className="text-center">
-          <Spinner
-            size="lg"
-            aria-label="Center-aligned spinner example" />
+          <Spinner size="lg" aria-label="Center-aligned spinner example" />
         </div>
       </div>
     )
@@ -96,11 +96,9 @@ export const CardPhotos = () => {
           <Modal.Body>
             <form onSubmit={onHandleSubmitPublication}>
               <div className="flex flex-col justify-center">
-                {/* <div className="mb-2"> */}
                 <h2 className="text-center font-semibold">
                   Agrega foto y comentario de publicación
                 </h2>
-                {/* </div> */}
                 <div className="flex flex-col justify-center mb-5 ">
                   <input
                     type="file"
@@ -120,12 +118,18 @@ export const CardPhotos = () => {
                     />
                   </Tooltip>
                 </div>
-                <div className='flex justify-center mb-3'>
-                  {imagePublication.preview && <img src={imagePublication.preview} width='100' height='100' />}
+                <div className="flex justify-center mb-3">
+                  {imagePublication.preview && (
+                    <img
+                      src={imagePublication.preview}
+                      width="100"
+                      height="100"
+                    />
+                  )}
                 </div>
                 <hr></hr>
-                <div className='flex flex-col'>
-                  <Label htmlFor="comment" >Comentario</Label>
+                <div className="flex flex-col">
+                  <Label htmlFor="comment">Comentario</Label>
 
                   <TextInput
                     name="comment"
@@ -134,11 +138,15 @@ export const CardPhotos = () => {
                     placeholder="Agrega tu comentario"
                   />
 
-                  <span className='text-[10px] text-end text-team-blue'>{formSubmitted && commentValid}</span>
+                  <span className="text-[10px] text-end text-team-blue">
+                    {formSubmitted && commentValid}
+                  </span>
                 </div>
                 <button
-                  className='bg-team-blue h-10 p-2 m-4 rounded-lg hover:bg-team-brown font-semibold'
-                  type='submit'>Enviar publicación
+                  className="bg-team-blue h-10 p-2 m-4 rounded-lg hover:bg-team-brown font-semibold"
+                  type="submit"
+                >
+                  Enviar publicación
                 </button>
               </div>
             </form>
@@ -146,22 +154,21 @@ export const CardPhotos = () => {
         </Modal>
       </>
 
-      {
-        userAlias
-          ? null
-          : <div className='min-w-full flex justify-center items-center'>
-            <Tooltip content="agregar publicación" arrow={false}>
-              <AiFillPlusCircle
-                className='w-12 h-12 rounded-full hover:bg-team-blue hover:text-white '
-                onClick={() => setOpenModalImg(true)}
-              />
-            </Tooltip>
-          </div>
-      }
-      <div className=''>
+      {userAlias
+        ? null
+        : (
+        <div className="min-w-full flex justify-center items-center">
+          <Tooltip content="agregar publicación" arrow={false}>
+            <AiFillPlusCircle
+              className="w-12 h-12 rounded-full hover:bg-team-blue hover:text-white "
+              onClick={() => setOpenModalImg(true)}
+            />
+          </Tooltip>
+        </div>
+          )}
+      <div>
         <CardPublication />
       </div>
-
     </div>
   )
 }

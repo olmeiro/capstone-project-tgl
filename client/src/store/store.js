@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+
 import { authSlice, profileSlice, homeSlice, friendSlice } from './index'
 
 export const store = configureStore({
