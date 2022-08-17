@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
-import { useHomeStore } from '../../../hooks/useHomeStore'
-import { HomeLayout } from '../layout/HomeLayout'
-import { socialApi } from '../../../api'
-import Conversation from '../layout/card/Conversation'
-import Message from '../layout/card/Message'
 import FriendsToChatSearchResults from '../layout/FriendsToChatSearchResults'
+import Conversation from '../layout/card/Conversation'
+import { HomeLayout } from '../layout/HomeLayout'
+import Message from '../layout/card/Message'
+import { socialApi } from '../../../api'
+import { useHomeStore } from '../../../hooks/useHomeStore'
 
 import io from 'socket.io-client'
 
 export const Messenger = () => {
-  const socket = useRef(io('https://socialnetworktgl.herokuapp.com'))
+  const socket = useRef(io('ws://localhost:3000'))
   const location = useLocation()
   const { user } = useSelector((state) => state.auth)
   const userId = user.id
@@ -41,13 +41,12 @@ export const Messenger = () => {
   }, [location])
 
   useEffect(() => {
-    socket.current = io('https://socialnetworktgl.herokuapp.com')
+    socket.current = io('ws://localhost:3000')
   }, [])
 
   useEffect(() => {
     socket.current.emit('addUser', userId)
-    socket.current.on('getUsers', (users) => {
-    })
+    socket.current.on('getUsers', (users) => {})
   }, [user])
 
   useEffect(() => {
@@ -264,13 +263,12 @@ export const Messenger = () => {
                               conversations.map((conversation) => {
                                 return (
                                   <div
-                                  key={conversation.id}
+                                    key={conversation.id}
                                     onClick={() =>
                                       handleCurrentChat(conversation)
                                     }
                                   >
                                     <Conversation
-
                                       conversation={conversation}
                                       currentUser={user}
                                     />
