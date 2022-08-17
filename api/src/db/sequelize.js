@@ -19,20 +19,20 @@ const URI = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_DAT
 
 const sequelize = new Sequelize(URI, {
   dialect: "postgres",
-  // pool: {
-  //     max: 3,
-  //     min: 1,
-  //     idle: 10000,
-  // },
-  // dialectOptions: {
-  //     ssl: {
-  //         require: true,
-  //         ///
-  //         rejectUnauthorized: false,
-  //     },
-  //     keepAlive: true,
-  // },
-  // ssl: true
+  pool: {
+      max: 3,
+      min: 1,
+      idle: 10000,
+  },
+  dialectOptions: {
+      ssl: {
+          require: true,
+          ///
+          rejectUnauthorized: false,
+      },
+      keepAlive: true,
+  },
+  ssl: true
 });
 
 setupModels(sequelize);
