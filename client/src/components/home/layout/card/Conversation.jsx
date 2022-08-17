@@ -32,17 +32,6 @@ const Conversation = ({ conversation, currentUser }) => {
                     <p className='text-sm font-bold text-team-dark'>
                         {friend && friend.alias}
                     </p>
-                    {/* <div className='text-gray-400 text-xs'>
-                        12:30
-                    </div>
-                </div>
-                <div className='flex items-center justify-between'>
-                    <p className='text-sm text-gray-500 truncate'>
-                        hola
-                    </p>
-                    <div className='text-white text-xs bg-team-dark rounded-full px-1 py-0'>
-                        2
-                    </div> */}
                 </div>
             </div>
         </div>

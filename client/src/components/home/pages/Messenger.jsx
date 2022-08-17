@@ -15,7 +15,7 @@ import io from "socket.io-client"
 export const Messenger = () => {
 
 
-    const socket = useRef(io("https://socialnetworktgl.herokuapp.com"))
+    const socket = useRef(io("ws://localhost:3000"))
     const location = useLocation()
     const { user } = useSelector(state => state.auth)
     const userId = user.id
@@ -44,7 +44,7 @@ export const Messenger = () => {
     }, [location])
 
     useEffect(() => {
-        socket.current = io("https://socialnetworktgl.herokuapp.com")
+        socket.current = io("ws://localhost:3000")
     }, [])
 
     useEffect(() => {
@@ -143,6 +143,7 @@ export const Messenger = () => {
     }, [newMessageId])
 
     useEffect(() => {
+        console.log("scrollRef.current ", scrollRef.current)
         scrollRef.current && scrollRef.current.scrollIntoView({ behavior: "smooth" })
     }, [messages])
 
@@ -266,7 +267,7 @@ export const Messenger = () => {
 
                                 {/*MIDDLE CONTENT START*/}
 
-                                <div className='flex-1 p:2 sm:pb-6 justify-between flex flex-col h-screen hidden xl:flex'>
+                                <div className='flex-1 p:2 sm:pb-6 justify-between flex flex-col h-screen xl:flex'>
 
                                     {/*Friend chat image */}
                                     <div className='flex sm:items-center justify-between py-3 border-b border-gray-200 p-3'>
@@ -317,14 +318,13 @@ export const Messenger = () => {
                                                     <img className='' src="https://jamiemcgrath10.files.wordpress.com/2015/01/talk.png" alt="" />
                                                 </div>
                                         }
-
                                     </div>
                                     {/* messages ends here*/}
 
                                     {/*message input starts here */}
                                     {
                                         friend
-                                            ? <div className='border-t-2 border-gray-200 px-4 pt-4 mb-2 mb-16'>
+                                            ? <div className='border-t-2 border-gray-200 px-4 pt-4 mb-2'>
                                                 <div className='relative flex'>
                                                     <input
                                                         value={newMessage}
@@ -347,7 +347,7 @@ export const Messenger = () => {
                                                     </span>
                                                 </div>
                                             </div>
-                                            : <div className='border-t-2 border-gray-200 px-4 pt-4 mb-2 mb-16'>
+                                            : <div className='border-t-2 border-gray-200 px-4 pt-4 mb-2'>
                                             </div>
                                     }
 
