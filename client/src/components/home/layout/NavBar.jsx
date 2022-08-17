@@ -7,6 +7,7 @@ import { Tooltip } from 'flowbite-react'
 import { useAuthStore } from '../../../hooks'
 import { useHomeStore } from '../../../hooks/useHomeStore'
 import imagePath from '../../../../assets/logo_Team_International.png'
+import { Link } from 'react-router-dom'
 
 const userMock = {
   name: 'Tom Cook',
@@ -25,11 +26,11 @@ const userNavigation = [
   { name: 'Salir', href: '#' }
 ]
 
-function classNames (...classes) {
+function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export function NavBar () {
+export function NavBar() {
   const { startLogout } = useAuthStore()
   const [search, setSearch] = useState('')
 
@@ -68,21 +69,37 @@ export function NavBar () {
 
                   <div className="hidden md:block">
                     <div className="ml-10 flex items-baseline space-x-4">
-                      {navigation.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className={classNames(
-                            item.current
-                              ? 'bg-gray-900 text-white'
-                              : 'text-team-green hover:bg-gray-700 hover:text-white',
-                            'px-3 py-2 rounded-md text-sm font-medium'
-                          )}
-                          aria-current={item.current ? 'page' : undefined}
-                        >
-                          {item.name}
-                        </a>
-                      ))}
+                      {navigation.map((item) => {
+                        return (
+                          pathReference == item.href
+                            ? <Link
+                              to={item.href}
+                              key={item.name}
+                              className={classNames(
+                                item.current
+                                  ? 'bg-gray-900 text-white'
+                                  : 'text-team-brown hover:bg-gray-700 hover:text-white',
+                                'px-3 py-2 rounded-md text-sm font-medium'
+                              )}
+                              aria-current={item.current ? 'page' : undefined}
+                            >
+                              {item.name}
+                            </Link>
+                            : <Link
+                              to={item.href}
+                              key={item.name}
+                              className={classNames(
+                                item.current
+                                  ? 'bg-gray-900 text-white'
+                                  : 'text-team-green hover:bg-gray-700 hover:text-white',
+                                'px-3 py-2 rounded-md text-sm font-medium'
+                              )}
+                              aria-current={item.current ? 'page' : undefined}
+                            >
+                              {item.name}
+                            </Link>
+                        )
+                      })}
                     </div>
                   </div>
                 </div>
@@ -142,8 +159,12 @@ export function NavBar () {
 
                 <div className="hidden md:block">
                   <div className="ml-4 flex items-center md:ml-6">
-                    <Tooltip content={email}>
-                      <div className="flex bg-gray-800 p-1 rounded-full text-team-green hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                    <Tooltip
+                      content={email}
+                    >
+                      <div
+                        className="flex bg-gray-800 p-1 rounded-full text-team-green hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                      >
                         <span className="sr-only">View notifications</span>
                         <p className="ml-3">Bienvenido {alias}</p>
                         <UserIcon
@@ -206,11 +227,11 @@ export function NavBar () {
                     <span className="sr-only">Open main menu</span>
                     {open
                       ? (
-                      <XIcon className="block h-6 w-6" aria-hidden="true" />
-                        )
+                        <XIcon className="block h-6 w-6" aria-hidden="true" />
+                      )
                       : (
-                      <MenuIcon className="block h-6 w-6" aria-hidden="true" />
-                        )}
+                        <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+                      )}
                   </Disclosure.Button>
                 </div>
               </div>
@@ -254,14 +275,15 @@ export function NavBar () {
                       {email !== '' ? email : userMock.email}
                     </div>
                   </div>
-                  <Tooltip content={email}>
-                    <div className="flex bg-gray-800 p-1 rounded-full text-team-green hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white sm:invisible">
+                  <Tooltip
+                    content={email}
+                  >
+                    <div
+                      className="flex bg-gray-800 p-1 rounded-full text-team-green hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white sm:invisible"
+                    >
                       <span className="sr-only">View notifications</span>
                       <p>Bienvenido {alias}</p>
-                      <UserIcon
-                        className="h-6 w-6  rounded-md"
-                        aria-hidden="true"
-                      />
+                      <UserIcon className="h-6 w-6  rounded-md" aria-hidden="true" />
                     </div>
                   </Tooltip>
                 </div>
