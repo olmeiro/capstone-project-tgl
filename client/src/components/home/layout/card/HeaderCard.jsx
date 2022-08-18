@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import {
-  StarIcon,
-  HeartIcon,
-  PlusCircleIcon,
-  ThumbUpIcon
-} from '@heroicons/react/outline'
-import { Tooltip, Button, Modal, Label, Textarea } from 'flowbite-react'
-import { useHomeStore } from '../../../../hooks/useHomeStore'
 import Swal from 'sweetalert2'
-import { socialApi } from '../../../../api'
+import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
+import { StarIcon, PlusCircleIcon } from '@heroicons/react/outline'
+import { Tooltip, Button, Modal, Label, Textarea } from 'flowbite-react'
 
-export default function HeaderCard({ setIsOpen, photo, description, likes, date, likeAPost, postId, userId }) {
+import { useHomeStore } from '../../../../hooks/useHomeStore'
+import { socialApi } from '../../../../api'
+
+export default function HeaderCard ({ setIsOpen, photo, description, likes, date, likeAPost, postId, userId }) {
   const [openModal, setOpenModal] = useState(false)
-  const [likesRender, setLikesRender] = useState(likes)
   const [comment, setComment] = useState('')
-  const { makeAComment, checkCommentsHook, addToFavorites } = useHomeStore()
   const [userOfPost, setUserOfPost] = useState()
-  const { user } = useSelector(state => state.auth)
 
-  let entireUser = socialApi.get(`/user/byid/${userId}`).then(response => response.data.body)
+  const { makeAComment, checkCommentsHook, addToFavorites } = useHomeStore()
+  const { user } = useSelector((state) => state.auth)
+
+  let entireUser = socialApi
+    .get(`/user/byid/${userId}`)
+    .then((response) => response.data.body)
   useEffect(() => {
     (async () => {
       entireUser = await entireUser
@@ -32,9 +31,6 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
     Swal.fire('¡Publicación agregada a favoritos!')
   }
 
-  const handleLike = () => {
-    likeAPost(postId)
-  }
   const handleComment = (e) => {
     setComment(e.target.value)
   }
@@ -49,7 +45,12 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
   return (
     <div>
       <>
-        <Modal show={openModal} size="md" popup={true} onClose={() => setOpenModal(false)}>
+        <Modal
+          show={openModal}
+          size="md"
+          popup={true}
+          onClose={() => setOpenModal(false)}
+        >
           <Modal.Header />
           <Modal.Body>
             <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
@@ -58,10 +59,7 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
               </h3>
               <div>
                 <div className="mb-2 block">
-                  <Label
-                    htmlFor="comment"
-                    value="Comentario"
-                  />
+                  <Label htmlFor="comment" value="Comentario" />
                 </div>
                 <Textarea
                   id="comment"
@@ -72,9 +70,7 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
                 />
               </div>
               <div className="w-full">
-                <Button onClick={() => handleSumit()}>
-                  Enviar
-                </Button>
+                <Button onClick={() => handleSumit()}>Enviar</Button>
               </div>
             </div>
           </Modal.Body>
@@ -82,20 +78,24 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
       </>
 
       <div className="bg-team-dark rounded-lg ">
-        <div className='flex '>
+        <div className="flex ">
           <div>
-            <img className="h-16 w-16 rounded-full m-4" src={userOfPost && userOfPost.photoProfile} alt="" />
+            <img
+              className="h-16 w-16 rounded-full m-4"
+              src={userOfPost && userOfPost.photoProfile}
+              alt=""
+            />
           </div>
           <div>
-            <div className=" text-lg font-medium text-white mt-6">{userOfPost && userOfPost.alias}</div>
+            <div className=" text-lg font-medium text-white mt-6">
+              {userOfPost && userOfPost.alias}
+            </div>
             <div className=" text-sm text-gray-400 inline-block">{date}</div>
           </div>
         </div>
-        <div className='ml-6 mb-3 text-sm text-white'>
-          {description}
-        </div>
+        <div className="ml-6 mb-3 text-sm text-white">{description}</div>
         <div className=" box-content max-w-md mx-auto rounded-br-lg rounded-bl-lg bg-myColor shadow-md overflow-hidden md:max-w-2xl mt-2">
-          <div className=' flex justify-center '>
+          <div className=" flex justify-center ">
             <img
               className="sm:h-48 sm:w-full object-cover md:h-80 md:w-full "
               src={photo}
@@ -110,19 +110,6 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
               Ver comentarios
             </button>
             <div className="flex flex-row w-2/3 justify-end items-center gap-4">
-              {/* <Tooltip content="likes" arrow={false}>
-                <div>
-                  {likesRender}
-                </div>
-              </Tooltip> */}
-              {/* <Tooltip content="Me gusta" arrow={false}>  
-                <button onClick={() => handleLike()}>
-                  <ThumbUpIcon
-                    className="h-6 w-6 mb-3 relative top-2  rounded-md  hover:fill-team-green  hover:text-black "
-                    aria-hidden="true"
-                  />
-                </button>
-              </Tooltip> */}
               <Tooltip content="Agregar a favoritos" arrow={false}>
                 <button onClick={() => handleAddFavorite()}>
                   <StarIcon
@@ -146,4 +133,15 @@ export default function HeaderCard({ setIsOpen, photo, description, likes, date,
       </div>
     </div>
   )
+}
+
+HeaderCard.propTypes = {
+  setIsOpen: PropTypes.func,
+  photo: PropTypes.string,
+  description: PropTypes.string,
+  likes: PropTypes.number,
+  date: PropTypes.string,
+  likeAPost: PropTypes.func,
+  postId: PropTypes.number,
+  userId: PropTypes.number
 }

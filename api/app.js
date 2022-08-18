@@ -1,9 +1,10 @@
-const express = require('express')
+const express = require("express");
 const cors = require("cors");
-const http = require("http")
-const { Server } = require("socket.io")
+const http = require("http");
+const { Server } = require("socket.io");
 
 const router = require("./src/routes/index");
+
 const app = express()
 
 app.use(cors());

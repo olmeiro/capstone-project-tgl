@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
+
 import { AuthLayout } from '../layout/AuthLayout'
 import { useForm, useAuthStore } from '../../../hooks'
 
@@ -69,7 +70,6 @@ export const RegisterPage = () => {
 
   const handleClick = () => {
     navigate('LoginPage')
-    // history.push("/LoginPage");
   }
 
   return (
@@ -130,7 +130,7 @@ export const RegisterPage = () => {
         <label htmlFor="">Contraseña</label>
         <input
           className="form-input px-4 py-3 rounded-full"
-          type="text"
+          type="password"
           placeholder="password"
           id="password"
           name="password"
@@ -142,7 +142,7 @@ export const RegisterPage = () => {
         <label htmlFor="">Confirmar contraseña</label>
         <input
           className="form-input px-4 py-3 rounded-full"
-          type="text"
+          type="password"
           placeholder="password"
           id="password1"
           name="password1"

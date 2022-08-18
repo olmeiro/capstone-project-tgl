@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import Swal from 'sweetalert2'
 import { Card, Modal, Label, TextInput } from 'flowbite-react'
 import { AiOutlineCloudUpload } from 'react-icons/ai'
-import { Link } from 'react-router-dom'
 
 import { useAuthStore, useForm } from '../../../../hooks'
-import { useProfileStore } from '../../../../hooks/useProfileStore'
-import { useSelector } from 'react-redux'
-import photoDefault from '../../../../../assets/photoDefault.png'
-import { useFriendStore } from '../../../../hooks/useFriendStore'
-import Swal from 'sweetalert2'
 import { useHomeStore } from '../../../../hooks/useHomeStore'
+import { useProfileStore } from '../../../../hooks/useProfileStore'
+import { useFriendStore } from '../../../../hooks/useFriendStore'
+import photoDefault from '../../../../../assets/photoDefault.png'
 
 const formData = {
   comment: ''
@@ -48,7 +48,7 @@ export const CardPhotosFriends = () => {
   const handleDeleteFriend = (friendId) => {
     Swal.fire({
       title: '¿Estas seguro de eliminar este amigo?',
-      text: "Esta acción no se puede revertir!",
+      text: 'Esta acción no se puede revertir!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -174,19 +174,19 @@ export const CardPhotosFriends = () => {
             friends.map((friend) => {
               return (
             <Card key={friend.id}>
-              <div className="flex flex-col items-center pb-10">
+              <div className="flex flex-col items-center justify-center pb-10 ">
                 <Link
                   to={`/profile/${friend.alias}`}
                   onClick={() => handleLastUserVisited(friend.alias, friend.id)}
                 >
                   <img
-                    className="mb-3 h-24 w-24 rounded-full shadow-lg"
+                    className="bg flex mb-3 h-24 w-24 justify-center mx-auto rounded-full shadow-lg"
                     src={
                       friend.photoProfile ? friend.photoProfile : photoDefault
                     }
                     alt="Bonnie image"
                   />
-                  <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+                  <h5 className="mb-1 text-xl text-center font-medium text-gray-900 dark:text-white">
                     {friend.alias}
                   </h5>
                   <span className="text-sm text-gray-500 dark:text-gray-400">
