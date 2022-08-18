@@ -13,7 +13,7 @@ app.use(router);
 const serverHttp = http.createServer(app);
 const io = new Server(serverHttp, {
   cors: {
-    origin: 'https://capstone-project-fefcmh83p-social-tgl.vercel.app', // url del frontend
+    origin: '*', // url del frontend
   },
 });
 
