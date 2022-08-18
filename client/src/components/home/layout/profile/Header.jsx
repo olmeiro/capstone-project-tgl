@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { Tooltip, Button, Modal, Label } from 'flowbite-react'
 import { AdjustmentsIcon } from '@heroicons/react/outline'
 import { AiFillTool, AiOutlineCloudUpload } from 'react-icons/ai'
-import { FormProfile } from './FormProfile'
+
+import photoDefault from '../../../../../assets/photoDefault.png'
 import { useProfileStore } from '../../../../hooks/useProfileStore'
 import { useAuthStore } from '../../../../hooks'
-import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import photoDefault from '../../../../../assets/photoDefault.png'
-
+import { FormProfile } from './FormProfile'
 const imagePath = '/assets/model.avif'
 
 export const Header = () => {
@@ -36,7 +36,6 @@ export const Header = () => {
   const onHandleSubmit = async (e) => {
     e.preventDefault()
     loadingPhotoProfile(image.data, idUser)
-    // loadingDataProfile(idUser)
     setModalImg(false)
   }
 

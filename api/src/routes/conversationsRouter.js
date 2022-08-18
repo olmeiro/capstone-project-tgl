@@ -2,12 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 const {
-    getConversationsByUserId,
-    postConversation
+  getConversationsByUserId,
+  postConversation,
 } = require("../controllers/conversationsController");
 
-
 router.get("/:userId", getConversationsByUserId);
-router.post("/", postConversation)
+router.post("/", postConversation);
 
-module.exports = router
+module.exports = router;

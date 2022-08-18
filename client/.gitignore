@@ -24,3 +24,10 @@ dist-ssr
 *.sw?
 
 .env
+
+
+Please create a .gitignore and add this to it:
+
+# Ignore test-related files
+/coverage.data
+/coverage/

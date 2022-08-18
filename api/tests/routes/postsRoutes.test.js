@@ -1,25 +1,24 @@
-const app = require("../../app")
-const request = require("supertest")
+const app = require("../../app");
+const request = require("supertest");
 
 describe("GET /posts/all", () => {
+  test("should response with a 200 status code", async () => {
+    const response = await request(app).get("/posts/all").send();
+    expect(response.statusCode).toBe(200);
+  });
 
-    test("should response with a 200 status code", async () => {
-        const response = await request(app).get("/posts/all").send()
-        expect(response.statusCode).toBe(200)
-    })
+  test("should response an Object", async () => {
+    const response = await request(app).get("/posts/all").send();
+    expect(response.body).toBeInstanceOf(Object);
+  });
 
-    test("should response an Object", async () => {
-        const response = await request(app).get("/posts/all").send()
-        expect(response.body).toBeInstanceOf(Object)
-    })
-
-    test("should response a content-type: application/json; charset=utf-8", async () => {
-        const response = await request(app).get("/posts/all").send()
-        expect(response.headers["content-type"]).toEqual("application/json; charset=utf-8")
-    })
-
-
-})
+  test("should response a content-type: application/json; charset=utf-8", async () => {
+    const response = await request(app).get("/posts/all").send();
+    expect(response.headers["content-type"]).toEqual(
+      "application/json; charset=utf-8"
+    );
+  });
+});
 
 // describe("POST /posts", () => {
 
@@ -48,31 +47,32 @@ describe("GET /posts/all", () => {
 // })
 
 describe("PUT /posts", () => {
+  test("should response with a 200 status code", async () => {
+    const response = await request(app).put("/posts").send({
+      id: 1,
+      description: "Gaseosa KRRRR",
+    });
+    expect(response.statusCode).toBe(200);
+  });
 
-    test("should response with a 200 status code", async () => {
-        const response = await request(app).put("/posts").send({
-            "id": 1,
-            "description": "Gaseosa KRRRR",
-        })
-        expect(response.statusCode).toBe(200)
-    })
+  test("should response a content-type: application/json; charset=utf-8", async () => {
+    const response = await request(app).put("/posts").send();
+    expect(response.headers["content-type"]).toEqual(
+      "application/json; charset=utf-8"
+    );
+  });
+});
 
-    test("should response a content-type: application/json; charset=utf-8", async () => {
-        const response = await request(app).put("/posts").send()
-        expect(response.headers["content-type"]).toEqual("application/json; charset=utf-8")
-    })
+describe("DELETE /posts", () => {
+  test("should response with a 200 status code", async () => {
+    const response = await request(app).delete("/posts/3").send();
+    expect(response.statusCode).toBe(200);
+  });
 
-})
-
-describe("DELETE /posts", ()=>{
-
-    test("should response with a 200 status code", async () => {
-        const response = await request(app).delete("/posts/3").send()
-        expect(response.statusCode).toBe(200)
-    })
-
-    test("should response a content-type: application/json; charset=utf-8", async () => {
-        const response = await request(app).delete("/posts").send()
-        expect(response.headers["content-type"]).toEqual("text/html; charset=utf-8")
-    })
-})
+  test("should response a content-type: application/json; charset=utf-8", async () => {
+    const response = await request(app).delete("/posts").send();
+    expect(response.headers["content-type"]).toEqual(
+      "text/html; charset=utf-8"
+    );
+  });
+});
