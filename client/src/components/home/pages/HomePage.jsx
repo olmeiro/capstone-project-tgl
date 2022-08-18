@@ -1,13 +1,13 @@
 
 import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
+
 import { Histories } from '../layout/Histories'
 import { HomeLayout } from '../layout/HomeLayout'
 import { SidebarLeft } from '../layout/SidebarLeft'
 import { SidebarRight } from '../layout/SidebarRight'
 import SearchResults from '../layout/SearchResults'
-import { useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom'
-
 import { useHomeStore } from '../../../hooks/useHomeStore'
 
 export const HomePage = () => {

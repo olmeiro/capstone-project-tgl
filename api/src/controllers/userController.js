@@ -2,8 +2,7 @@ const { response } = require("express");
 const FormData = require("form-data");
 const axios = require("axios");
 const fs = require("fs");
-const jwt = require('jsonwebtoken')
-
+const jwt = require("jsonwebtoken");
 
 const { successResponse, errorResponse } = require("../utils/responses/index");
 const { generateJWT } = require("../helpers/generate-jwts");
@@ -42,14 +41,14 @@ const getUserById = async (req, res) => {
 const postUser = async (req, res) => {
   const { alias, name, email, phone, password } = req.body;
   try {
-    const photoProfile = "https://i.ibb.co/7CfHmMQ/142320.png"
+    const photoProfile = "https://i.ibb.co/7CfHmMQ/142320.png";
     const user = await UserService.postUser({
       alias,
       name,
       email,
       phone,
       password,
-      photoProfile
+      photoProfile,
     });
     const token = await generateJWT(user.id, user.alias, user.name);
     successResponse(req, res, { user, token });
@@ -64,18 +63,17 @@ const putUserById = async (req, res) => {
     await UserService.putUserById({ alias, name, bio, email, phone }, idUser);
     successResponse(req, res, "USUARIO ACTUALIZADO!!");
   } catch (error) {
-    console.log(error)
     errorResponse(req, res, error);
   }
 };
 
 const putProfilePhotoUser = async (req, res) => {
-  const { SECRET_JWT_SEED } = require("../config/index")
+  const { SECRET_JWT_SEED } = require("../config/index");
 
-  const token = req.headers['x-token']
+  const token = req.headers["x-token"];
 
-  const { id } = jwt.verify(token, SECRET_JWT_SEED)
-  const idUser = id
+  const { id } = jwt.verify(token, SECRET_JWT_SEED);
+  const idUser = id;
 
   const photoProfile = req.file;
 
@@ -103,7 +101,7 @@ const putProfilePhotoUser = async (req, res) => {
 
     await UserService.putUserById(
       {
-        photoProfile: urlPhotoProfile
+        photoProfile: urlPhotoProfile,
       },
       idUser
     );
@@ -150,7 +148,6 @@ module.exports = {
   getUserById,
   postUser,
   putUserById,
-  // putPhotoUserById,
   putProfilePhotoUser,
   deleteUserById,
   loginUser,

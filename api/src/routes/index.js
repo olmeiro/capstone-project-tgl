@@ -1,21 +1,20 @@
 const express = require("express");
 const router = express.Router();
 
-
-const userRouter = require("./userRouter");
-const postsRouter = require("./postsRouter")
 const commentsRouter = require("./commentsRouter");
-const friendsRouter = require("./friendsRouter");
+const conversationsRouter = require("./conversationsRouter");
 const favoritesRouter = require("./favoritesRouter");
-const conversationsRouter = require("./conversationsRouter")
-const messagesRouter = require("./messagesRouter")
+const friendsRouter = require("./friendsRouter");
+const messagesRouter = require("./messagesRouter");
+const postsRouter = require("./postsRouter");
+const userRouter = require("./userRouter");
 
-router.use("/user", userRouter)
-router.use("/posts", postsRouter)
-router.use("/comments", commentsRouter)
-router.use("/friends", friendsRouter)
-router.use("/favorites", favoritesRouter)
-router.use("/conversations", conversationsRouter)
-router.use("/messages", messagesRouter)
+router.use("/comments", commentsRouter);
+router.use("/conversations", conversationsRouter);
+router.use("/favorites", favoritesRouter);
+router.use("/friends", friendsRouter);
+router.use("/messages", messagesRouter);
+router.use("/posts", postsRouter);
+router.use("/user", userRouter);
 
-module.exports = router
+module.exports = router;

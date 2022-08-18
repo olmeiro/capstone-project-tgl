@@ -1,5 +1,5 @@
 import { authSlice, clearErrorMessage, onLogin, onLogout } from '../../../src/store/auth/authSlice'
-import { authenticatedState, initialState, notauthenticatedState } from '../../fixtures/auth-states'
+import { authenticatedState, initialState } from '../../fixtures/auth-states'
 import { testUserCredentials } from '../../fixtures/testUser'
 
 describe('Test on authSlice', () => {
